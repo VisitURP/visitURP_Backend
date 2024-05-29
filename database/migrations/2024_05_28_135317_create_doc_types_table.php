@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user__u_r_p_s', function (Blueprint $table) {
-            $table->id();
+        Schema::create('doc_types', function (Blueprint $table) {
+            $table->id('id_docType');
+            $table->string('docTypeName', 100);
+            $table->string('docTypeCode');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user__u_r_p_s');
+        Schema::dropIfExists('doc_types');
     }
 };
