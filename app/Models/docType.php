@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class docType extends Model
 {
     use SoftDeletes;
-    protected $table = 'docTypes';
+    protected $table = 'doc_types';
     protected $primaryKey = 'id_docType';
     protected $fillable = ['docTypeName', 'docTypeCode'];
 }
