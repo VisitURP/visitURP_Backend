@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password', 500);
             $table->unsignedBigInteger('fk_docType_id');
             $table->foreign('fk_docType_id')->references('id_docType')->on('doc_types');
+            $table->string('docNumber', 500);
             $table->string('phone', 500);
             $table->timestamps();
             $table->softDeletes();

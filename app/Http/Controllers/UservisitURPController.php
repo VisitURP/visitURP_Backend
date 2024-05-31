@@ -103,6 +103,7 @@ class UservisitURPController extends Controller
                     'email' => $request['email'],
                     'rol' => $request['rol'],
                     'username' => $request['username'],
+                    'password' => $request['password'],
                     'fk_docType_id' => $request['fk_docType_id'],
                     'docNumber' => $request['docNumber'],
                     'phone' => $request['phone']
