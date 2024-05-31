@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreign('fk_docType_id')->references('id_docType')->on('doc_types');
             $table->string('docNumber', 500);
             $table->string('phone', 500);
-            $table->dateTime('visitDate', 500);
+            $table->dateTime('visitDate');
             $table->string('residentDistrict', 500);
             $table->string('educationalInstitution', 500);
             $table->string('interestCareer', 500);
