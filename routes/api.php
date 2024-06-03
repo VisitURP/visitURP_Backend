@@ -3,6 +3,7 @@
 use App\Http\Controllers\DocTypeController;
 use App\Http\Controllers\UservisitURPController;
 use App\Http\Controllers\VisitorPController;
+use App\Http\Controllers\VisitorVController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,3 +43,14 @@ Route::get('find-visitorP/{id}', [VisitorPController::class, 'show']);
 Route::put('update-visitorP/{id}', [VisitorPController::class, 'update']);
 
 Route::delete('delete-visitorP/{id}',[VisitorPController::class, 'destroy']);
+
+//visitorV
+Route::get('list-visitorVs', [VisitorVController::class, 'index']);
+
+Route::post('register-visitorV', [VisitorVController::class, 'store']);
+
+Route::get('find-visitorV/{id}', [VisitorVController::class, 'show']);
+
+Route::put('update-visitorV/{id}', [VisitorVController::class, 'update']);
+
+Route::delete('delete-visitorV/{id}', [VisitorVController::class, 'destroy']);
