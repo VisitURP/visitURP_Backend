@@ -4,6 +4,7 @@ use App\Http\Controllers\DocTypeController;
 use App\Http\Controllers\UservisitURPController;
 use App\Http\Controllers\VisitorPController;
 use App\Http\Controllers\VisitorVController;
+use App\Http\Controllers\ChatBot_CategoriesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -54,3 +55,14 @@ Route::get('find-visitorV/{id}', [VisitorVController::class, 'show']);
 Route::put('update-visitorV/{id}', [VisitorVController::class, 'update']);
 
 Route::delete('delete-visitorV/{id}', [VisitorVController::class, 'destroy']);
+
+//ChatBot_Categories
+Route::get('list-categories', [ChatBot_CategoriesController::class, 'index']);
+
+Route::post('register-category', [ChatBot_CategoriesController::class, 'store']);
+
+Route::get('find-category/{id}', [ChatBot_CategoriesController::class, 'show']);
+
+Route::put('update-category/{id}', [ChatBot_CategoriesController::class, 'update']);
+
+Route::delete('/delete-category/{id}', [ChatBot_CategoriesController::class, 'destroy']);
