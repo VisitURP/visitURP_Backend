@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'sqlite'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -107,6 +107,20 @@ return [
             'prefix_indexes' => true,
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
+        ],
+
+        // Add your new visitAll_DB connection here
+        'visitAll' => [
+            'driver' => 'pgsql',
+            'host' => env('VISITALL_DB_HOST', 'app-bd12af8a-5a78-4933-9bdd-90a0b6daa26e-do-user-16561502-0.c.db.ondigitalocean.com'),
+            'port' => env('VISITALL_DB_PORT', '25060'),
+            'database' => env('VISITALL_DB_DATABASE', 'visitalldb'),
+            'username' => env('VISITALL_DB_USERNAME', 'visitalldb'),
+            'password' => env('VISITALL_DB_PASSWORD', 'AVNS_rUju2Ee5_aa7kJaQm7I'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'schema' => 'public',
+            'sslmode' => 'require',
         ],
 
     ],
