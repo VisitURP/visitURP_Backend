@@ -7,6 +7,7 @@ use App\Http\Controllers\VisitorVController;
 use App\Http\Controllers\ChatBot_CategoriesController;
 use App\Http\Controllers\ChatBot_QAController;
 use App\Http\Controllers\ChatBot_InquiryController;
+use App\Http\Controllers\ApplicantURPController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -90,5 +91,16 @@ Route::get('find-inquiry/{id}', [ChatBot_InquiryController::class, 'show']);
 Route::put('update-inquiry/{id}', [ChatBot_InquiryController::class, 'update']);
 
 Route::delete('delete-inquiry/{id}', [ChatBot_InquiryController::class, 'destroy']);
+
+//applicant
+Route::get('list-applicants', [ApplicantURPController::class, 'index']);
+
+Route::post('register-applicant', [ApplicantURPController::class, 'store']);
+
+Route::get('find-applicant/{id}', [ApplicantURPController::class, 'show']);
+
+Route::put('update-applicant/{id}', [ApplicantURPController::class, 'update']);
+
+Route::delete('delete-applicant/{id}', [ApplicantURPController::class, 'destroy']);
 
 
