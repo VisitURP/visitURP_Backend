@@ -8,6 +8,7 @@ use App\Http\Controllers\ChatBot_CategoriesController;
 use App\Http\Controllers\ChatBot_QAController;
 use App\Http\Controllers\ChatBot_InquiryController;
 use App\Http\Controllers\ApplicantURPController;
+use App\Http\Controllers\VisitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -103,4 +104,6 @@ Route::put('update-applicant/{id}', [ApplicantURPController::class, 'update']);
 
 Route::delete('delete-applicant/{id}', [ApplicantURPController::class, 'destroy']);
 
+//visit table
+Route::get('sync-visits', [VisitController::class, 'syncVisits']);
 

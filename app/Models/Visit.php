@@ -28,4 +28,6 @@ class Visit extends Model
         'residentDistrict', 
         'virtualVisit'
     ];
+
+   
 }
