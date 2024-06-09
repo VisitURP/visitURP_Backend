@@ -21,8 +21,6 @@ class VisitController extends Controller
        return response()->json(['message' => 'Visits synchronized successfully']);
    }
 
-
-
    // Function to find matches between physical and virtual visitors
    private function findMatches()
    {
@@ -121,7 +119,7 @@ class VisitController extends Controller
                    'fk_docType_id' => $pVisitor->fk_docType_id,
                    'docNumber' => $pVisitor->docNumber,
                    'phone' => $pVisitor->phone,
-                   'visitDateP' => $pVisitor->visitDate ?? null,
+                   'visitDateP' => $pVisitor->visitDate ,
                    'visitDateV' => null, // No virtual visit
                    'interestCareer' => $pVisitor->interestCareer,
                    'educationalInstitution' => $pVisitor->educationalInstitution,
@@ -139,7 +137,32 @@ class VisitController extends Controller
      */
     public function index()
     {
-        //
+        $visit = Visit::get();
+
+        $data = $visit->map(function($visit){
+            return [
+                   'id_visit' => $visit->id_visit,
+                   'name' => $visit->name,
+                   'lastName' => $visit->lastName,
+                   'email' => $visit->email,
+                   'fk_visitorP_id' => $visit->fk_visitorP_id,
+                   'fk_visitorV_id' => $visit->fk_visitorV_id,
+                   'fk_docType_id' => $visit->fk_docType_id ?? 1,
+                   'docNumber' => $visit->docNumber,
+                   'phone' => $visit->phone,
+                   'visitDateP' => $visit->visitDate ?? null,
+                   'visitDateV' => $visit->created_at ?? null,
+                   'interestCareer' => $visit->interestCareer,
+                   'educationalInstitution' => $visit->educationalInstitution,
+                   'residentDistrict' => $visit->residentDistrict,
+                   'virtualVisit' => true,
+            ];
+        });
+
+        //pequeña modificacion
+        return response()->json(
+            $data
+        );
     }
 
     /**
@@ -161,9 +184,13 @@ class VisitController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(visit $visit)
+    public function show(int $id)
     {
-        //
+        $visit = Visit::findOrFail($id);
+        return response()->json([
+            $visit
+        ] 
+        );
     }
 
     /**
@@ -177,16 +204,58 @@ class VisitController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, visit $visit)
+    public function update(Request $request, int $visit)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'max:500'],
+            'lastName' => ['required', 'max:500'],
+            'email' => ['required','email', 'max:500'],
+            'fk_visitorP_id' => ['required', 'max:100'],
+            'fk_visitorV_id' => ['required', 'max:100'],
+            'fk_docType_id' => ['required', 'max:100'],
+            'docNumber' => ['required','max:500'],
+            'phone' => ['required','max:500'],
+            'visitDateP' => ['required','date_format:d/m/y'], // Accept DD/MM/YY format
+            'visitDateV' => ['required','date_format:d/m/y'], // Accept DD/MM/YY format
+            'interestCareer' => ['required','max:500'],
+            'educationalInstitution' => ['required','max:500'],
+            'residentDistrict' => ['required','max:500'],
+            'virtualVisit' => ['required'],
+        ]);
+
+        $visit = Visit::findOrFail($visit);
+        $visit-> name = $request['name'];
+        $visit->lastName = $request['lastName'];
+        $visit-> email = $request['email'];
+        $visit-> fk_visitorP_id = $request['fk_visitorP_id'];
+        $visit-> fk_visitorV_id = $request['fk_visitorV_id'];
+        $visit-> fk_docType_id = $request['fk_docType_id'];
+        $visit-> docNumber = $request['docNumber'];
+        $visit-> phone = $request['phone'];
+        $visit-> visitDateP = $request['visitDateP'];
+        $visit-> visitDateV = $request['visitDateV'];
+        $visit-> interestCareer = $request['interestCareer'];
+        $visit-> educationalInstitution = $request['educationalInstitution'];
+        $visit-> residentDistrict = $request['residentDistrict'];
+        $visit-> virtualVisit = $request['virtualVisit'];
+        $visit-> save();
+
+        return response()->json([
+            'Message' => 'Data already updated.',
+            'Visit info: ' => $visit
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(visit $visit)
+    public function destroy(int $id)
     {
-        //
+        $visit = Visit::findOrFail($id);
+        $visit -> delete();
+
+        return response()->json([
+            'Message' => 'Visit deleted successfully.'
+        ]);
     }
 }

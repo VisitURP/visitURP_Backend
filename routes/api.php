@@ -107,3 +107,11 @@ Route::delete('delete-applicant/{id}', [ApplicantURPController::class, 'destroy'
 //visit table
 Route::get('sync-visits', [VisitController::class, 'syncVisits']);
 
+Route::get('list-visits', [VisitController::class, 'index']);
+
+Route::get('find-visit/{id}', [VisitController::class, 'show']);
+
+Route::put('update-visit/{id}', [VisitController::class, 'update']);
+
+Route::delete('delete-visit/{id}', [VisitController::class, 'destroy']);
+
