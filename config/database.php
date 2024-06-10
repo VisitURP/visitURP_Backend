@@ -123,6 +123,20 @@ return [
             'sslmode' => 'require',
         ],
 
+        // Add your new urP_DB connection here
+        'urp_db' => [
+            'driver' => 'mysql',
+            'host' => env('URP_DB_HOST', 'db-mysql-nyc3-30982-do-user-16561502-0.c.db.ondigitalocean.com'),
+            'port' => env('URP_DB_PORT', '25060'),
+            'database' => env('URP_DB_DATABASE', 'defaultdb'),
+            'username' => env('URP_DB_USERNAME', 'doadmin'),
+            'password' => env('URP_DB_PASSWORD', 'AVNS_eA09PgTponv_gEu8aot'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'schema' => 'public',
+            'sslmode' => 'require',
+        ],
+
     ],
 
     /*

@@ -7,6 +7,8 @@ use App\Http\Controllers\VisitorVController;
 use App\Http\Controllers\ChatBot_CategoriesController;
 use App\Http\Controllers\ChatBot_QAController;
 use App\Http\Controllers\ChatBot_InquiryController;
+use App\Http\Controllers\ApplicantURPController;
+use App\Http\Controllers\VisitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -91,4 +93,25 @@ Route::put('update-inquiry/{id}', [ChatBot_InquiryController::class, 'update']);
 
 Route::delete('delete-inquiry/{id}', [ChatBot_InquiryController::class, 'destroy']);
 
+//applicant
+Route::get('list-applicants', [ApplicantURPController::class, 'index']);
+
+Route::post('register-applicant', [ApplicantURPController::class, 'store']);
+
+Route::get('find-applicant/{id}', [ApplicantURPController::class, 'show']);
+
+Route::put('update-applicant/{id}', [ApplicantURPController::class, 'update']);
+
+Route::delete('delete-applicant/{id}', [ApplicantURPController::class, 'destroy']);
+
+//visit table
+Route::get('sync-visits', [VisitController::class, 'syncVisits']);
+
+Route::get('list-visits', [VisitController::class, 'index']);
+
+Route::get('find-visit/{id}', [VisitController::class, 'show']);
+
+Route::put('update-visit/{id}', [VisitController::class, 'update']);
+
+Route::delete('delete-visit/{id}', [VisitController::class, 'destroy']);
 
