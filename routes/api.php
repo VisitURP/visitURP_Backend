@@ -9,6 +9,7 @@ use App\Http\Controllers\ChatBot_QAController;
 use App\Http\Controllers\ChatBot_InquiryController;
 use App\Http\Controllers\ApplicantURPController;
 use App\Http\Controllers\VisitController;
+use App\Http\Controllers\VisitXapplicantController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -114,4 +115,15 @@ Route::get('find-visit/{id}', [VisitController::class, 'show']);
 Route::put('update-visit/{id}', [VisitController::class, 'update']);
 
 Route::delete('delete-visit/{id}', [VisitController::class, 'destroy']);
+
+//visit X applicant table
+Route::get('sync-visitXapplicants', [VisitXapplicantController::class, 'syncVisitXapplicants']);
+
+Route::get('list-visitXapplicants', [VisitXapplicantController::class, 'index']);
+
+Route::get('find-visitXapplicant/{id}', [VisitXapplicantController::class, 'show']);
+
+Route::put('update-visitXapplicant/{id}', [VisitXapplicantController::class, 'update']);
+
+Route::delete('delete-visitXapplicant/{id}', [VisitXapplicantController::class, 'destroy']);
 
