@@ -11,6 +11,7 @@ use App\Http\Controllers\ApplicantURPController;
 use App\Http\Controllers\VisitController;
 use App\Http\Controllers\VisitXapplicantController;
 use App\Http\Controllers\AcademicInterestController;
+use App\Http\Controllers\BuiltAreaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -139,4 +140,15 @@ Route::get('find-academicInterest/{id}', [AcademicInterestController::class, 'sh
 Route::put('update-academicInterest/{id}', [AcademicInterestController::class, 'update']);
 
 Route::delete('delete-academicInterest/{id}', [AcademicInterestController::class, 'destroy']);
+
+//builtArea table
+Route::post('register-builtArea', [BuiltAreaController::class, 'store']);
+
+Route::get('list-builtAreas', [BuiltAreaController::class, 'index']);
+
+Route::get('find-builtArea/{id}', [BuiltAreaController::class, 'show']);
+
+Route::put('update-builtArea/{id}', [BuiltAreaController::class, 'update']);
+
+Route::delete('delete-builtArea/{id}', [BuiltAreaController::class, 'destroy']);
 

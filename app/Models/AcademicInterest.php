@@ -11,4 +11,9 @@ class AcademicInterest extends Model
     protected $table = 'academic_interests';
     protected $primaryKey = 'id_academicInterest';
     protected $fillable = ['academicInterestName', 'academicInterestCod'];
+
+    public function builtAreas()
+    {
+        return $this->hasMany(BuiltArea::class, 'fk_id_academicInterest', 'id_academicInterest');
+    }
 }
