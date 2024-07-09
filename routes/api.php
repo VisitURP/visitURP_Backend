@@ -10,6 +10,7 @@ use App\Http\Controllers\ChatBot_InquiryController;
 use App\Http\Controllers\ApplicantURPController;
 use App\Http\Controllers\VisitController;
 use App\Http\Controllers\VisitXapplicantController;
+use App\Http\Controllers\AcademicInterestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -126,4 +127,16 @@ Route::get('find-visitXapplicant/{id}', [VisitXapplicantController::class, 'show
 Route::put('update-visitXapplicant/{id}', [VisitXapplicantController::class, 'update']);
 
 Route::delete('delete-visitXapplicant/{id}', [VisitXapplicantController::class, 'destroy']);
+
+
+//academicInterest table
+Route::post('register-academicInterest', [AcademicInterestController::class, 'store']);
+
+Route::get('list-academicInterests', [AcademicInterestController::class, 'index']);
+
+Route::get('find-academicInterest/{id}', [AcademicInterestController::class, 'show']);
+
+Route::put('update-academicInterest/{id}', [AcademicInterestController::class, 'update']);
+
+Route::delete('delete-academicInterest/{id}', [AcademicInterestController::class, 'destroy']);
 
