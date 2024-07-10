@@ -12,6 +12,8 @@ use App\Http\Controllers\VisitController;
 use App\Http\Controllers\VisitXapplicantController;
 use App\Http\Controllers\AcademicInterestController;
 use App\Http\Controllers\BuiltAreaController;
+use App\Http\Controllers\UserVController;
+use App\Http\Controllers\UserAreaVisitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -152,3 +154,26 @@ Route::put('update-builtArea/{id}', [BuiltAreaController::class, 'update']);
 
 Route::delete('delete-builtArea/{id}', [BuiltAreaController::class, 'destroy']);
 
+
+//user visitor table
+Route::post('register-userV', [UserVController::class, 'store']);
+
+Route::get('list-usersV', [UserVController::class, 'index']);
+
+Route::get('find-userV/{id}', [UserVController::class, 'show']);
+
+Route::put('update-userV/{id}', [UserVController::class, 'update']);
+
+Route::delete('delete-userV/{id}', [UserVController::class, 'destroy']);
+
+
+//user area visit table
+Route::post('register-userAreaVisit', [UserAreaVisitController::class, 'store']);
+
+Route::get('list-userAreaVisit', [UserAreaVisitController::class, 'index']);
+
+Route::get('find-userAreaVisit/{id}', [UserAreaVisitController::class, 'show']);
+
+Route::put('update-userAreaVisit/{id}', [UserAreaVisitController::class, 'update']);
+
+Route::delete('delete-userAreaVisit/{id}', [UserAreaVisitController::class, 'destroy']);
