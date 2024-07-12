@@ -44,8 +44,10 @@ class UserAreaVisitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
-    {
+{
+    try {
         $validated = $request->validate([
             'fk_id_userV' => [
                 'required',
@@ -57,30 +59,36 @@ class UserAreaVisitController extends Controller
             ],
             'entered_at' => 'required|date_format:Y-m-d H:i:s',
             'exited_at' => 'nullable|date_format:Y-m-d H:i:s|after:entered_at',
+            'duration_seconds' => 'required',
         ]);
 
-        // Calculate duration in seconds if exited_at is provided
-        $duration_seconds = null;
-        if ($request->has('exited_at')) {
-            $entered_at = new Carbon($validated['entered_at']);
-            $exited_at = new Carbon($validated['exited_at']);
-            $duration_seconds = $entered_at->diffInSeconds($exited_at);
-        }
+        // Log the validated data
+        \Log::info('Validated Data:', $validated);
 
         $areaVisit = UserAreaVisit::create([
             'fk_id_userV' => $validated['fk_id_userV'],
             'fk_id_builtArea' => $validated['fk_id_builtArea'],
-            'entered_at' => $validated['entered_at'],
-            'exited_at' => $validated['exited_at'],
-            'duration_seconds' => $duration_seconds,
+            'entered_at' => Carbon::createFromFormat('Y-m-d H:i:s', $validated['entered_at']),
+            'exited_at' => Carbon::createFromFormat('Y-m-d H:i:s', $validated['exited_at']),
+            'duration_seconds' => $validated['duration_seconds'],
         ]);
+
+        \Log::info('User Area Visit created successfully:', $areaVisit->toArray());
 
         return response()->json([
             'message' => 'User Area visit recorded successfully',
             'data' => $areaVisit
         ], 201);
-    
+
+    } catch (\Exception $e) {
+        \Log::error('Error storing User Area Visit:', ['error' => $e->getMessage()]);
+        return response()->json([
+            'message' => 'Error storing User Area visit',
+            'error' => $e->getMessage()
+        ], 500);
     }
+}
+
 
     /**
      * Display the specified resource.
