@@ -8,12 +8,12 @@ use App\Http\Controllers\ChatBot_CategoriesController;
 use App\Http\Controllers\ChatBot_QAController;
 use App\Http\Controllers\ChatBot_InquiryController;
 use App\Http\Controllers\ApplicantURPController;
-use App\Http\Controllers\VisitController;
 use App\Http\Controllers\VisitXapplicantController;
 use App\Http\Controllers\AcademicInterestController;
 use App\Http\Controllers\BuiltAreaController;
 use App\Http\Controllers\UserVController;
 use App\Http\Controllers\UserAreaVisitController;
+use App\Http\Controllers\VisitVController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -109,16 +109,6 @@ Route::put('update-applicant/{id}', [ApplicantURPController::class, 'update']);
 
 Route::delete('delete-applicant/{id}', [ApplicantURPController::class, 'destroy']);
 
-//visit table
-Route::get('sync-visits', [VisitController::class, 'syncVisits']);
-
-Route::get('list-visits', [VisitController::class, 'index']);
-
-Route::get('find-visit/{id}', [VisitController::class, 'show']);
-
-Route::put('update-visit/{id}', [VisitController::class, 'update']);
-
-Route::delete('delete-visit/{id}', [VisitController::class, 'destroy']);
 
 //visit X applicant table
 Route::get('sync-visitXapplicants', [VisitXapplicantController::class, 'syncVisitXapplicants']);
@@ -177,3 +167,14 @@ Route::get('find-userAreaVisit/{id}', [UserAreaVisitController::class, 'show']);
 Route::put('update-userAreaVisit/{id}', [UserAreaVisitController::class, 'update']);
 
 Route::delete('delete-userAreaVisit/{id}', [UserAreaVisitController::class, 'destroy']);
+
+//visitV table
+Route::post('register-visitV', [VisitVController::class, 'store']);
+
+Route::get('list-visitVs', [VisitVController::class, 'index']);
+
+Route::get('find-visitV/{id}', [VisitVController::class, 'show']);
+
+Route::put('update-visitV/{id}', [VisitVController::class, 'update']);
+
+Route::delete('delete-visitV/{id}', [VisitVController::class, 'destroy']);

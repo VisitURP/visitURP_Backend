@@ -20,4 +20,10 @@ class VisitorV extends Model
         'documentNumber', 
         'phone',
     ];
+
+    public function docType()
+    {
+        return $this->hasMany(docType::class, 'fk_docType_id');
+    }
+
 }

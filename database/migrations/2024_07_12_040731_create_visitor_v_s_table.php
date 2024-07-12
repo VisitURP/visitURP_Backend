@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email', 500);
             $table->string('lastName', 500)->nullable();
             $table->unsignedBigInteger('fk_docType_id')->nullable();
+            $table->foreign('fk_docType_id')->references('id_docType')->on('doc_types');
             $table->string('documentNumber', 500)->nullable();
             $table->string('phone', 500)->nullable();
             $table->timestamps();
