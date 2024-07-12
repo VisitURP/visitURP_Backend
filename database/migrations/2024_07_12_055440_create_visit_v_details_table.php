@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_area_visits', function (Blueprint $table) {
-            $table->id('id_AreaVisit');
-            $table->unsignedBigInteger('fk_id_userV');
-            $table->foreign('fk_id_userV')->references('id_userV')->on('user_v_s');
+        Schema::create('visit_v_details', function (Blueprint $table) {
+            $table->id('id_visitVDetail');
+            $table->unsignedBigInteger('fk_id_visitV');
+            $table->foreign('fk_id_visitV')->references('id_visitV')->on('visit_v_s');
             $table->unsignedBigInteger('fk_id_builtArea');
             $table->foreign('fk_id_builtArea')->references('id_builtArea')->on('built_areas');
-            $table->dateTime('entered_at');
-            $table->dateTime('exited_at');
-            $table->unsignedBigInteger('duration_seconds');
+            $table->string('kindOfEvent');
+            $table->string('get');
+            $table->dateTime('DateTime');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_area_visits');
+        Schema::dropIfExists('visit_v_details');
     }
 };

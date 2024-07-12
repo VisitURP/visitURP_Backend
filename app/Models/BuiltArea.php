@@ -16,6 +16,11 @@ class BuiltArea extends Model
     {
         return $this->belongsTo(AcademicInterest::class, 'fk_id_academicInterest', 'id_academicInterest');
     }
+
+    public function visitVDetail()
+    {
+        return $this->hasMany(VisitVDetail::class, 'fk_id_builtArea','id_builtArea');
+    }
 }
 
 

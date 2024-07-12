@@ -14,6 +14,7 @@ use App\Http\Controllers\BuiltAreaController;
 use App\Http\Controllers\UserVController;
 use App\Http\Controllers\UserAreaVisitController;
 use App\Http\Controllers\VisitVController;
+use App\Http\Controllers\VisitVDetailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -178,3 +179,14 @@ Route::get('find-visitV/{id}', [VisitVController::class, 'show']);
 Route::put('update-visitV/{id}', [VisitVController::class, 'update']);
 
 Route::delete('delete-visitV/{id}', [VisitVController::class, 'destroy']);
+
+//visitVdetail table
+Route::post('register-visitVD', [VisitVDetailController::class, 'store']);
+
+Route::get('list-visitVD', [VisitVDetailController::class, 'index']);
+
+Route::get('find-visitVD/{id}', [VisitVDetailController::class, 'show']);
+
+Route::put('update-visitVD/{id}', [VisitVDetailController::class, 'update']);
+
+Route::delete('delete-visitVD/{id}', [VisitVDetailController::class, 'destroy']);

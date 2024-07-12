@@ -26,4 +26,9 @@ class VisitorV extends Model
         return $this->hasMany(docType::class, 'fk_docType_id');
     }
 
+    public function visitV()
+    {
+        return $this->hasMany(visitV::class, 'fk_id_visitorV','id_visitorV');
+    }
+
 }

@@ -16,7 +16,7 @@ class VisitVController extends Controller
 
         $data = $visit_V->map(function($visit_V){
             return [
-                'id_visit' => $visit_V -> id_visit,
+                'id_visitV' => $visit_V -> id_visitV,
                 'fk_id_visitorV' => $visit_V -> fk_id_visitorV,
             ];
         });
