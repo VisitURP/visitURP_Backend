@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\VisitorV;
+use App\Models\VisitV;
 use Illuminate\Http\Request;
 
 class VisitorVController extends Controller
@@ -56,9 +57,16 @@ class VisitorVController extends Controller
 
         $visitorV = VisitorV::create($validatedData);
         
-        return response()->json([
-             $visitorV
-        ]);
+        // Crear la visita asociada al visitante recién creado
+    $visitV = visitV::create([
+        'fk_id_visitorV' => $visitorV->id_visitorV,
+    ]);
+
+    // Retornar la respuesta con los datos del visitante y de la visita
+    return response()->json([
+        'visitorV' => $visitorV,
+        'visitV' => $visitV,
+    ], 201);
 
     }
 
