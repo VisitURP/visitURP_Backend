@@ -56,7 +56,9 @@ class VisitorVController extends Controller
 
         $visitorV = VisitorV::create($validatedData);
         
-        return response()->json($visitorV, 201);
+        return response()->json([
+             $visitorV
+        ]);
 
     }
 
