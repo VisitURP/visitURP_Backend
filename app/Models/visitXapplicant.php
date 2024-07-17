@@ -2,32 +2,32 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
 
-class Visit extends Model
+class visitXapplicant extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'visits';
-    protected $primaryKey = 'id_visit';
+    protected $table = 'visit_xapplicants';
+    protected $primaryKey = 'id_visitXapplicant';
     
     protected $fillable = [
+        'fk_applicant_id', 
+        'fk_visit_id', 
+        'fk_docType_id', 
+        'docNumber', 
         'name', 
         'lastName', 
         'email', 
-        'fk_visitorP_id', 
-        'fk_visitorV_id',
-        'fk_docType_id', 
-        'docNumber', 
         'phone', 
         'visitDateP', 
         'visitDateV',
         'interestCareer',
         'educationalInstitution', 
         'residentDistrict', 
-        'virtualVisit'
+        'meritOrder',
+        'studentCode',
+        'admitted',
     ];
-
-   
 }

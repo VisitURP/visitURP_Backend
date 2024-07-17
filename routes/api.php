@@ -8,7 +8,13 @@ use App\Http\Controllers\ChatBot_CategoriesController;
 use App\Http\Controllers\ChatBot_QAController;
 use App\Http\Controllers\ChatBot_InquiryController;
 use App\Http\Controllers\ApplicantURPController;
-use App\Http\Controllers\VisitController;
+use App\Http\Controllers\VisitXapplicantController;
+use App\Http\Controllers\AcademicInterestController;
+use App\Http\Controllers\BuiltAreaController;
+use App\Http\Controllers\UserVController;
+use App\Http\Controllers\UserAreaVisitController;
+use App\Http\Controllers\VisitVController;
+use App\Http\Controllers\VisitVDetailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -104,14 +110,83 @@ Route::put('update-applicant/{id}', [ApplicantURPController::class, 'update']);
 
 Route::delete('delete-applicant/{id}', [ApplicantURPController::class, 'destroy']);
 
-//visit table
-Route::get('sync-visits', [VisitController::class, 'syncVisits']);
 
-Route::get('list-visits', [VisitController::class, 'index']);
+//visit X applicant table
+Route::get('sync-visitXapplicants', [VisitXapplicantController::class, 'syncVisitXapplicants']);
 
-Route::get('find-visit/{id}', [VisitController::class, 'show']);
+Route::get('list-visitXapplicants', [VisitXapplicantController::class, 'index']);
 
-Route::put('update-visit/{id}', [VisitController::class, 'update']);
+Route::get('find-visitXapplicant/{id}', [VisitXapplicantController::class, 'show']);
 
-Route::delete('delete-visit/{id}', [VisitController::class, 'destroy']);
+Route::put('update-visitXapplicant/{id}', [VisitXapplicantController::class, 'update']);
 
+Route::delete('delete-visitXapplicant/{id}', [VisitXapplicantController::class, 'destroy']);
+
+
+//academicInterest table
+Route::post('register-academicInterest', [AcademicInterestController::class, 'store']);
+
+Route::get('list-academicInterests', [AcademicInterestController::class, 'index']);
+
+Route::get('find-academicInterest/{id}', [AcademicInterestController::class, 'show']);
+
+Route::put('update-academicInterest/{id}', [AcademicInterestController::class, 'update']);
+
+Route::delete('delete-academicInterest/{id}', [AcademicInterestController::class, 'destroy']);
+
+//builtArea table
+Route::post('register-builtArea', [BuiltAreaController::class, 'store']);
+
+Route::get('list-builtAreas', [BuiltAreaController::class, 'index']);
+
+Route::get('find-builtArea/{id}', [BuiltAreaController::class, 'show']);
+
+Route::put('update-builtArea/{id}', [BuiltAreaController::class, 'update']);
+
+Route::delete('delete-builtArea/{id}', [BuiltAreaController::class, 'destroy']);
+
+
+//user visitor table
+Route::post('register-userV', [UserVController::class, 'store']);
+
+Route::get('list-usersV', [UserVController::class, 'index']);
+
+Route::get('find-userV/{id}', [UserVController::class, 'show']);
+
+Route::put('update-userV/{id}', [UserVController::class, 'update']);
+
+Route::delete('delete-userV/{id}', [UserVController::class, 'destroy']);
+
+
+//user area visit table
+Route::post('register-userAreaVisit', [UserAreaVisitController::class, 'store']);
+
+Route::get('list-userAreaVisit', [UserAreaVisitController::class, 'index']);
+
+Route::get('find-userAreaVisit/{id}', [UserAreaVisitController::class, 'show']);
+
+Route::put('update-userAreaVisit/{id}', [UserAreaVisitController::class, 'update']);
+
+Route::delete('delete-userAreaVisit/{id}', [UserAreaVisitController::class, 'destroy']);
+
+//visitV table
+Route::post('register-visitV', [VisitVController::class, 'store']);
+
+Route::get('list-visitVs', [VisitVController::class, 'index']);
+
+Route::get('find-visitV/{id}', [VisitVController::class, 'show']);
+
+Route::put('update-visitV/{id}', [VisitVController::class, 'update']);
+
+Route::delete('delete-visitV/{id}', [VisitVController::class, 'destroy']);
+
+//visitVdetail table
+Route::post('register-visitVD', [VisitVDetailController::class, 'store']);
+
+Route::get('list-visitVD', [VisitVDetailController::class, 'index']);
+
+Route::get('find-visitVD/{id}', [VisitVDetailController::class, 'show']);
+
+Route::put('update-visitVD/{id}', [VisitVDetailController::class, 'update']);
+
+Route::delete('delete-visitVD/{id}', [VisitVDetailController::class, 'destroy']);

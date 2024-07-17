@@ -8,17 +8,27 @@ use Illuminate\Database\Eloquent\Model;
 class VisitorV extends Model
 {
     use SoftDeletes;
-    protected $connection = 'visitAll'; // Use the visitAll connection
-    protected $table = 'visitors'; // Specify the table name
-    protected $primaryKey = 'id_visitor';
-    // Specify the fillable attributes
+
+    protected $table = 'visitor_v_s';
+    protected $primaryKey = 'id_visitorV';
+    
     protected $fillable = [
-        'nombre', 
-        'apellido', 
-        'correo', 
-        'dni', 
-        'celular', 
-        'carreraDeInteres', 
+        'name', 
+        'email', 
+        'lastName', 
+        'fk_docType_id', 
+        'documentNumber', 
+        'phone',
     ];
+
+    public function docType()
+    {
+        return $this->hasMany(docType::class, 'fk_docType_id');
+    }
+
+    public function visitV()
+    {
+        return $this->hasMany(visitV::class, 'fk_id_visitorV','id_visitorV');
+    }
 
 }

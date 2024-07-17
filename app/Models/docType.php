@@ -11,4 +11,5 @@ class docType extends Model
     protected $table = 'doc_types';
     protected $primaryKey = 'id_docType';
     protected $fillable = ['docTypeName', 'docTypeCode'];
+
 }
