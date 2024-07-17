@@ -23,7 +23,7 @@ class VisitVDetailController extends Controller
                 'fk_id_builtArea' => $visitVDetail -> fk_id_builtArea,
                 'kindOfEvent' => $visitVDetail -> kindOfEvent,
                 'get' => $visitVDetail -> get,
-                'DateTime' => $userArea -> DateTime,
+                'DateTime' => $visitVDetail -> DateTime,
             ];
         });
 
