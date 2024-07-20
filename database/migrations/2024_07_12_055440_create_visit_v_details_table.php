@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('visit_v_details', function (Blueprint $table) {
-            $table->id('id_visitVDetail');
-            $table->unsignedBigInteger('fk_id_visitV');
-            $table->foreign('fk_id_visitV')->references('id_visitV')->on('visit_v_s');
+            $table->unsignedBigInteger('id_visitorV');
+            $table->unsignedBigInteger('id_visitV');
             $table->unsignedBigInteger('fk_id_builtArea');
             $table->foreign('fk_id_builtArea')->references('id_builtArea')->on('built_areas');
             $table->string('kindOfEvent');
@@ -22,6 +21,10 @@ return new class extends Migration
             $table->dateTime('DateTime');
             $table->timestamps();
             $table->softDeletes();
+
+            $table->primary(['id_visitorV', 'id_visitV']);
+            $table->foreign('id_visitorV')->references('id_visitorV')->on('visitor_v_s');
+            $table->foreign('id_visitV')->references('id_visitV')->on('visit_v_s');
         });
     }
 

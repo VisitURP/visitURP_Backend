@@ -11,7 +11,7 @@ class visitorP extends Model
     use SoftDeletes;
     protected $table = 'visitor_p_s';
     protected $primaryKey = 'id_visitorP';
-    protected $fillable = ['name', 'lastName', 'email','fk_docType_id', 'docNumber', 'phone', 'visitDate', 'residentDistrict', 'educationalInstitution','interestCareer'];
+    protected $fillable = ['name', 'lastName', 'email','fk_docType_id', 'docNumber', 'phone', 'visitDate', 'residentDistrict', 'educationalInstitution'];
 
     public function setVisitDateAttribute($value)
     {

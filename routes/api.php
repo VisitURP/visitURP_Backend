@@ -185,8 +185,8 @@ Route::post('register-visitVD', [VisitVDetailController::class, 'store']);
 
 Route::get('list-visitVD', [VisitVDetailController::class, 'index']);
 
-Route::get('find-visitVD/{id}', [VisitVDetailController::class, 'show']);
+Route::get('find-visitVD/{id_visitorV}/{id_visitV}', [VisitVDetailController::class, 'show']);
 
-Route::put('update-visitVD/{id}', [VisitVDetailController::class, 'update']);
+Route::put('update-visitVD/{id_visitorV}/{id_visitV}', [VisitVDetailController::class, 'update']);
 
-Route::delete('delete-visitVD/{id}', [VisitVDetailController::class, 'destroy']);
+Route::delete('delete-visitVD/{id_visitorV}/{id_visitV}', [VisitVDetailController::class, 'destroy']);
