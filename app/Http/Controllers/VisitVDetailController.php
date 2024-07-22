@@ -33,8 +33,8 @@ class VisitVDetailController extends Controller
      public function store(Request $request)
     {
         $validated = $request->validate([
-            'id_visitorV' => 'required|exists:visitors,id_visitor',
-            'id_visitV' => 'required|exists:visits,id_visit',
+            'id_visitorV' => 'required|exists:visitor_v_s,id_visitorV',
+            'id_visitV' => 'required|exists:visit_v_s,id_visitV',
             'fk_id_builtArea' => 'required|exists:built_areas,id_builtArea',
             'kindOfEvent' => 'required|string',
             'get' => 'required|string',

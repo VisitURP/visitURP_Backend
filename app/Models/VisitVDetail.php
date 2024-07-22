@@ -25,7 +25,7 @@ class VisitVDetail extends Model
         return $this->belongsTo(VisitV::class, 'id_visitV');
     }
 
-    public function visitor()
+    public function visitorV()
     {
         return $this->belongsTo(VisitorV::class, 'id_visitorV');
     }
@@ -35,8 +35,7 @@ class VisitVDetail extends Model
         return $this->belongsTo(BuiltArea::class, 'fk_id_builtArea');
     }
     
-    // Métodos personalizados para manejar la clave primaria compuesta
-    public static function find($id_visitor, $id_visit)
+    public static function findComposite($id_visitor, $id_visit)
     {
         return self::where('id_visitorV', $id_visitor)->where('id_visitV', $id_visit)->first();
     }

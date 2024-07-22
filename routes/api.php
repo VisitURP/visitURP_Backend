@@ -158,17 +158,6 @@ Route::put('update-userV/{id}', [UserVController::class, 'update']);
 Route::delete('delete-userV/{id}', [UserVController::class, 'destroy']);
 
 
-//user area visit table
-Route::post('register-userAreaVisit', [UserAreaVisitController::class, 'store']);
-
-Route::get('list-userAreaVisit', [UserAreaVisitController::class, 'index']);
-
-Route::get('find-userAreaVisit/{id}', [UserAreaVisitController::class, 'show']);
-
-Route::put('update-userAreaVisit/{id}', [UserAreaVisitController::class, 'update']);
-
-Route::delete('delete-userAreaVisit/{id}', [UserAreaVisitController::class, 'destroy']);
-
 //visitV table
 Route::post('register-visitV', [VisitVController::class, 'store']);
 
@@ -185,7 +174,7 @@ Route::post('register-visitVD', [VisitVDetailController::class, 'store']);
 
 Route::get('list-visitVD', [VisitVDetailController::class, 'index']);
 
-Route::get('find-visitVD/{id_visitorV}/{id_visitV}', [VisitVDetailController::class, 'show']);
+Route::get('find-visitVD/{id_visitor}/{id_visit}', [VisitVDetailController::class, 'show']);
 
 Route::put('update-visitVD/{id_visitorV}/{id_visitV}', [VisitVDetailController::class, 'update']);
 

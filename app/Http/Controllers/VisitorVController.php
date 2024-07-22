@@ -58,7 +58,7 @@ class VisitorVController extends Controller
         $visitorV = VisitorV::create($validatedData);
         
         // Crear la visita asociada al visitante recién creado
-    $visitV = visitV::create([
+    $visitV = VisitV::create([
         'fk_id_visitorV' => $visitorV->id_visitorV,
     ]);
 
