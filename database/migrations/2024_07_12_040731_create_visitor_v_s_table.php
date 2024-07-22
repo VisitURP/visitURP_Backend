@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreign('fk_docType_id')->references('id_docType')->on('doc_types');
             $table->string('documentNumber', 500)->nullable();
             $table->string('phone', 500)->nullable();
+            $table->string('residentDistrict', 500)->nullable();
+            $table->string('educationalInstitution', 500)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
