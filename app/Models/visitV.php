@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class visitV extends Model
 {
     use SoftDeletes;
     protected $table = 'visit_v_s';
     protected $primaryKey = 'id_visitV';
-    protected $fillable = ['fk_id_visitorV'];
+    protected $fillable = ['fk_id_visitorV','fk_id_semester'];
 
 
     public function visitorV()
@@ -22,4 +23,9 @@ class visitV extends Model
     {
         return $this->hasMany(VisitVDetail::class, 'fk_id_visitV', 'id_visitV');
     }
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class, 'fk_id_semester');
+    }
+    
 }

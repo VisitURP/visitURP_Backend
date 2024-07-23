@@ -15,6 +15,7 @@ use App\Http\Controllers\UserVController;
 use App\Http\Controllers\UserAreaVisitController;
 use App\Http\Controllers\VisitVController;
 use App\Http\Controllers\VisitVDetailController;
+use App\Http\Controllers\SemesterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -179,3 +180,14 @@ Route::get('find-visitVD/{id_visitor}/{id_visit}', [VisitVDetailController::clas
 Route::put('update-visitVD/{id_visitorV}/{id_visitV}', [VisitVDetailController::class, 'update']);
 
 Route::delete('delete-visitVD/{id_visitorV}/{id_visitV}', [VisitVDetailController::class, 'destroy']);
+
+//semester table
+Route::post('register-semester', [SemesterController::class, 'store']);
+
+Route::get('list-semester', [SemesterController::class, 'index']);
+
+Route::get('find-semester/{id_semester}', [SemesterController::class, 'show']);
+
+Route::put('update-semester/{id_semester}', [SemesterController::class, 'update']);
+
+Route::delete('delete-semester/{id_semester}', [SemesterController::class, 'destroy']);

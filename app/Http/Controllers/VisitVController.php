@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\visitV;
+use App\Models\Semester;
 use Illuminate\Http\Request;
 
 class VisitVController extends Controller
@@ -18,6 +19,7 @@ class VisitVController extends Controller
             return [
                 'id_visitV' => $visit_V -> id_visitV,
                 'fk_id_visitorV' => $visit_V -> fk_id_visitorV,
+                'fk_id_semester' => $visit_V -> fk_id_semester,
             ];
         });
 
@@ -48,6 +50,7 @@ class VisitVController extends Controller
         
         return response()->json($visitV, 201);
     }
+
 
     /**
      * Display the specified resource.

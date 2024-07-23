@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\VisitorV;
 use App\Models\VisitV;
+use App\Models\Semester;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 
 class VisitorVController extends Controller
@@ -57,10 +59,10 @@ class VisitorVController extends Controller
 
         $visitorV = VisitorV::create($validatedData);
         
-        // Crear la visita asociada al visitante recién creado
-    $visitV = VisitV::create([
-        'fk_id_visitorV' => $visitorV->id_visitorV,
-    ]);
+        $visitV = VisitV::create([
+            'fk_id_visitorV' => $visitorV->id_visitorV,
+            'fk_id_semester' => $this->assignSemester($visitorV->created_at),
+        ]);
 
     // Retornar la respuesta con los datos del visitante y de la visita
     return response()->json([
@@ -68,6 +70,14 @@ class VisitorVController extends Controller
         'visitV' => $visitV,
     ], 201);
 
+    }
+
+    public static function assignSemester($createdAt)
+    {
+        $createdAt = new Carbon($createdAt);
+        $semester = Semester::where('until', '>', $createdAt)->orderBy('until')->first();
+        
+        return $semester ? $semester->id_semester : null;
     }
 
     /**
