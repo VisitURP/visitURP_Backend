@@ -26,7 +26,6 @@ class VisitorPController extends Controller
                 'visitDate' => $visitorP -> visitDate,
                 'residentDistrict' => $visitorP -> residentDistrict,
                 'educationalInstitution' => $visitorP -> educationalInstitution,
-                'interestCareer' => $visitorP -> interestCareer
             ];
         });
 
@@ -59,7 +58,6 @@ class VisitorPController extends Controller
             'visitDate' => ['required','date_format:d/m/y'], // Accept DD/MM/YY format
             'residentDistrict' => ['required','max:500'],
             'educationalInstitution' => ['required','max:500'],
-            'interestCareer' => ['required','max:500'],
         ]);
 
         // // PREGUNTAR AL PROFE SI SE HACE UN FILTRO CON EL CORREO Y DOCUMENTO
@@ -110,7 +108,6 @@ class VisitorPController extends Controller
             'visitDate' => ['required','date_format:d/m/y'], // Accept DD/MM/YY format
             'residentDistrict' => ['required','max:500'],
             'educationalInstitution' => ['required','max:500'],
-            'interestCareer' => ['required','max:500'],
         ]);
 
         $visitorP = visitorP::findOrFail($visitorP);
@@ -123,7 +120,6 @@ class VisitorPController extends Controller
         $visitorP-> visitDate = $request['visitDate'];
         $visitorP-> residentDistrict = $request['residentDistrict'];
         $visitorP-> educationalInstitution = $request['educationalInstitution'];
-        $visitorP-> interestCareer = $request['interestCareer'];
         $visitorP-> save();
 
         return response()->json([

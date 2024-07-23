@@ -16,6 +16,7 @@ use App\Http\Controllers\UserAreaVisitController;
 use App\Http\Controllers\VisitVController;
 use App\Http\Controllers\VisitVDetailController;
 use App\Http\Controllers\SemesterController;
+use App\Http\Controllers\VisitorPreferenceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -191,3 +192,14 @@ Route::get('find-semester/{id_semester}', [SemesterController::class, 'show']);
 Route::put('update-semester/{id_semester}', [SemesterController::class, 'update']);
 
 Route::delete('delete-semester/{id_semester}', [SemesterController::class, 'destroy']);
+
+//visitorPreferences table
+Route::post('register-visitorPreference', [VisitorPreferenceController::class, 'store']);
+
+Route::get('list-visitorPreference', [VisitorPreferenceController::class, 'index']);
+
+Route::get('find-visitorPreference/{id}', [VisitorPreferenceController::class, 'show']);
+
+Route::put('update-visitorPreference/{id}', [VisitorPreferenceController::class, 'update']);
+
+Route::delete('delete-visitorPreference/{id}', [VisitorPreferenceController::class, 'destroy']);
