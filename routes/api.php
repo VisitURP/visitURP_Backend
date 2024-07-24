@@ -15,6 +15,8 @@ use App\Http\Controllers\UserVController;
 use App\Http\Controllers\UserAreaVisitController;
 use App\Http\Controllers\VisitVController;
 use App\Http\Controllers\VisitVDetailController;
+use App\Http\Controllers\SemesterController;
+use App\Http\Controllers\VisitorPreferenceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -174,8 +176,30 @@ Route::post('register-visitVD', [VisitVDetailController::class, 'store']);
 
 Route::get('list-visitVD', [VisitVDetailController::class, 'index']);
 
-Route::get('find-visitVD/{id_visitor}/{id_visit}', [VisitVDetailController::class, 'show']);
+Route::get('find-visitVD/{id_visitVDetail}', [VisitVDetailController::class, 'show']);
 
-Route::put('update-visitVD/{id_visitorV}/{id_visitV}', [VisitVDetailController::class, 'update']);
+Route::put('update-visitVD/{id_visitVDetail}', [VisitVDetailController::class, 'update']);
 
-Route::delete('delete-visitVD/{id_visitorV}/{id_visitV}', [VisitVDetailController::class, 'destroy']);
+Route::delete('delete-visitVD/{id_visitVDetail}', [VisitVDetailController::class, 'destroy']);
+
+//semester table
+Route::post('register-semester', [SemesterController::class, 'store']);
+
+Route::get('list-semester', [SemesterController::class, 'index']);
+
+Route::get('find-semester/{id_semester}', [SemesterController::class, 'show']);
+
+Route::put('update-semester/{id_semester}', [SemesterController::class, 'update']);
+
+Route::delete('delete-semester/{id_semester}', [SemesterController::class, 'destroy']);
+
+//visitorPreferences table
+Route::post('register-visitorPreference', [VisitorPreferenceController::class, 'store']);
+
+Route::get('list-visitorPreference', [VisitorPreferenceController::class, 'index']);
+
+Route::get('find-visitorPreference/{id}', [VisitorPreferenceController::class, 'show']);
+
+Route::put('update-visitorPreference/{id}', [VisitorPreferenceController::class, 'update']);
+
+Route::delete('delete-visitorPreference/{id}', [VisitorPreferenceController::class, 'destroy']);

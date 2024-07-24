@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\VisitorV;
 use App\Models\VisitV;
+use App\Models\Semester;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 
 class VisitorVController extends Controller
@@ -55,19 +57,47 @@ class VisitorVController extends Controller
             'phone' => ['nullable','max:500'],
         ]);
 
+        $existingVisitor = VisitorV::where('email', $request->input('email'))->first();
+        
+        if ($existingVisitor) {
+            $visitV = VisitV::create([
+               'fk_id_visitorV' => $existingVisitor->id_visitorV,
+               'fk_id_semester' => $this->assignSemester($existingVisitor->created_at),
+            ]);
+        // Retorna los datos del visitante existente para que Unity los muestre en el modal
+        return response()->json([
+            'isNewVisitor' => false,
+            'visitorV' => $existingVisitor,
+            'visitV' => $visitV,
+        ]);
+    }
+
+    else{
         $visitorV = VisitorV::create($validatedData);
         
-        // Crear la visita asociada al visitante recién creado
-    $visitV = VisitV::create([
-        'fk_id_visitorV' => $visitorV->id_visitorV,
-    ]);
+        $visitV = VisitV::create([
+            'fk_id_visitorV' => $visitorV->id_visitorV,
+            'fk_id_semester' => $this->assignSemester($visitorV->created_at),
+        ]);
 
     // Retornar la respuesta con los datos del visitante y de la visita
     return response()->json([
+        'isNewVisitor' => true,
         'visitorV' => $visitorV,
         'visitV' => $visitV,
     ], 201);
 
+       }
+    }
+
+        
+
+    public static function assignSemester($createdAt)
+    {
+        $createdAt = new Carbon($createdAt);
+        $semester = Semester::where('until', '>', $createdAt)->orderBy('until')->first();
+        
+        return $semester ? $semester->id_semester : null;
     }
 
     /**
