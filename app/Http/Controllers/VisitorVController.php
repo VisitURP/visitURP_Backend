@@ -57,6 +57,22 @@ class VisitorVController extends Controller
             'phone' => ['nullable','max:500'],
         ]);
 
+        $existingVisitor = VisitorV::where('email', $request->input('email'))->first();
+        
+        if ($existingVisitor) {
+            $visitV = VisitV::create([
+               'fk_id_visitorV' => $existingVisitor->id_visitorV,
+               'fk_id_semester' => $this->assignSemester($existingVisitor->created_at),
+            ]);
+        // Retorna los datos del visitante existente para que Unity los muestre en el modal
+        return response()->json([
+            'isNewVisitor' => false,
+            'visitorV' => $existingVisitor,
+            'visitV' => $visitV,
+        ]);
+    }
+
+    else{
         $visitorV = VisitorV::create($validatedData);
         
         $visitV = VisitV::create([
@@ -66,11 +82,15 @@ class VisitorVController extends Controller
 
     // Retornar la respuesta con los datos del visitante y de la visita
     return response()->json([
+        'isNewVisitor' => true,
         'visitorV' => $visitorV,
         'visitV' => $visitV,
     ], 201);
 
+       }
     }
+
+        
 
     public static function assignSemester($createdAt)
     {
