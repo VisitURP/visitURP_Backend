@@ -33,8 +33,8 @@ class VisitVDetailController extends Controller
      public function store(Request $request)
     {
         $validated = $request->validate([
-            'id_visitorV' => 'required|exists:visitor_v_s,id_visitorV',
-            'id_visitV' => 'required|exists:visit_v_s,id_visitV',
+            'fk_id_visitorV' => 'required|exists:visitor_v_s,id_visitorV',
+            'fk_id_visitV' => 'required|exists:visit_v_s,id_visitV',
             'fk_id_builtArea' => 'required|exists:built_areas,id_builtArea',
             'kindOfEvent' => 'required|string',
             'get' => 'required|string',
@@ -51,15 +51,13 @@ class VisitVDetailController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id_visitor, $id_visit)
+    public function show(int $id_visitVDetail)
     {
-        $detail = VisitVDetail::findComposite($id_visitor, $id_visit);
-        
-        if (!$detail) {
-            return response()->json(['message' => 'Record not found'], 404);
-        }
-
-        return response()->json($detail);
+        $visitVDetail = VisitVDetail::findOrFail($id_visitVDetail);
+        return response()->json([
+            $visitVDetail
+        ] 
+        );
     }
 
     /**
@@ -70,38 +68,43 @@ class VisitVDetailController extends Controller
         //
     }
 
-    public function update(Request $request, $id_visitor, $id_visit)
+    public function update(Request $request, int $id_visitVDetail)
     {
-        $detail = VisitVDetail::findComposite($id_visitor, $id_visit);
-        
-        if (!$detail) {
-            return response()->json(['message' => 'Record not found'], 404);
-        }
-
-        $validated = $request->validate([
-            'fk_id_builtArea' => 'required|exists:built_areas,id_builtArea',
-            'kindOfEvent' => 'required|string',
-            'get' => 'required|string',
-            'DateTime' => 'required|date',
+        $request->validate([
+            'fk_id_visitorV' => ['required', 'exists:visitor_v_s,id_visitorV'],
+            'fk_id_visitV' => ['required','exists:visit_v_s,id_visitV'],
+            'fk_id_builtArea' => ['required', 'exists:built_areas,id_builtArea'],
+            'kindOfEvent' => ['required', 'string'],
+            'get' => ['required','string'],
+            'DateTime' => ['required','date_format:Y-m-d H:i:s'],
         ]);
 
-        $detail->update($validated);
+        $visitVDetail = VisitVDetail::findOrFail($id_visitVDetail);
+        $visitVDetail-> fk_id_visitorV = $request['fk_id_visitorV'];
+        $visitVDetail-> fk_id_visitV = $request['fk_id_visitV'];
+        $visitVDetail-> fk_id_builtArea = $request['fk_id_builtArea'];
+        $visitVDetail-> kindOfEvent = $request['kindOfEvent'];
+        $visitVDetail-> get = $request['get'];
+        $visitVDetail-> DateTime = $request['DateTime'];
+        $visitVDetail-> save();
 
-        return response()->json($detail);
+        return response()->json([
+            'Message' => 'Data already updated.',
+            'Virtual visitor: ' => $visitVDetail
+        ]);
     }
     
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id_visitor, $id_visit)
+    public function destroy(int $id_visitVDetail)
     {
-        $deleted = VisitVDetail::deleteComposite($id_visitor, $id_visit);
-        
-        if (!$deleted) {
-            return response()->json(['message' => 'Record not found'], 404);
-        }
+        $visitVDetail = VisitVDetail::findOrFail($id_visitVDetail);
+        $visitVDetail -> delete();
 
-        return response()->json(['message' => 'Record deleted']);
+        return response()->json([
+            'Message' => 'Virtual visitor deleted successfully.'
+        ]);
     }
 }

@@ -176,11 +176,11 @@ Route::post('register-visitVD', [VisitVDetailController::class, 'store']);
 
 Route::get('list-visitVD', [VisitVDetailController::class, 'index']);
 
-Route::get('find-visitVD/{id_visitor}/{id_visit}', [VisitVDetailController::class, 'show']);
+Route::get('find-visitVD/{id_visitVDetail}', [VisitVDetailController::class, 'show']);
 
-Route::put('update-visitVD/{id_visitorV}/{id_visitV}', [VisitVDetailController::class, 'update']);
+Route::put('update-visitVD/{id_visitVDetail}', [VisitVDetailController::class, 'update']);
 
-Route::delete('delete-visitVD/{id_visitorV}/{id_visitV}', [VisitVDetailController::class, 'destroy']);
+Route::delete('delete-visitVD/{id_visitVDetail}', [VisitVDetailController::class, 'destroy']);
 
 //semester table
 Route::post('register-semester', [SemesterController::class, 'store']);

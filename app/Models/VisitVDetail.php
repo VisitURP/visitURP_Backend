@@ -11,23 +11,19 @@ class VisitVDetail extends Model
     
     protected $table = 'visit_v_details';
 
-    public $incrementing = false;
+    protected $primaryKey = 'id_visitVDetail';
 
-    // Deshabilitar la clave primaria por defecto (id)
-    protected $primaryKey = null;
-
-    protected $primaryKeyColumns = ['id_visitorV', 'id_visitV'];
-    protected $fillable = ['id_visitorV','id_visitV','fk_id_builtArea','kindOfEvent','get','DateTime'];
+    protected $fillable = ['fk_id_visitorV','fk_id_visitV','fk_id_builtArea','kindOfEvent','get','DateTime'];
 
 
     public function visitV()
     {
-        return $this->belongsTo(VisitV::class, 'id_visitV');
+        return $this->belongsTo(VisitV::class, 'fk_id_visitV');
     }
 
     public function visitorV()
     {
-        return $this->belongsTo(VisitorV::class, 'id_visitorV');
+        return $this->belongsTo(VisitorV::class, 'fk_id_visitorV');
     }
 
     public function builtArea()
