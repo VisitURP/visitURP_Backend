@@ -17,6 +17,7 @@ use App\Http\Controllers\VisitVController;
 use App\Http\Controllers\VisitVDetailController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\VisitorPreferenceController;
+use App\Http\Controllers\ChatBotCategorieController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -203,3 +204,14 @@ Route::get('find-visitorPreference/{id}', [VisitorPreferenceController::class, '
 Route::put('update-visitorPreference/{id}', [VisitorPreferenceController::class, 'update']);
 
 Route::delete('delete-visitorPreference/{id}', [VisitorPreferenceController::class, 'destroy']);
+
+//chatCategory table
+Route::post('register-chatCategory', [ChatBotCategorieController::class, 'store']);
+
+Route::get('list-chatCategory', [ChatBotCategorieController::class, 'index']);
+
+Route::get('find-chatCategory/{id}', [ChatBotCategorieController::class, 'show']);
+
+Route::put('update-chatCategory/{id}', [ChatBotCategorieController::class, 'update']);
+
+Route::delete('delete-chatCategory/{id}', [ChatBotCategorieController::class, 'destroy']);
