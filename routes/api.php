@@ -17,7 +17,8 @@ use App\Http\Controllers\VisitVController;
 use App\Http\Controllers\VisitVDetailController;
 use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\VisitorPreferenceController;
-use App\Http\Controllers\ChatBotCategorieController;
+use App\Http\Controllers\UserPrivacyPreferencesController;
+use App\Http\Controllers\InteractiveFeedbacksController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -205,13 +206,25 @@ Route::put('update-visitorPreference/{id}', [VisitorPreferenceController::class,
 
 Route::delete('delete-visitorPreference/{id}', [VisitorPreferenceController::class, 'destroy']);
 
-//chatCategory table
-Route::post('register-chatCategory', [ChatBotCategorieController::class, 'store']);
+//userprivacyPreferences table
+Route::post('register-UserPrivacyPreference', [UserPrivacyPreferencesController::class, 'store']);
 
-Route::get('list-chatCategory', [ChatBotCategorieController::class, 'index']);
+Route::get('list-UserPrivacyPreference', [UserPrivacyPreferencesController::class, 'index']);
 
-Route::get('find-chatCategory/{id}', [ChatBotCategorieController::class, 'show']);
+Route::get('find-UserPrivacyPreference/{id}', [UserPrivacyPreferencesController::class, 'show']);
 
-Route::put('update-chatCategory/{id}', [ChatBotCategorieController::class, 'update']);
+Route::put('update-UserPrivacyPreference/{id}', [UserPrivacyPreferencesController::class, 'update']);
 
-Route::delete('delete-chatCategory/{id}', [ChatBotCategorieController::class, 'destroy']);
+Route::delete('delete-UserPrivacyPreference/{id}', [UserPrivacyPreferencesController::class, 'destroy']);
+
+
+//interactiveFeedbacks table
+Route::post('register-interactiveFeedback', [InteractiveFeedbacksController::class, 'store']);
+
+Route::get('list-interactiveFeedbacks', [InteractiveFeedbacksController::class, 'index']);
+
+Route::get('find-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::class, 'show']);
+
+Route::put('update-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::class, 'update']);
+
+Route::delete('delete-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::class, 'destroy']);
