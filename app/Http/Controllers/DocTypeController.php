@@ -118,9 +118,9 @@ class DocTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id_docType)
+    public function destroy(int $id)
     {
-        $docuType = docType::findOrFail($id_docType);
+        $docuType = docType::findOrFail($id);
         $docuType -> delete();
 
         return response()->json([

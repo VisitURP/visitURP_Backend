@@ -206,7 +206,6 @@ Route::put('update-visitorPreference/{id}', [VisitorPreferenceController::class,
 
 Route::delete('delete-visitorPreference/{id}', [VisitorPreferenceController::class, 'destroy']);
 
-
 //userprivacyPreferences table
 Route::post('register-UserPrivacyPreference', [UserPrivacyPreferencesController::class, 'store']);
 
