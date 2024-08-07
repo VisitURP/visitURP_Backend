@@ -35,7 +35,7 @@ class InteractiveFeedbacksController extends Controller
             'comment' => 'required|string|max:255',
         ]);
 
-        $interactiveFeedback = InteractiveFeedback::create($validatedData);
+        $interactiveFeedback = interactiveFeedbacks::create($validatedData);
 
         return response()->json($interactiveFeedback, 201);
     }

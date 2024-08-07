@@ -9,7 +9,7 @@ class User_Privacy_preferences extends Model
 {
     use SoftDeletes;
     
-    protected $table = 'user__privacy_preferences';
+    protected $table = 'user_privacy_preferences';
 
     protected $primaryKey = 'id_privacy_preferences';
 
