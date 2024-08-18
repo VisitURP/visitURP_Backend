@@ -10,7 +10,7 @@ class VisitorInfo extends Model
     use SoftDeletes;
     protected $table = 'visitor_p_s';
     protected $primaryKey = 'id_visitorInfo';
-    protected $fillable = ['name', 'lastName', 'email','fk_docType_id', 'documentNumber', 'phone', 'visitor_type', 'typeOfVisitor'];
+    protected $fillable = ['name', 'lastName', 'email','fk_docType_id', 'documentNumber', 'phone', 'fk_id_visitor','visitor_type', 'typeOfVisitor'];
 
     public function docType()
     {
