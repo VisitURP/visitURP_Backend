@@ -7,7 +7,7 @@ use App\Http\Controllers\VisitorVController;
 use App\Http\Controllers\ChatBot_CategoriesController;
 use App\Http\Controllers\ChatBot_QAController;
 use App\Http\Controllers\ChatBot_InquiryController;
-use App\Http\Controllers\ApplicantURPController;
+use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\VisitXapplicantController;
 use App\Http\Controllers\AcademicInterestController;
 use App\Http\Controllers\BuiltAreaController;
@@ -104,15 +104,15 @@ Route::put('update-inquiry/{id}', [ChatBot_InquiryController::class, 'update']);
 Route::delete('delete-inquiry/{id}', [ChatBot_InquiryController::class, 'destroy']);
 
 //applicant
-Route::get('list-applicants', [ApplicantURPController::class, 'index']);
+Route::get('list-applicants', [ApplicantController::class, 'index']);
 
-Route::post('register-applicant', [ApplicantURPController::class, 'store']);
+Route::post('register-applicant', [ApplicantController::class, 'store']);
 
-Route::get('find-applicant/{id}', [ApplicantURPController::class, 'show']);
+Route::get('find-applicant/{id}', [ApplicantController::class, 'show']);
 
-Route::put('update-applicant/{id}', [ApplicantURPController::class, 'update']);
+Route::put('update-applicant/{id}', [ApplicantController::class, 'update']);
 
-Route::delete('delete-applicant/{id}', [ApplicantURPController::class, 'destroy']);
+Route::delete('delete-applicant/{id}', [ApplicantController::class, 'destroy']);
 
 
 //visit X applicant table

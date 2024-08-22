@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
        $schedule->command('sync:visitor-info')->daily();
+       $schedule->command('sync:applicantXvisitor-info')->daily();
     }
 
 
