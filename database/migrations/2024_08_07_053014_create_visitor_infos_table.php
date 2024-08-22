@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('documentNumber')->nullable();
             $table->string('phone')->nullable();
             // No necesariamente requerimos una foreign key para fk_id_visitor porque puede apuntar a distintas tablas.
-            $table->unsignedBigInteger('fk_id_visitor'); 
+            $table->string('fk_id_visitor'); 
             $table->enum('visitor_type', ['V', 'P', 'B']); // 'V' para Virtual, 'P' para Físico, 'B' para ambos
             $table->string('typeOfVisitor'); // Describe si es virtual, físico o ambos
             $table->softDeletes(); // Para manejo de borrado suave

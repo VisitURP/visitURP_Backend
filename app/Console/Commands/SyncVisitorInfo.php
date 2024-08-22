@@ -24,6 +24,11 @@ class SyncVisitorInfo extends Command
                                 
             if ($visitorP) {
                 // Si hay un match, actualiza o crea un registro en VisitorInfo con tipo 'B' (ambos)
+
+                //crear cadena para concatenar id de visitorV y visitorP 
+                $id_visitorVP = $visitorV->id_visitorV . '_' . $visitorP->id_visitorP;
+
+
                 VisitorInfo::updateOrCreate(
                     [
                         'email' => $visitorV->email,
@@ -36,7 +41,7 @@ class SyncVisitorInfo extends Command
                         'phone' => $visitorV->phone ?: $visitorP->phone,
                         'visitor_type' => 'B',
                         'typeOfVisitor' => 'Both',
-                        'fk_id_visitor' => $visitorV->id_visitorV, // ID de VisitorV para tipo 'B'
+                        'fk_id_visitor' => $id_visitorVP, // concatenado cuando es de tipo 'B'
 
                     ]
                 );

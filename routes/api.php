@@ -4,7 +4,7 @@ use App\Http\Controllers\DocTypeController;
 use App\Http\Controllers\UservisitURPController;
 use App\Http\Controllers\VisitorPController;
 use App\Http\Controllers\VisitorVController;
-use App\Http\Controllers\ChatBot_CategoriesController;
+use App\Http\Controllers\ChatbotCategorieController;
 use App\Http\Controllers\ChatBot_QAController;
 use App\Http\Controllers\ChatBot_InquiryController;
 use App\Http\Controllers\ApplicantController;
@@ -71,15 +71,15 @@ Route::put('update-visitorV/{id}', [VisitorVController::class, 'update']);
 Route::delete('delete-visitorV/{id}', [VisitorVController::class, 'destroy']);
 
 //ChatBot_Category
-Route::get('list-categories', [ChatBot_CategoriesController::class, 'index']);
+Route::get('list-categories', [ChatbotCategorieController::class, 'index']);
 
-Route::post('register-category', [ChatBot_CategoriesController::class, 'store']);
+Route::post('register-category', [ChatbotCategorieController::class, 'store']);
 
-Route::get('find-category/{id}', [ChatBot_CategoriesController::class, 'show']);
+Route::get('find-category/{id}', [ChatbotCategorieController::class, 'show']);
 
-Route::put('update-category/{id}', [ChatBot_CategoriesController::class, 'update']);
+Route::put('update-category/{id}', [ChatbotCategorieController::class, 'update']);
 
-Route::delete('delete-category/{id}', [ChatBot_CategoriesController::class, 'destroy']);
+Route::delete('delete-category/{id}', [ChatbotCategorieController::class, 'destroy']);
 
 //ChatBot_QA
 Route::get('list-qa', [ChatBot_QAController::class, 'index']);
