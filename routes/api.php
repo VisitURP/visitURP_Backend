@@ -19,6 +19,7 @@ use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\VisitorPreferenceController;
 use App\Http\Controllers\UserPrivacyPreferencesController;
 use App\Http\Controllers\InteractiveFeedbacksController;
+use App\Http\Controllers\VisitorInfoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -228,3 +229,15 @@ Route::get('find-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::cl
 Route::put('update-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::class, 'update']);
 
 Route::delete('delete-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::class, 'destroy']);
+
+
+//visitorInfo table
+Route::post('register-visitorInfo', [VisitorInfoController::class, 'store']);
+
+Route::get('list-visitorInfos', [VisitorInfoController::class, 'index']);
+
+Route::get('find-visitorInfo/{id}', [VisitorInfoController::class, 'show']);
+
+Route::put('update-visitorInfo/{id}', [VisitorInfoController::class, 'update']);
+
+Route::delete('delete-visitorInfo/{id}', [VisitorInfoController::class, 'destroy']);
