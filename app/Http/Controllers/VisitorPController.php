@@ -24,7 +24,7 @@ class VisitorPController extends Controller
                 'docNumber' => $visitorP -> docNumber,
                 'phone' => $visitorP -> phone,
                 'visitDate' => $visitorP -> visitDate,
-                'residentDistrict' => $visitorP -> residentDistrict,
+                'residenceDistrict' => $visitorP -> residentDistrict,
                 'educationalInstitution' => $visitorP -> educationalInstitution,
             ];
         });
@@ -56,7 +56,7 @@ class VisitorPController extends Controller
             'docNumber' => ['required','max:500'],
             'phone' => ['required','max:500'],
             'visitDate' => ['required','date_format:d/m/y'], // Accept DD/MM/YY format
-            'residentDistrict' => ['required','max:500'],
+            'residenceDistrict' => ['required','max:500'],
             'educationalInstitution' => ['required','max:500'],
         ]);
 
@@ -106,7 +106,7 @@ class VisitorPController extends Controller
             'docNumber' => ['required','max:500'],
             'phone' => ['required','max:500'],
             'visitDate' => ['required','date_format:d/m/y'], // Accept DD/MM/YY format
-            'residentDistrict' => ['required','max:500'],
+            'residenceDistrict' => ['required','max:500'],
             'educationalInstitution' => ['required','max:500'],
         ]);
 

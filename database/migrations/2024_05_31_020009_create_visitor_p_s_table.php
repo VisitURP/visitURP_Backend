@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('docNumber', 500);
             $table->string('phone', 500);
             $table->dateTime('visitDate');
-            $table->string('residentDistrict', 500);
+            $table->string('residenceDistrict', 500);
             $table->string('educationalInstitution', 500);
             $table->timestamps();
             $table->softDeletes();

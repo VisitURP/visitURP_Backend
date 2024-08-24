@@ -19,7 +19,7 @@ class VisitorV extends Model
         'fk_docType_id', 
         'documentNumber', 
         'phone',
-        'residentDistrict',
+        'residenceDistrict',
         'educationalInstitution'
     ];
 

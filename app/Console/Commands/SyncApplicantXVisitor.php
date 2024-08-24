@@ -61,7 +61,7 @@ class SyncApplicantXVisitor extends Command
 
                         if ($visitorV && $visitorP) {
                             $educationalInstitution = $visitorV->educationalInstitution ?: $visitorP->educationalInstitution;
-                            $residenceDistrict = $visitorV->residentDistrict ?: $visitorP->residentDistrict;
+                            $residenceDistrict = $visitorV->residenceDistrict ?: $visitorP->residenceDistrict;
                         }
                     }
 
