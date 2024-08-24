@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class applicantURP extends Model
+class examplE extends Model
 {
     protected $connection = 'urp_db'; 
     protected $table = 'applicant'; 

@@ -15,24 +15,8 @@ class VisitorVController extends Controller
      */
     public function index()
     {
-        $visitorV = VisitorV::get();
-
-        $data = $visitorV->map(function($visitorV){
-            return [
-                'id_visitorV' => $visitorV -> id_visitorV,
-                'name' => $visitorV -> name,
-                'email' => $visitorV -> email,
-                'lastName' => $visitorV -> lastName,
-                'fk_docType_id' => $visitorV -> fk_docType_id,
-                'documentNumber' => $visitorV -> documentNumber,
-                'phone' => $visitorV -> phone,
-            ];
-        });
-
-        //pequeña modificacion
-        return response()->json(
-            $data
-        );
+        $Visitor = VisitorV::all();
+        return response()->json($Visitor);
     }
 
     /**
@@ -55,7 +39,7 @@ class VisitorVController extends Controller
             'fk_docType_id' => ['nullable', 'max:100'],
             'documentNumber' => ['nullable','max:500'],
             'phone' => ['nullable','max:500'],
-            'residentDistrict' => ['nullable','max:500'],
+            'residenceDistrict' => ['nullable','max:500'],
             'educationalInstitution' => ['nullable','max:500'],
         ]);
 
@@ -135,7 +119,7 @@ class VisitorVController extends Controller
              'fk_docType_id' => ['nullable', 'max:100'],
              'documentNumber' => ['nullable','max:500'],
              'phone' => ['nullable','max:500'],
-             'residentDistrict' => ['nullable','max:500'],
+             'residenceDistrict' => ['nullable','max:500'],
              'educationalInstitution' => ['nullable','max:500'],
          ]);
      
@@ -159,8 +143,8 @@ class VisitorVController extends Controller
          if ($request->has('phone')) {
              $visitorV->phone = $request->input('phone');
          }
-         if ($request->has('residentDistrict')) {
-             $visitorV->residentDistrict = $request->input('residentDistrict');
+         if ($request->has('residenceDistrict')) {
+             $visitorV->residenceDistrict = $request->input('residenceDistrict');
          }
          if ($request->has('educationalInstitution')) {
              $visitorV->educationalInstitution = $request->input('educationalInstitution');
@@ -173,36 +157,6 @@ class VisitorVController extends Controller
             'Virtual visitor: ' => $visitorV
         ]);
      }
-
-    // public function update(Request $request, int $visitorV)
-    // {
-    //     $request->validate([
-    //         'name' => ['sometimes', 'max:500'],
-    //         'email' => ['sometimes','email', 'max:500'],
-    //         'lastName' => ['nullable', 'max:500'],
-    //         'fk_docType_id' => ['nullable', 'max:100'],
-    //         'documentNumber' => ['nullable','max:500'],
-    //         'phone' => ['nullable','max:500'],
-    //         'residentDistrict' => ['nullable','max:500'],
-    //         'educationalInstitution' => ['nullable','max:500'],
-    //     ]);
-
-    //     $visitorV = VisitorV::findOrFail($visitorV);
-    //     $visitorV-> name = $request['name'];
-    //     $visitorV-> email = $request['email'];
-    //     $visitorV->lastName = $request['lastName'];
-    //     $visitorV-> fk_docType_id = $request['fk_docType_id'];
-    //     $visitorV-> documentNumber = $request['documentNumber'];
-    //     $visitorV-> phone = $request['phone'];
-    //     $visitorV-> residentDistrict = $request['residentDistrict'];
-    //     $visitorV-> educationalInstitution = $request['educationalInstitution'];
-    //     $visitorV-> save();
-
-    //     return response()->json([
-    //         'Message' => 'Data already updated.',
-    //         'Virtual visitor: ' => $visitorV
-    //     ]);
-    // }
 
     /**
      * Remove the specified resource from storage.

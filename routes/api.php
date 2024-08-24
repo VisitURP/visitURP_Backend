@@ -4,10 +4,10 @@ use App\Http\Controllers\DocTypeController;
 use App\Http\Controllers\UservisitURPController;
 use App\Http\Controllers\VisitorPController;
 use App\Http\Controllers\VisitorVController;
-use App\Http\Controllers\ChatBot_CategoriesController;
-use App\Http\Controllers\ChatBot_QAController;
-use App\Http\Controllers\ChatBot_InquiryController;
-use App\Http\Controllers\ApplicantURPController;
+use App\Http\Controllers\ChatbotCategorieController;
+use App\Http\Controllers\ChatbotQAController;
+use App\Http\Controllers\ChatbotInquiryController;
+use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\VisitXapplicantController;
 use App\Http\Controllers\AcademicInterestController;
 use App\Http\Controllers\BuiltAreaController;
@@ -19,6 +19,8 @@ use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\VisitorPreferenceController;
 use App\Http\Controllers\UserPrivacyPreferencesController;
 use App\Http\Controllers\InteractiveFeedbacksController;
+use App\Http\Controllers\VisitorInfoController;
+use App\Http\Controllers\VisitorInfoXapplicantController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -71,48 +73,48 @@ Route::put('update-visitorV/{id}', [VisitorVController::class, 'update']);
 Route::delete('delete-visitorV/{id}', [VisitorVController::class, 'destroy']);
 
 //ChatBot_Category
-Route::get('list-categories', [ChatBot_CategoriesController::class, 'index']);
+Route::get('list-categories', [ChatbotCategorieController::class, 'index']);
 
-Route::post('register-category', [ChatBot_CategoriesController::class, 'store']);
+Route::post('register-category', [ChatbotCategorieController::class, 'store']);
 
-Route::get('find-category/{id}', [ChatBot_CategoriesController::class, 'show']);
+Route::get('find-category/{id}', [ChatbotCategorieController::class, 'show']);
 
-Route::put('update-category/{id}', [ChatBot_CategoriesController::class, 'update']);
+Route::put('update-category/{id}', [ChatbotCategorieController::class, 'update']);
 
-Route::delete('delete-category/{id}', [ChatBot_CategoriesController::class, 'destroy']);
+Route::delete('delete-category/{id}', [ChatbotCategorieController::class, 'destroy']);
 
 //ChatBot_QA
-Route::get('list-qa', [ChatBot_QAController::class, 'index']);
+Route::get('list-qa', [ChatbotQAController::class, 'index']);
 
-Route::post('register-qa', [ChatBot_QAController::class, 'store']);
+Route::post('register-qa', [ChatbotQAController::class, 'store']);
 
-Route::get('find-qa/{id}', [ChatBot_QAController::class, 'show']);
+Route::get('find-qa/{id}', [ChatbotQAController::class, 'show']);
 
-Route::put('update-qa/{id}', [ChatBot_QAController::class, 'update']);
+Route::put('update-qa/{id}', [ChatbotQAController::class, 'update']);
 
-Route::delete('delete-qa/{id}', [ChatBot_QAController::class, 'destroy']);
+Route::delete('delete-qa/{id}', [ChatbotQAController::class, 'destroy']);
 
 //ChatBot_inquiry
-Route::get('list-inquiry', [ChatBot_InquiryController::class, 'index']);
+Route::get('list-inquiry', [ChatbotInquiryController::class, 'index']);
 
-Route::post('register-inquiry', [ChatBot_InquiryController::class, 'store']);
+Route::post('register-inquiry', [ChatbotInquiryController::class, 'store']);
 
-Route::get('find-inquiry/{id}', [ChatBot_InquiryController::class, 'show']);
+Route::get('find-inquiry/{id}', [ChatbotInquiryController::class, 'show']);
 
-Route::put('update-inquiry/{id}', [ChatBot_InquiryController::class, 'update']);
+Route::put('update-inquiry/{id}', [ChatbotInquiryController::class, 'update']);
 
-Route::delete('delete-inquiry/{id}', [ChatBot_InquiryController::class, 'destroy']);
+Route::delete('delete-inquiry/{id}', [ChatbotInquiryController::class, 'destroy']);
 
 //applicant
-Route::get('list-applicants', [ApplicantURPController::class, 'index']);
+Route::get('list-applicants', [ApplicantController::class, 'index']);
 
-Route::post('register-applicant', [ApplicantURPController::class, 'store']);
+Route::post('register-applicant', [ApplicantController::class, 'store']);
 
-Route::get('find-applicant/{id}', [ApplicantURPController::class, 'show']);
+Route::get('find-applicant/{id}', [ApplicantController::class, 'show']);
 
-Route::put('update-applicant/{id}', [ApplicantURPController::class, 'update']);
+Route::put('update-applicant/{id}', [ApplicantController::class, 'update']);
 
-Route::delete('delete-applicant/{id}', [ApplicantURPController::class, 'destroy']);
+Route::delete('delete-applicant/{id}', [ApplicantController::class, 'destroy']);
 
 
 //visit X applicant table
@@ -228,3 +230,27 @@ Route::get('find-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::cl
 Route::put('update-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::class, 'update']);
 
 Route::delete('delete-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::class, 'destroy']);
+
+
+//visitorInfo table
+Route::post('register-visitorInfo', [VisitorInfoController::class, 'store']);
+
+Route::get('list-visitorInfos', [VisitorInfoController::class, 'index']);
+
+Route::get('find-visitorInfo/{id}', [VisitorInfoController::class, 'show']);
+
+Route::put('update-visitorInfo/{id}', [VisitorInfoController::class, 'update']);
+
+Route::delete('delete-visitorInfo/{id}', [VisitorInfoController::class, 'destroy']);
+
+
+//visitorInfo x applicant table
+Route::post('register-VxA', [VisitorInfoXapplicantController::class, 'store']);
+
+Route::get('list-VxAs', [VisitorInfoXapplicantController::class, 'index']);
+
+Route::get('find-VxA/{id}', [VisitorInfoXapplicantController::class, 'show']);
+
+Route::put('update-VxA/{id}', [VisitorInfoXapplicantController::class, 'update']);
+
+Route::delete('delete-VxA/{id}', [VisitorInfoXapplicantController::class, 'destroy']);

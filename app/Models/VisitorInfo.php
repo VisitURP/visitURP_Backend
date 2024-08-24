@@ -16,16 +16,4 @@ class VisitorInfo extends Model
     {
         return $this->belongsTo(docType::class, 'fk_docType_id');
     }
-
-//     public function visitor()
-//     {
-//         if ($this->visitor_type == 'V') {
-//             return $this->belongsTo(VisitorV::class, 'fk_id_visitor');
-//         } elseif ($this->visitor_type == 'P') {
-//             return $this->belongsTo(VisitorP::class, 'fk_id_visitor');
-//         } elseif ($this->visitor_type == 'B') {
-            
-//         }
-//         return null;
-//     }
 }

@@ -19,7 +19,7 @@ class VisitorV extends Model
         'fk_docType_id', 
         'documentNumber', 
         'phone',
-        'residentDistrict',
+        'residenceDistrict',
         'educationalInstitution'
     ];
 
@@ -31,6 +31,11 @@ class VisitorV extends Model
     public function visitV()
     {
         return $this->hasMany(visitV::class, 'fk_id_visitorV','id_visitorV');
+    }
+
+    public function inquiry()
+    {
+        return $this->hasMany(ChatbotInquiry::class, 'fk_id_visitorV','id_visitorV');
     }
 
 }
