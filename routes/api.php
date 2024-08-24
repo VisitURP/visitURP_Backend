@@ -6,7 +6,7 @@ use App\Http\Controllers\VisitorPController;
 use App\Http\Controllers\VisitorVController;
 use App\Http\Controllers\ChatbotCategorieController;
 use App\Http\Controllers\ChatbotQAController;
-use App\Http\Controllers\ChatBot_InquiryController;
+use App\Http\Controllers\ChatbotInquiryController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\VisitXapplicantController;
 use App\Http\Controllers\AcademicInterestController;
@@ -95,15 +95,15 @@ Route::put('update-qa/{id}', [ChatbotQAController::class, 'update']);
 Route::delete('delete-qa/{id}', [ChatbotQAController::class, 'destroy']);
 
 //ChatBot_inquiry
-Route::get('list-inquiry', [ChatBot_InquiryController::class, 'index']);
+Route::get('list-inquiry', [ChatbotInquiryController::class, 'index']);
 
-Route::post('register-inquiry', [ChatBot_InquiryController::class, 'store']);
+Route::post('register-inquiry', [ChatbotInquiryController::class, 'store']);
 
-Route::get('find-inquiry/{id}', [ChatBot_InquiryController::class, 'show']);
+Route::get('find-inquiry/{id}', [ChatbotInquiryController::class, 'show']);
 
-Route::put('update-inquiry/{id}', [ChatBot_InquiryController::class, 'update']);
+Route::put('update-inquiry/{id}', [ChatbotInquiryController::class, 'update']);
 
-Route::delete('delete-inquiry/{id}', [ChatBot_InquiryController::class, 'destroy']);
+Route::delete('delete-inquiry/{id}', [ChatbotInquiryController::class, 'destroy']);
 
 //applicant
 Route::get('list-applicants', [ApplicantController::class, 'index']);

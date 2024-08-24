@@ -33,4 +33,9 @@ class VisitorV extends Model
         return $this->hasMany(visitV::class, 'fk_id_visitorV','id_visitorV');
     }
 
+    public function inquiry()
+    {
+        return $this->hasMany(ChatbotInquiry::class, 'fk_id_visitorV','id_visitorV');
+    }
+
 }
