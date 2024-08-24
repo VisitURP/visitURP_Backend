@@ -20,6 +20,7 @@ use App\Http\Controllers\VisitorPreferenceController;
 use App\Http\Controllers\UserPrivacyPreferencesController;
 use App\Http\Controllers\InteractiveFeedbacksController;
 use App\Http\Controllers\VisitorInfoController;
+use App\Http\Controllers\VisitorInfoXapplicantController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -241,3 +242,15 @@ Route::get('find-visitorInfo/{id}', [VisitorInfoController::class, 'show']);
 Route::put('update-visitorInfo/{id}', [VisitorInfoController::class, 'update']);
 
 Route::delete('delete-visitorInfo/{id}', [VisitorInfoController::class, 'destroy']);
+
+
+//visitorInfo x applicant table
+Route::post('register-VxA', [VisitorInfoXapplicantController::class, 'store']);
+
+Route::get('list-VxAs', [VisitorInfoXapplicantController::class, 'index']);
+
+Route::get('find-VxA/{id}', [VisitorInfoXapplicantController::class, 'show']);
+
+Route::put('update-VxA/{id}', [VisitorInfoXapplicantController::class, 'update']);
+
+Route::delete('delete-VxA/{id}', [VisitorInfoXapplicantController::class, 'destroy']);

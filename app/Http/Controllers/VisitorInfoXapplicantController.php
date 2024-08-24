@@ -30,8 +30,8 @@ class VisitorInfoXapplicantController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'fk_applicant_id' => 'required|exists:applicants',
-            'fk_visitorInfo_id' => 'required|exists:visitor_infos',
+            'fk_applicant_id' => 'required|exists:applicants,id_applicant',
+            'fk_visitorInfo_id' => 'required|exists:visitor_infos,id_visitorInfo',
             'fk_docType_id' => 'nullable|exists:doc_types,id_docType',
             'documentNumber' => 'required|string',
             'name' => 'required|string',
@@ -39,7 +39,7 @@ class VisitorInfoXapplicantController extends Controller
             'email' => ['required','email', 'max:500'],
             'phone' => 'max:500',
             'educationalInstitution' => 'max:500',
-            'residentDistrict' => 'max:500',
+            'residenceDistrict' => 'max:500',
             'studentCode' => 'required|string',
             'admitted' => 'required|boolean',
         ]);
@@ -76,15 +76,15 @@ class VisitorInfoXapplicantController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $Vapplicant = Applicant::find($id);
+        $Vapplicant = VisitorInfoXapplicant::find($id);
 
         if (!$Vapplicant) {
             return response()->json(['message' => 'Visitor info x Applicant not found'], 404);
         }
 
         $request->validate([
-            'fk_applicant_id' => 'required|exists:applicants',
-            'fk_visitorInfo_id' => 'required|exists:visitor_infos',
+            'fk_applicant_id' => 'required|exists:applicants,id_applicant',
+            'fk_visitorInfo_id' => 'required|exists:visitor_infos,id_visitorInfo',
             'fk_docType_id' => 'nullable|exists:doc_types,id_docType',
             'documentNumber' => 'required|string',
             'name' => 'required|string',
@@ -92,7 +92,7 @@ class VisitorInfoXapplicantController extends Controller
             'email' => ['required','email', 'max:500'],
             'phone' => 'max:500',
             'educationalInstitution' => 'max:500',
-            'residentDistrict' => 'max:500',
+            'residenceDistrict' => 'max:500',
             'studentCode' => 'required|string',
             'admitted' => 'required|boolean',
         ]);
