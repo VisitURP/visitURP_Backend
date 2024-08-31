@@ -106,7 +106,7 @@ class VisitorPController extends Controller
             'docNumber' => ['required','max:500'],
             'phone' => ['required','max:500'],
             'visitDate' => ['required','date_format:d/m/y'], // Accept DD/MM/YY format
-            'residentDistrict' => ['required','max:500'],
+            'fk_id_Ubigeo' => ['required','max:500'],
             'educationalInstitution' => ['required','max:500'],
         ]);
 
@@ -118,7 +118,7 @@ class VisitorPController extends Controller
         $visitorP-> docNumber = $request['docNumber'];
         $visitorP-> phone = $request['phone'];
         $visitorP-> visitDate = $request['visitDate'];
-        $visitorP-> residentDistrict = $request['residentDistrict'];
+        $visitorP-> fk_id_Ubigeo = $request['fk_id_Ubigeo'];
         $visitorP-> educationalInstitution = $request['educationalInstitution'];
         $visitorP-> save();
 
