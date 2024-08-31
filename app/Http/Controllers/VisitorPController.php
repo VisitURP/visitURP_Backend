@@ -56,7 +56,7 @@ class VisitorPController extends Controller
             'docNumber' => ['required','max:500'],
             'phone' => ['required','max:500'],
             'visitDate' => ['required','date_format:d/m/y'], // Accept DD/MM/YY format
-            'residentDistrict' => ['required','max:500'],
+            'fk_id_Ubigeo' => ['max:500'],
             'educationalInstitution' => ['required','max:500'],
         ]);
 

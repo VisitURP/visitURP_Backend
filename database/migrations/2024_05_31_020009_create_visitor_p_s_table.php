@@ -17,14 +17,17 @@ return new class extends Migration
             $table->string('lastName', 500);
             $table->string('email', 500);
             $table->unsignedBigInteger('fk_docType_id');
-            $table->foreign('fk_docType_id')->references('id_docType')->on('doc_types');
             $table->string('docNumber', 500);
             $table->string('phone', 500);
             $table->dateTime('visitDate');
-            $table->string('residentDistrict', 500);
+            $table->unsignedBigInteger('fk_id_Ubigeo');
             $table->string('educationalInstitution', 500);
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('fk_docType_id')->references('id_docType')->on('doc_types');
+            $table->foreign('fk_id_Ubigeo')->references('id_Ubigeo')->on('ubigeos');
+
         });
     }
 

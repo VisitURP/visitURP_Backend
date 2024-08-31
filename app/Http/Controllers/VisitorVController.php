@@ -15,24 +15,8 @@ class VisitorVController extends Controller
      */
     public function index()
     {
-        $visitorV = VisitorV::get();
-
-        $data = $visitorV->map(function($visitorV){
-            return [
-                'id_visitorV' => $visitorV -> id_visitorV,
-                'name' => $visitorV -> name,
-                'email' => $visitorV -> email,
-                'lastName' => $visitorV -> lastName,
-                'fk_docType_id' => $visitorV -> fk_docType_id,
-                'documentNumber' => $visitorV -> documentNumber,
-                'phone' => $visitorV -> phone,
-            ];
-        });
-
-        //pequeña modificacion
-        return response()->json(
-            $data
-        );
+        $details = VisitorV::all();
+        return response()->json($details);
     }
 
     /**
@@ -55,6 +39,8 @@ class VisitorVController extends Controller
             'fk_docType_id' => ['nullable', 'max:100'],
             'documentNumber' => ['nullable','max:500'],
             'phone' => ['nullable','max:500'],
+            'fk_id_Ubigeo' => ['nullable','max:500'],
+            'educationalInstitution' => ['nullable','max:500'],
         ]);
 
         $existingVisitor = VisitorV::where('email', $request->input('email'))->first();
@@ -90,15 +76,16 @@ class VisitorVController extends Controller
        }
     }
 
-        
+    public function assignSemester($createdAt)
+{
+    // Busca el semestre correspondiente basado en la fecha de creación
+    $semester = Semester::where('until', '>=', $createdAt)
+                        ->orderBy('until', 'asc')
+                        ->first();
 
-    public static function assignSemester($createdAt)
-    {
-        $createdAt = new Carbon($createdAt);
-        $semester = Semester::where('until', '>', $createdAt)->orderBy('until')->first();
-        
-        return $semester ? $semester->id_semester : null;
-    }
+    // Retorna el id del semestre
+    return $semester ? $semester->id_semester : null;
+}
 
     /**
      * Display the specified resource.
@@ -125,13 +112,15 @@ class VisitorVController extends Controller
      */
     public function update(Request $request, int $visitorV)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => ['required', 'max:500'],
             'email' => ['required','email', 'max:500'],
             'lastName' => ['nullable', 'max:500'],
             'fk_docType_id' => ['nullable', 'max:100'],
             'documentNumber' => ['nullable','max:500'],
             'phone' => ['nullable','max:500'],
+            'fk_id_Ubigeo' => ['nullable','max:500'],
+            'educationalInstitution' => ['nullable','max:500'],
         ]);
 
         $visitorV = VisitorV::findOrFail($visitorV);
@@ -141,6 +130,8 @@ class VisitorVController extends Controller
         $visitorV-> fk_docType_id = $request['fk_docType_id'];
         $visitorV-> documentNumber = $request['documentNumber'];
         $visitorV-> phone = $request['phone'];
+        $visitorV-> fk_id_Ubigeo = $request['fk_id_Ubigeo'];
+        $visitorV-> educationalInstitution = $request['educationalInstitution'];
         $visitorV-> save();
 
         return response()->json([
@@ -154,11 +145,11 @@ class VisitorVController extends Controller
      */
     public function destroy(int $id)
     {
-        $visitorV = VisitorV::findOrFail($id);
-        $visitorV -> delete();
+        $VisitorV = VisitorV::findOrFail($id);
+        $VisitorV -> delete();
 
         return response()->json([
-            'Message' => 'Virtual visitor deleted successfully.'
+            'Message' => 'VisitorV deleted successfully.'
         ]);
     }
 }

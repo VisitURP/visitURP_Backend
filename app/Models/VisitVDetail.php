@@ -18,7 +18,7 @@ class VisitVDetail extends Model
 
     public function visitV()
     {
-        return $this->belongsTo(VisitV::class, 'fk_id_visitV');
+        return $this->belongsTo(visitV::class, 'fk_id_visitV');
     }
 
     public function visitorV()

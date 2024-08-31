@@ -12,4 +12,9 @@ class Semester extends Model
     protected $primaryKey = 'id_semester';
     protected $fillable = ['semesterName', 'until', ];
 
+    public function visitV()
+    {
+        return $this->hasMany(visitV::class, 'fk_id_visitorV','id_visitorV');
+    }
+
 }

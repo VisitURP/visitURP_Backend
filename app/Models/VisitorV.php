@@ -19,7 +19,7 @@ class VisitorV extends Model
         'fk_docType_id', 
         'documentNumber', 
         'phone',
-        'residentDistrict',
+        'fk_id_Ubigeo',
         'educationalInstitution'
     ];
 
@@ -33,4 +33,5 @@ class VisitorV extends Model
         return $this->hasMany(visitV::class, 'fk_id_visitorV','id_visitorV');
     }
 
+    //Falta agregar Ubigeo
 }

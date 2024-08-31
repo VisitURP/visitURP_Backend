@@ -46,7 +46,14 @@ class UbigeoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'cod_Ubigeo' => ['required', 'max:7'],
+            'UbigeoName' => ['required', 'max:500'],
+        ]);
+
+        $ubigeo = Ubigeo::create($validatedData);
+        
+        return response()->json($ubigeo, 201);
     }
 
     /**

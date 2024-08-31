@@ -17,13 +17,17 @@ return new class extends Migration
             $table->string('email', 500);
             $table->string('lastName', 500)->nullable();
             $table->unsignedBigInteger('fk_docType_id')->nullable();
-            $table->foreign('fk_docType_id')->references('id_docType')->on('doc_types');
             $table->string('documentNumber', 500)->nullable();
             $table->string('phone', 500)->nullable();
-            $table->string('residentDistrict', 500)->nullable();
+            $table->unsignedBigInteger('fk_id_Ubigeo')->nullable();
             $table->string('educationalInstitution', 500)->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('fk_docType_id')->references('id_docType')->on('doc_types');
+            $table->foreign('fk_id_Ubigeo')->references('id_Ubigeo')->on('ubigeos');
+
+            //falta forgein de Ubigeo
         });
     }
 
