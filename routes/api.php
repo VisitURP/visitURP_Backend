@@ -19,6 +19,7 @@ use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\VisitorPreferenceController;
 use App\Http\Controllers\UserPrivacyPreferencesController;
 use App\Http\Controllers\InteractiveFeedbacksController;
+use App\Http\Controllers\UbigeoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -228,3 +229,10 @@ Route::get('find-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::cl
 Route::put('update-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::class, 'update']);
 
 Route::delete('delete-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::class, 'destroy']);
+
+//Ubigeo
+Route::get('ubigeo/district/{id}', [UbigeoController::class, 'filterByDistrict']);
+
+Route::get('ubigeo/province/{id}', [UbigeoController::class, 'filterByProvince']);
+
+Route::get('ubigeo/department/{id}', [UbigeoController::class, 'filterByDepartment']);
