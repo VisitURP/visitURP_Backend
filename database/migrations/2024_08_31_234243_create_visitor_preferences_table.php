@@ -13,15 +13,10 @@ return new class extends Migration
     {
         Schema::create('visitor_preferences', function (Blueprint $table) {
             $table->id('id_visitorPreference');
-            $table->unsignedBigInteger('fk_id_visitorV')->nullable();
-            $table->unsignedBigInteger('fk_id_visitorP')->nullable();
+            $table->unsignedBigInteger('fk_id_visitor');
             $table->unsignedBigInteger('fk_id_academicInterested');
-            $table->string('visitor_type');
+            $table->enum('visitor_type', ['V', 'P']);
             $table->timestamps();
-            $table->softDeletes();
-            
-            $table->foreign('fk_id_visitorV')->references('id_visitorV')->on('visitor_v_s');
-            $table->foreign('fk_id_visitorP')->references('id_visitorP')->on('visitor_p_s');
         });
     }
 

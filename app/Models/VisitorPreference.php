@@ -2,31 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VisitorPreference extends Model
+class visitorPreference extends Model
 {
-    use SoftDeletes;
-    
+    use HasFactory;
+
     protected $table = 'visitor_preferences';
+    
+    const TYPE1 = 'V';
+    const TYPE2 = 'P';
 
-    protected $primaryKey = 'id_visitorPreference';
+    protected $primarykey = 'id_visitorPreference';
 
-    protected $fillable = ['fk_id_visitorV', 'fk_id_visitorP', 'fk_id_academicInterested', 'visitor_type'];
-
-    public function visitor()
-    {
-        if ($this->visitor_type == 'V') {
-            return $this->belongsTo(VisitorV::class, 'fk_id_visitorV');
-        } elseif ($this->visitor_type == 'P') {
-            return $this->belongsTo(VisitorP::class, 'fk_id_visitorP');
-        }
-        return null;
-    }
-
-    public function academicInterest()
-    {
-        return $this->belongsTo(AcademicInterest::class, 'fk_id_academicInterest', 'id_academicInterest');
-    }
+    protected $fillable = [
+        'fk_id_visitor', 
+        'fk_id_academicInterested', 
+        'visitor_type',
+    ];
 }
