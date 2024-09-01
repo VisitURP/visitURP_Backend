@@ -21,6 +21,9 @@ use App\Http\Controllers\UserPrivacyPreferencesController;
 use App\Http\Controllers\InteractiveFeedbacksController;
 use App\Http\Controllers\VisitorInfoController;
 use App\Http\Controllers\VisitorInfoXapplicantController;
+
+use App\Http\Controllers\VisitorVPruebaController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -254,3 +257,15 @@ Route::get('find-VxA/{id}', [VisitorInfoXapplicantController::class, 'show']);
 Route::put('update-VxA/{id}', [VisitorInfoXapplicantController::class, 'update']);
 
 Route::delete('delete-VxA/{id}', [VisitorInfoXapplicantController::class, 'destroy']);
+
+
+//visitorv PRUEBA table
+Route::post('register-visitorVprueba', [VisitorVPruebaController::class, 'store']);
+
+Route::get('list-visitorVprueba', [VisitorVPruebaController::class, 'index']);
+
+Route::get('find-visitorVprueba/{id}', [VisitorVPruebaController::class, 'show']);
+
+Route::put('update-visitorVprueba/{id}', [VisitorVPruebaController::class, 'update']);
+
+Route::delete('delete-visitorVprueba/{id}', [VisitorVPruebaController::class, 'destroy']);  
