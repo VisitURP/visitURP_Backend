@@ -12,7 +12,7 @@ use App\Models\Applicant;
 class SyncApplicantXVisitor extends Command
 {
     protected $signature = 'sync:applicantXvisitor-info';
-    protected $description = 'Sync Applicant x Visitor Info to found matches';
+    protected $description = 'Sync Applicant x Visitor Info to find matches';
 
     public function handle()
     {
@@ -20,74 +20,90 @@ class SyncApplicantXVisitor extends Command
         $visitorInfoRecords = VisitorInfo::all();
 
         foreach ($visitorInfoRecords as $visitor) {
-            // Solo procesar si el campo 'documentNumber' no está vacío
-            if (!empty($visitor->documentNumber)) {
-                $applicant = Applicant::where('documentNumber', $visitor->documentNumber)->first();
-                
-                if ($applicant) {
-                    // Buscar información adicional dependiendo del tipo de visitante
-                    $educationalInstitution = null;
-                    $residenceDistrict = null;
-
-                    if ($visitor->visitor_type == 'V') {
-                        // Si es Virtual, buscar en VisitorV
-                        $visitorV = VisitorV::find($visitor->fk_id_visitor);
-                        if ($visitorV) {
-                            $educationalInstitution = $visitorV->educationalInstitution;
-                            $residenceDistrict = $visitorV->residenceDistrict;
-                        }
-                    } elseif ($visitor->visitor_type == 'P') {
-                        // Si es Physical, buscar en VisitorP
-                        $visitorP = VisitorP::find($visitor->fk_id_visitor);
-                        if ($visitorP) {
-                            $educationalInstitution = $visitorP->educationalInstitution;
-                            $residenceDistrict = $visitorP->residenceDistrict;
-                        }
-                    } elseif ($visitor->visitor_type == 'B') {
-                        // Si es Both, buscar en ambas tablas y combinar los datos
-
-                        // Cadena concatenada 
-                        $id_visitorVP = $visitor->fk_id_visitor;
-                        
-                        // Separar la cadena en un array usando '_' como delimitador
-                        $ids = explode('_', $id_visitorVP);
-                        
-                        // Obtener los valores individuales
-                        $id_visitorV = $ids[0];
-                        $id_visitorP = $ids[1];
-
-                        $visitorV = VisitorV::find($id_visitorV);
-                        $visitorP = VisitorP::find($id_visitorP);
-
-                        if ($visitorV && $visitorP) {
-                            $educationalInstitution = $visitorV->educationalInstitution ?: $visitorP->educationalInstitution;
-                            $residenceDistrict = $visitorV->residenceDistrict ?: $visitorP->residenceDistrict;
-                        }
-                    }
-
-                    // Si hay un registro coincidente en Applicant, actualizar o crear en VisitorInfoXapplicant
-                    VisitorInfoXapplicant::updateOrCreate(
-                        [
-                            'fk_docType_id' => $visitor->fk_docType_id,
-                            'documentNumber' => $visitor->documentNumber,  
-                        ],
-                        [
-                            'fk_applicant_id' => $applicant->id_applicant,
-                            'fk_visitorInfo_id' => $visitor->id_visitorInfo,
-                            'name' => $visitor->name,
-                            'lastName' => $visitor->lastName,
-                            'email' => $visitor->email,
-                            'phone' => $visitor->phone,
-                            'educationalInstitution' => $educationalInstitution,
-                            'residenceDistrict' => $residenceDistrict,
-                            'studentCode' => $applicant->studentCode,
-                            'admitted' => $applicant->admitted,
-                        ]
-                    );
-                }
+            // Procesar solo si el campo 'visitor_type' está definido y tiene un valor válido
+            switch ($visitor->visitor_type) {
+                case 'V':
+                    $this->processVisitorV($visitor);
+                    break;
+                case 'P':
+                    $this->processVisitorP($visitor);
+                    break;
+                case 'B':
+                    $this->processVisitorB($visitor);
+                    break;
+                default:
+                    // Manejar casos donde el visitor_type no es reconocido
+                    $this->warn("Unrecognized visitor_type: {$visitor->visitor_type} for VisitorInfo ID: {$visitor->id_visitorInfo}");
+                    break;
             }
         }
 
         $this->info('Visitor x Applicant Info synchronized successfully!');
     }
+
+    protected function processVisitorV($visitor)
+    {
+        $visitorV = VisitorV::find($visitor->fk_id_visitor);
+
+        if ($visitorV) {
+            $applicant = Applicant::where('documentNumber', $visitorV->documentNumber)->first();
+
+            if ($applicant) {
+                // Actualizar o crear en VisitorInfoXapplicant
+                VisitorInfoXapplicant::updateOrCreate(
+                    [
+                        'fk_id_applicant' => $applicant->id_applicant,
+                        'fk_id_visitorInfo' => $visitor->id_visitorInfo,
+                    ]
+                );
+            }
+        }
+    }
+
+    protected function processVisitorP($visitor)
+    {
+        $visitorP = VisitorP::find($visitor->fk_id_visitor);
+
+        if ($visitorP) {
+            $applicant = Applicant::where('documentNumber', $visitorP->docNumber)->first();
+
+            if ($applicant) {
+                // Actualizar o crear en VisitorInfoXapplicant
+                VisitorInfoXapplicant::updateOrCreate(
+                    [
+                        'fk_id_applicant' => $applicant->id_applicant,
+                        'fk_id_visitorInfo' => $visitor->id_visitorInfo,
+                    ]
+                );
+            }
+        }
+    }
+
+    protected function processVisitorB($visitor)
+    {
+        // Cadena concatenada en el campo fk_id_visitor
+        $id_visitorVP = $visitor->fk_id_visitor;
+
+        // Separar la cadena en un array usando '_' como delimitador
+        list($id_visitorV, $id_visitorP) = explode('_', $id_visitorVP);
+
+        $visitorV = VisitorV::find($id_visitorV);
+        $visitorP = VisitorP::find($id_visitorP);
+
+        if ($visitorV && $visitorP) {
+            $applicant = Applicant::where('documentNumber', $visitorV->documentNumber)->first();
+            $applicant2 = Applicant::where('documentNumber', $visitorP->docNumber)->first();
+
+            if ($applicant && $applicant2) {
+                // Actualizar o crear en VisitorInfoXapplicant
+                VisitorInfoXapplicant::updateOrCreate(
+                    [
+                        'fk_id_applicant' => $applicant ? $applicant->id_applicant : $applicant2->id_applicant,
+                        'fk_id_visitorInfo' => $visitor->id_visitorInfo,
+                    ]
+                );
+            }
+        }
+    }
 }
+

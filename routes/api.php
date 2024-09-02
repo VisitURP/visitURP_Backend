@@ -6,7 +6,6 @@ use App\Http\Controllers\VisitorPController;
 use App\Http\Controllers\VisitorVController;
 use App\Http\Controllers\ChatbotCategorieController;
 use App\Http\Controllers\ChatbotQAController;
-use App\Http\Controllers\ChatbotInquiryController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\VisitXapplicantController;
 use App\Http\Controllers\AcademicInterestController;
@@ -20,7 +19,7 @@ use App\Http\Controllers\VisitorPreferenceController;
 use App\Http\Controllers\UserPrivacyPreferencesController;
 use App\Http\Controllers\InteractiveFeedbacksController;
 use App\Http\Controllers\VisitorInfoController;
-use App\Http\Controllers\VisitorInfoXapplicantController;
+use App\Http\Controllers\UbigeoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -95,15 +94,15 @@ Route::put('update-qa/{id}', [ChatbotQAController::class, 'update']);
 Route::delete('delete-qa/{id}', [ChatbotQAController::class, 'destroy']);
 
 //ChatBot_inquiry
-Route::get('list-inquiry', [ChatbotInquiryController::class, 'index']);
+Route::get('list-inquiry', [ChatBot_InquiryController::class, 'index']);
 
-Route::post('register-inquiry', [ChatbotInquiryController::class, 'store']);
+Route::post('register-inquiry', [ChatBot_InquiryController::class, 'store']);
 
-Route::get('find-inquiry/{id}', [ChatbotInquiryController::class, 'show']);
+Route::get('find-inquiry/{id}', [ChatBot_InquiryController::class, 'show']);
 
-Route::put('update-inquiry/{id}', [ChatbotInquiryController::class, 'update']);
+Route::put('update-inquiry/{id}', [ChatBot_InquiryController::class, 'update']);
 
-Route::delete('delete-inquiry/{id}', [ChatbotInquiryController::class, 'destroy']);
+Route::delete('delete-inquiry/{id}', [ChatBot_InquiryController::class, 'destroy']);
 
 //applicant
 Route::get('list-applicants', [ApplicantController::class, 'index']);
@@ -231,26 +230,30 @@ Route::put('update-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::
 
 Route::delete('delete-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::class, 'destroy']);
 
+//Ubigeo
+Route::get('ubigeo/district/{id}', [UbigeoController::class, 'filterByDistrict']);
 
-//visitorInfo table
-Route::post('register-visitorInfo', [VisitorInfoController::class, 'store']);
+Route::get('ubigeo/province/{id}', [UbigeoController::class, 'filterByProvince']);
 
-Route::get('list-visitorInfos', [VisitorInfoController::class, 'index']);
+Route::get('ubigeo/department/{id}', [UbigeoController::class, 'filterByDepartment']);
 
-Route::get('find-visitorInfo/{id}', [VisitorInfoController::class, 'show']);
+Route::post('register-ubigeo', [UbigeoController::class, 'store']);
 
-Route::put('update-visitorInfo/{id}', [VisitorInfoController::class, 'update']);
+Route::get('list-ubigeo', [UbigeoController::class, 'index']);
 
-Route::delete('delete-visitorInfo/{id}', [VisitorInfoController::class, 'destroy']);
+Route::get('find-ubigeo/{id}', [UbigeoController::class, 'show']);
+
+Route::put('update-ubigeo/{id}', [UbigeoController::class, 'update']);
+
+Route::delete('delete-ubigeo/{id}', [UbigeoController::class, 'destroy']);
 
 
-//visitorInfo x applicant table
-Route::post('register-VxA', [VisitorInfoXapplicantController::class, 'store']);
+Route::post('register-VisitorInfo', [VisitorInfoController::class, 'store']);
 
-Route::get('list-VxAs', [VisitorInfoXapplicantController::class, 'index']);
+Route::get('list-VisitorInfos', [VisitorInfoController::class, 'index']);
 
-Route::get('find-VxA/{id}', [VisitorInfoXapplicantController::class, 'show']);
+Route::get('find-VisitorInfo/{id}', [VisitorInfoController::class, 'show']);
 
-Route::put('update-VxA/{id}', [VisitorInfoXapplicantController::class, 'update']);
+Route::put('update-VisitorInfo/{id}', [VisitorInfoController::class, 'update']);
 
-Route::delete('delete-VxA/{id}', [VisitorInfoXapplicantController::class, 'destroy']);
+Route::delete('delete-VisitorInfo/{id}', [VisitorInfoController::class, 'destroy']);

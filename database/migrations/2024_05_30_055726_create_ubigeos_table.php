@@ -11,17 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chatbot_inquiries', function (Blueprint $table) {
-            $table->id('id_inquiry');
-            $table->unsignedBigInteger('fk_visitorV_id');
-            $table->string('detail');
-            $table->string('state');
+        Schema::create('ubigeos', function (Blueprint $table) {
+            $table->id('id_Ubigeo');
+            $table->unsignedBigInteger('cod_Ubigeo');
+            $table->string('UbigeoName');
             $table->timestamps();
             $table->softDeletes();
-
-            // Claves foráneas
-            $table->foreign('fk_visitorV_id')->references('id_visitorV')->on('visitor_v_s');
-        
         });
     }
 
@@ -30,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('chatbot_inquiries');
+        Schema::dropIfExists('ubigeos');
     }
 };

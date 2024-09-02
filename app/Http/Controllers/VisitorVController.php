@@ -15,8 +15,8 @@ class VisitorVController extends Controller
      */
     public function index()
     {
-        $Visitor = VisitorV::all();
-        return response()->json($Visitor);
+        $details = VisitorV::all();
+        return response()->json($details);
     }
 
     /**
@@ -39,7 +39,7 @@ class VisitorVController extends Controller
             'fk_docType_id' => ['nullable', 'max:100'],
             'documentNumber' => ['nullable','max:500'],
             'phone' => ['nullable','max:500'],
-            'residenceDistrict' => ['nullable','max:500'],
+            'fk_id_Ubigeo' => ['nullable','max:500'],
             'educationalInstitution' => ['nullable','max:500'],
         ]);
 
@@ -76,15 +76,16 @@ class VisitorVController extends Controller
        }
     }
 
-        
+    public function assignSemester($createdAt)
+{
+    // Busca el semestre correspondiente basado en la fecha de creación
+    $semester = Semester::where('until', '>=', $createdAt)
+                        ->orderBy('until', 'asc')
+                        ->first();
 
-    public static function assignSemester($createdAt)
-    {
-        $createdAt = new Carbon($createdAt);
-        $semester = Semester::where('until', '>', $createdAt)->orderBy('until')->first();
-        
-        return $semester ? $semester->id_semester : null;
-    }
+    // Retorna el id del semestre
+    return $semester ? $semester->id_semester : null;
+}
 
     /**
      * Display the specified resource.
@@ -92,9 +93,9 @@ class VisitorVController extends Controller
     public function show(int $id)
     {
         $visitorV = VisitorV::findOrFail($id);
-        return response()->json(
+        return response()->json([
             $visitorV
-        
+        ] 
         );
     }
 
@@ -109,65 +110,46 @@ class VisitorVController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    public function update(Request $request, int $visitorV)
+    {
+        $validatedData = $request->validate([
+            'name' => ['required', 'max:500'],
+            'email' => ['required','email', 'max:500'],
+            'lastName' => ['nullable', 'max:500'],
+            'fk_docType_id' => ['nullable', 'max:100'],
+            'documentNumber' => ['nullable','max:500'],
+            'phone' => ['nullable','max:500'],
+            'fk_id_Ubigeo' => ['nullable','max:500'],
+            'educationalInstitution' => ['nullable','max:500'],
+        ]);
 
-     public function update(Request $request, int $visitorV)
-     {
-         $request->validate([
-             'name' => ['sometimes', 'max:500'],
-             'email' => ['sometimes','email', 'max:500'],
-             'lastName' => ['nullable', 'max:500'],
-             'fk_docType_id' => ['nullable', 'max:100'],
-             'documentNumber' => ['nullable','max:500'],
-             'phone' => ['nullable','max:500'],
-             'residenceDistrict' => ['nullable','max:500'],
-             'educationalInstitution' => ['nullable','max:500'],
-         ]);
-     
-         $visitorV = VisitorV::findOrFail($visitorV);
-     
-         if ($request->has('name')) {
-             $visitorV->name = $request->input('name');
-         }
-         if ($request->has('email')) {
-             $visitorV->email = $request->input('email');
-         }
-         if ($request->has('lastName')) {
-             $visitorV->lastName = $request->input('lastName');
-         }
-         if ($request->has('fk_docType_id')) {
-             $visitorV->fk_docType_id = $request->input('fk_docType_id');
-         }
-         if ($request->has('documentNumber')) {
-             $visitorV->documentNumber = $request->input('documentNumber');
-         }
-         if ($request->has('phone')) {
-             $visitorV->phone = $request->input('phone');
-         }
-         if ($request->has('residenceDistrict')) {
-             $visitorV->residenceDistrict = $request->input('residenceDistrict');
-         }
-         if ($request->has('educationalInstitution')) {
-             $visitorV->educationalInstitution = $request->input('educationalInstitution');
-         }
-     
-         $visitorV->save();
+        $visitorV = VisitorV::findOrFail($visitorV);
+        $visitorV-> name = $request['name'];
+        $visitorV-> email = $request['email'];
+        $visitorV->lastName = $request['lastName'];
+        $visitorV-> fk_docType_id = $request['fk_docType_id'];
+        $visitorV-> documentNumber = $request['documentNumber'];
+        $visitorV-> phone = $request['phone'];
+        $visitorV-> fk_id_Ubigeo = $request['fk_id_Ubigeo'];
+        $visitorV-> educationalInstitution = $request['educationalInstitution'];
+        $visitorV-> save();
 
-         return response()->json([
+        return response()->json([
             'Message' => 'Data already updated.',
             'Virtual visitor: ' => $visitorV
         ]);
-     }
+    }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(int $id)
     {
-        $visitorV = VisitorV::findOrFail($id);
-        $visitorV -> delete();
+        $VisitorV = VisitorV::findOrFail($id);
+        $VisitorV -> delete();
 
         return response()->json([
-            'Message' => 'Virtual visitor deleted successfully.'
+            'Message' => 'VisitorV deleted successfully.'
         ]);
     }
 }

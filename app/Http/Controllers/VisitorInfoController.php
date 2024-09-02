@@ -30,12 +30,6 @@ class VisitorInfoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
-            'lastName' => 'required|string',
-            'email' => 'required|email',
-            'fk_docType_id' => 'nullable|exists:doc_types,id_docType',
-            'documentNumber' => 'required|string',
-            'phone' => 'required|max:500',
             'fk_id_visitor' => 'required|string',
             'visitor_type' => 'required',
             'typeOfVisitor' => 'required|string',
@@ -71,7 +65,7 @@ class VisitorInfoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, VisitorInfo $visitorInfo)
     {
         $visitorInfo = VisitorInfo::find($id);
 
@@ -80,12 +74,6 @@ class VisitorInfoController extends Controller
         }
 
         $request->validate([
-            'name' => 'required|string',
-            'lastName' => 'required|string',
-            'email' => 'required|email',
-            'fk_docType_id' => 'nullable|exists:doc_types,id_docType',
-            'documentNumber' => 'required|string',
-            'phone' => 'required|max:500',
             'fk_id_visitor' => 'required|string',
             'visitor_type' => 'required',
             'typeOfVisitor' => 'required|string',

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\VisitorInfoXapplicant;
+use App\Models\VisitorInfoxapplicant;
 use Illuminate\Http\Request;
 
-class VisitorInfoXapplicantController extends Controller
+class VisitorInfoxapplicantController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,18 +30,8 @@ class VisitorInfoXapplicantController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'fk_applicant_id' => 'required|exists:applicants,id_applicant',
-            'fk_visitorInfo_id' => 'required|exists:visitor_infos,id_visitorInfo',
-            'fk_docType_id' => 'nullable|exists:doc_types,id_docType',
-            'documentNumber' => 'required|string',
-            'name' => 'required|string',
-            'lastName' => 'required|string',
-            'email' => ['required','email', 'max:500'],
-            'phone' => 'max:500',
-            'educationalInstitution' => 'max:500',
-            'residenceDistrict' => 'max:500',
-            'studentCode' => 'required|string',
-            'admitted' => 'required|boolean',
+            'fk_applicant_id' => 'required|exists:applicants',
+            'fk_visitorInfo_id' => 'required|exists:visitor_infos',
         ]);
 
         $Vapplicant = VisitorInfoXapplicant::create($request->all());
@@ -57,7 +47,7 @@ class VisitorInfoXapplicantController extends Controller
         $vXa = VisitorInfoXapplicant::find($id);
 
         if (!$vXa) {
-            return response()->json(['message' => 'Applicant not found'], 404);
+            return response()->json(['message' => 'Visitor x Applicant not found'], 404);
         }
 
         return response()->json($vXa);
@@ -76,25 +66,15 @@ class VisitorInfoXapplicantController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $Vapplicant = VisitorInfoXapplicant::find($id);
+        $Vapplicant = Applicant::find($id);
 
         if (!$Vapplicant) {
             return response()->json(['message' => 'Visitor info x Applicant not found'], 404);
         }
 
         $request->validate([
-            'fk_applicant_id' => 'required|exists:applicants,id_applicant',
-            'fk_visitorInfo_id' => 'required|exists:visitor_infos,id_visitorInfo',
-            'fk_docType_id' => 'nullable|exists:doc_types,id_docType',
-            'documentNumber' => 'required|string',
-            'name' => 'required|string',
-            'lastName' => 'required|string',
-            'email' => ['required','email', 'max:500'],
-            'phone' => 'max:500',
-            'educationalInstitution' => 'max:500',
-            'residenceDistrict' => 'max:500',
-            'studentCode' => 'required|string',
-            'admitted' => 'required|boolean',
+            'fk_applicant_id' => 'required|exists:applicants',
+            'fk_visitorInfo_id' => 'required|exists:visitor_infos',
         ]);
 
         $Vapplicant->update($request->all());
