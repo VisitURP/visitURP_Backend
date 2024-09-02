@@ -12,19 +12,9 @@ class AcademicInterestController extends Controller
      */
     public function index()
     {
-        $academic = AcademicInterest::get();
-        $data = $academic->map(function($academic){
-            return [
-                'id_academicInterest' => $academic -> id_academicInterest,
-                'academicInterestName' => $academic -> academicInterestName,
-                'academicInterestCod' => $academic -> academicInterestCod           
-            ];
-        });
-
-        //pequeña modificacion
-        return response()->json(
-            $data
-        );
+        
+        $details = AcademicInterest::all();
+        return response()->json($details);
     }
 
     /**
@@ -79,9 +69,9 @@ class AcademicInterestController extends Controller
     public function show(int $id)
     {
         $academic = AcademicInterest::findOrFail($id);
-        return response()->json([
+        return response()->json(
             $academic
-        ] 
+         
         );
     }
 
