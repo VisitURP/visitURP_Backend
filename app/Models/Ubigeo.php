@@ -12,5 +12,4 @@ class Ubigeo extends Model
     protected $primaryKey = 'id_Ubigeo';
     protected $fillable = ['cod_Ubigeo', 'UbigeoName'];
 
-    
 }

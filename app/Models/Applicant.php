@@ -2,24 +2,28 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class applicantURP extends Model
+class Applicant extends Model
 {
-    protected $connection = 'urp_db'; 
-    protected $table = 'applicant'; 
+    use SoftDeletes;
+    protected $table = 'applicants'; 
     protected $primaryKey = 'id_applicant';
     // Specify the fillable attributes
     protected $fillable = [
         'applicantCod', 
         'name', 
         'lastName', 
+        'fk_docType_id',
         'documentNumber', 
         'meritOrder', 
         'studentCode', 
         'admitted', 
     ];
 
-    // Disable timestamps
-    public $timestamps = false;
+    public function docType()
+    {
+        return $this->belongsTo(docType::class, 'fk_docType_id');
+    }
 }

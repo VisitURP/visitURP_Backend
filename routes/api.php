@@ -7,7 +7,7 @@ use App\Http\Controllers\VisitorVController;
 use App\Http\Controllers\ChatbotCategorieController;
 use App\Http\Controllers\ChatBot_QAController;
 use App\Http\Controllers\ChatBot_InquiryController;
-use App\Http\Controllers\ApplicantURPController;
+use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\VisitXapplicantController;
 use App\Http\Controllers\AcademicInterestController;
 use App\Http\Controllers\BuiltAreaController;
@@ -19,6 +19,7 @@ use App\Http\Controllers\SemesterController;
 use App\Http\Controllers\VisitorPreferenceController;
 use App\Http\Controllers\UserPrivacyPreferencesController;
 use App\Http\Controllers\InteractiveFeedbacksController;
+use App\Http\Controllers\VisitorInfoController;
 use App\Http\Controllers\UbigeoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -105,15 +106,15 @@ Route::put('update-inquiry/{id}', [ChatBot_InquiryController::class, 'update']);
 Route::delete('delete-inquiry/{id}', [ChatBot_InquiryController::class, 'destroy']);
 
 //applicant
-Route::get('list-applicants', [ApplicantURPController::class, 'index']);
+Route::get('list-applicants', [ApplicantController::class, 'index']);
 
-Route::post('register-applicant', [ApplicantURPController::class, 'store']);
+Route::post('register-applicant', [ApplicantController::class, 'store']);
 
-Route::get('find-applicant/{id}', [ApplicantURPController::class, 'show']);
+Route::get('find-applicant/{id}', [ApplicantController::class, 'show']);
 
-Route::put('update-applicant/{id}', [ApplicantURPController::class, 'update']);
+Route::put('update-applicant/{id}', [ApplicantController::class, 'update']);
 
-Route::delete('delete-applicant/{id}', [ApplicantURPController::class, 'destroy']);
+Route::delete('delete-applicant/{id}', [ApplicantController::class, 'destroy']);
 
 
 //visit X applicant table
@@ -246,3 +247,14 @@ Route::get('find-ubigeo/{id}', [UbigeoController::class, 'show']);
 Route::put('update-ubigeo/{id}', [UbigeoController::class, 'update']);
 
 Route::delete('delete-ubigeo/{id}', [UbigeoController::class, 'destroy']);
+
+
+Route::post('register-VisitorInfo', [VisitorInfoController::class, 'store']);
+
+Route::get('list-VisitorInfos', [VisitorInfoController::class, 'index']);
+
+Route::get('find-VisitorInfo/{id}', [VisitorInfoController::class, 'show']);
+
+Route::put('update-VisitorInfo/{id}', [VisitorInfoController::class, 'update']);
+
+Route::delete('delete-VisitorInfo/{id}', [VisitorInfoController::class, 'destroy']);
