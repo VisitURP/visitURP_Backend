@@ -21,6 +21,9 @@ use App\Http\Controllers\UserPrivacyPreferencesController;
 use App\Http\Controllers\InteractiveFeedbacksController;
 use App\Http\Controllers\VisitorInfoController;
 use App\Http\Controllers\VisitorInfoXapplicantController;
+use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\DistrictController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -254,3 +257,27 @@ Route::get('find-VxA/{id}', [VisitorInfoXapplicantController::class, 'show']);
 Route::put('update-VxA/{id}', [VisitorInfoXapplicantController::class, 'update']);
 
 Route::delete('delete-VxA/{id}', [VisitorInfoXapplicantController::class, 'destroy']);
+
+
+//province table
+Route::post('register-Province', [ProvinceController::class, 'store']);
+
+Route::get('list-Province', [ProvinceController::class, 'index']);
+
+Route::get('find-Province/{id}', [ProvinceController::class, 'show']);
+
+Route::put('update-Province/{id}', [ProvinceController::class, 'update']);
+
+Route::delete('delete-Province/{id}', [ProvinceController::class, 'destroy']);
+
+//district table
+Route::post('register-District', [DistrictController::class, 'store']);
+
+Route::get('list-District', [DistrictController::class, 'index']);
+
+Route::get('find-District/{id}', [DistrictController::class, 'show']);
+
+Route::put('update-District/{id}', [DistrictController::class, 'update']);
+
+Route::delete('delete-District/{id}', [DistrictController::class, 'destroy']);
+
