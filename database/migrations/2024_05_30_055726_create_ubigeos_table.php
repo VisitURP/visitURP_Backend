@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ubigeos', function (Blueprint $table) {
             $table->id('id_Ubigeo');
-            $table->unsignedBigInteger('cod_Ubigeo');
+            $table->string('cod_Ubigeo');
             $table->string('UbigeoName');
             $table->timestamps();
             $table->softDeletes();

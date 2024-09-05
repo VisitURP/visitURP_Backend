@@ -20,6 +20,7 @@ use App\Http\Controllers\UserPrivacyPreferencesController;
 use App\Http\Controllers\InteractiveFeedbacksController;
 use App\Http\Controllers\VisitorInfoController;
 use App\Http\Controllers\UbigeoController;
+use App\Http\Controllers\ImportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -230,16 +231,17 @@ Route::put('update-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::
 
 Route::delete('delete-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::class, 'destroy']);
 
+
 //Ubigeo
-Route::get('ubigeo/district/{id}', [UbigeoController::class, 'filterByDistrict']);
+Route::get('getdepartmentS', [UbigeoController::class, 'getDepartments']);
 
-Route::get('ubigeo/province/{id}', [UbigeoController::class, 'filterByProvince']);
+Route::get('getprovinceS/{departmentCode}', [UbigeoController::class, 'getProvinces']);
 
-Route::get('ubigeo/department/{id}', [UbigeoController::class, 'filterByDepartment']);
+Route::get('getdistrictS/{provinceCode}', [UbigeoController::class, 'getDistricts']);
 
 Route::post('register-ubigeo', [UbigeoController::class, 'store']);
 
-Route::get('list-ubigeo', [UbigeoController::class, 'index']);
+Route::get('list-ubigeos', [UbigeoController::class, 'index']);
 
 Route::get('find-ubigeo/{id}', [UbigeoController::class, 'show']);
 
@@ -248,6 +250,7 @@ Route::put('update-ubigeo/{id}', [UbigeoController::class, 'update']);
 Route::delete('delete-ubigeo/{id}', [UbigeoController::class, 'destroy']);
 
 
+//visitorInfo
 Route::post('register-VisitorInfo', [VisitorInfoController::class, 'store']);
 
 Route::get('list-VisitorInfos', [VisitorInfoController::class, 'index']);
@@ -257,3 +260,9 @@ Route::get('find-VisitorInfo/{id}', [VisitorInfoController::class, 'show']);
 Route::put('update-VisitorInfo/{id}', [VisitorInfoController::class, 'update']);
 
 Route::delete('delete-VisitorInfo/{id}', [VisitorInfoController::class, 'destroy']);
+
+
+//Ubigeos
+// Route::post('/import-ubigeos', [ImportController::class, 'importUbigeos'])->name('import.ubigeos');
+Route::get('import-ubigeos', [ImportController::class, 'importUbigeos']);
+

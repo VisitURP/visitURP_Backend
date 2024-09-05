@@ -7,30 +7,36 @@ use Illuminate\Http\Request;
 
 class UbigeoController extends Controller
 {
-    public function filterByDistrict($districtCode)
+    public function getDepartments()
     {
-        $results = Ubigeo::where('cod_Ubigeo', 'LIKE', $districtCode . '%')->get();
+        $results = Ubigeo::where('cod_Ubigeo', 'LIKE', '%'.'0000')->get();
         return response()->json($results);
     }
 
-    public function filterByProvince($provinceCode)
+    public function getProvinces($department)
     {
-        $results = Ubigeo::where('cod_Ubigeo', 'LIKE', $provinceCode . '%')->get();
+        $results = Ubigeo::where('cod_Ubigeo', 'LIKE', $department.'%'.'00')
+        ->where('cod_Ubigeo', '!=', $department . '0000') 
+        ->get();
+        
+        return response()->json($results);        
+    }
+
+    public function getDistricts($province)
+    {
+        $results = Ubigeo::where('cod_Ubigeo', 'LIKE', $province.'%')
+        ->where('cod_Ubigeo', '!=', $province . '00') 
+        ->get();
         return response()->json($results);
     }
 
-    public function filterByDepartment($departmentCode)
-    {
-        $results = Ubigeo::where('cod_Ubigeo', 'LIKE', $departmentCode . '%')->get();
-        return response()->json($results);
-    }
-    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $details = Ubigeo::all();
+        return response()->json($details);
     }
 
     /**
