@@ -9,9 +9,14 @@ use Carbon\Carbon;
 class visitorP extends Model
 {
     use SoftDeletes;
+    const TYPE1 = 'V';
+    const TYPE2 = 'P';
+    const TYPE3 = 'I';
+    
     protected $table = 'visitor_p_s';
     protected $primaryKey = 'id_visitorP';
-    protected $fillable = ['name', 'lastName', 'email','fk_docType_id', 'docNumber', 'phone', 'visitDate', 'fk_id_Ubigeo', 'educationalInstitution'];
+    protected $fillable = ['name', 'lastName', 'email','fk_docType_id', 'docNumber', 'phone', 'visitDate', 'fk_id_Ubigeo', 'educationalInstitution', 'birthDate',
+        'gender'];
 
     public function setVisitDateAttribute($value)
     {

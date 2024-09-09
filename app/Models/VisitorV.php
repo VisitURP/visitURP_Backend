@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class VisitorV extends Model
 {
     use SoftDeletes;
+    const TYPE1 = 'V';
+    const TYPE2 = 'P';
+    const TYPE3 = 'I';
 
     protected $table = 'visitor_v_s';
     protected $primaryKey = 'id_visitorV';
@@ -20,7 +23,9 @@ class VisitorV extends Model
         'documentNumber', 
         'phone',
         'fk_id_Ubigeo',
-        'educationalInstitution'
+        'educationalInstitution',
+        'birthDate',
+        'gender'
     ];
 
     public function docType()

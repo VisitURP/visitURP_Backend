@@ -14,12 +14,16 @@ return new class extends Migration
         Schema::create('built_areas', function (Blueprint $table) {
             $table->id('id_builtArea');
             $table->unsignedBigInteger('fk_id_academicInterest');
-            $table->foreign('fk_id_academicInterest')->references('id_academicInterest')->on('academic_interests');
             $table->string('builtAreaName', 100);
+            $table->string('builtAreaImageURL', 800)->nullable();
+            $table->string('builtAreaAudioURL', 800)-nullable();
             $table->unsignedBigInteger('builtAreaCod');
             $table->string('builtAreaDescription', 100);
             $table->timestamps();
             $table->softDeletes();
+
+            //foreign
+            $table->foreign('fk_id_academicInterest')->references('id_academicInterest')->on('academic_interests');
         });
     }
 
