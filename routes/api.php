@@ -7,7 +7,7 @@ use App\Http\Controllers\VisitorVController;
 use App\Http\Controllers\ChatbotCategorieController;
 use App\Http\Controllers\ChatbotQAController;
 use App\Http\Controllers\ApplicantController;
-use App\Http\Controllers\VisitXapplicantController;
+use App\Http\Controllers\VisitorInfoXapplicantController;
 use App\Http\Controllers\AcademicInterestController;
 use App\Http\Controllers\BuiltAreaController;
 use App\Http\Controllers\UserVController;
@@ -118,15 +118,15 @@ Route::delete('delete-applicant/{id}', [ApplicantController::class, 'destroy']);
 
 
 //visit X applicant table
-Route::get('sync-visitXapplicants', [VisitXapplicantController::class, 'syncVisitXapplicants']);
+Route::get('sync-visitXapplicants', [VisitorInfoXapplicantController::class, 'syncVisitXapplicants']);
 
-Route::get('list-visitXapplicants', [VisitXapplicantController::class, 'index']);
+Route::get('list-visitXapplicants', [VisitorInfoXapplicantController::class, 'index']);
 
-Route::get('find-visitXapplicant/{id}', [VisitXapplicantController::class, 'show']);
+Route::get('find-visitXapplicant/{id}', [VisitorInfoXapplicantController::class, 'show']);
 
-Route::put('update-visitXapplicant/{id}', [VisitXapplicantController::class, 'update']);
+Route::put('update-visitXapplicant/{id}', [VisitorInfoXapplicantController::class, 'update']);
 
-Route::delete('delete-visitXapplicant/{id}', [VisitXapplicantController::class, 'destroy']);
+Route::delete('delete-visitXapplicant/{id}', [VisitorInfoXapplicantController::class, 'destroy']);
 
 
 //academicInterest table
@@ -174,6 +174,7 @@ Route::get('find-visitV/{id}', [VisitVController::class, 'show']);
 Route::put('update-visitV/{id}', [VisitVController::class, 'update']);
 
 Route::delete('delete-visitV/{id}', [VisitVController::class, 'destroy']);
+
 
 //visitVdetail table
 Route::post('register-visitVD', [VisitVDetailController::class, 'store']);

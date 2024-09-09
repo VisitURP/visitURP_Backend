@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class VisitorV extends Model
 {
@@ -27,6 +28,12 @@ class VisitorV extends Model
         'birthDate',
         'gender'
     ];
+
+    public function setBirthDateAttribute($value)
+    {
+        $this->attributes['birthDate'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+    }
+
 
     public function docType()
     {

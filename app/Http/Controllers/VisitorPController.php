@@ -40,8 +40,8 @@ class VisitorPController extends Controller
             'visitDate' => ['required','date_format:d/m/y'], // Accept DD/MM/YY format
             'fk_id_Ubigeo' => ['max:500'],
             'educationalInstitution' => ['required','max:500'],
-            'birthDate' => ['nullable','datetime'],
-            'gender' => 'nullable','required|in:' . implode(',', [visitorP::TYPE1, visitorP::TYPE2, visitorP::TYPE3])
+            'birthDate' => ['nullable','date_format:d/m/Y'],
+            'gender' => 'nullable','in:' . implode(',', [visitorP::TYPE1, visitorP::TYPE2, visitorP::TYPE3])
         ]);
 
         
@@ -87,7 +87,7 @@ class VisitorPController extends Controller
             'visitDate' => ['required','date_format:d/m/y'], // Accept DD/MM/YY format
             'fk_id_Ubigeo' => ['required','max:500'],
             'educationalInstitution' => ['required','max:500'],
-            'birthDate' => ['nullable','datetime'],
+            'birthDate' => ['nullable','date_format:d/m/Y'],
             'gender' => 'nullable','required|in:' . implode(',', [visitorP::TYPE1, visitorP::TYPE2, visitorP::TYPE3])
        
         ]);

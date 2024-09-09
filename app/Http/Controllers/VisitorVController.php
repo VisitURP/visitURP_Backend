@@ -41,9 +41,8 @@ class VisitorVController extends Controller
             'phone' => ['nullable','max:500'],
             'fk_id_Ubigeo' => ['nullable','max:500'],
             'educationalInstitution' => ['nullable','max:500'],
-            'birthDate' => ['nullable','datetime'],
-            'gender' => 'nullable','required|in:' . implode(',', [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])
-            
+           'birthDate' => ['nullable','date_format:d/m/Y'],
+            'gender' => 'nullable','in:' . implode(',', [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])
         ]);
 
         $existingVisitor = VisitorV::where('email', $request->input('email'))->first();
@@ -123,8 +122,8 @@ class VisitorVController extends Controller
             'phone' => ['nullable','max:500'],
             'fk_id_Ubigeo' => ['nullable'],
             'educationalInstitution' => ['nullable','max:500'],
-            'birthDate' => ['nullable','datetime'],
-            'gender' => 'nullable','required|in:' . implode(',', [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])
+            'birthDate' => ['nullable','date_format:d/m/Y'],
+            'gender' => 'nullable','in:' . implode(',', [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])
             
         ]);
 
