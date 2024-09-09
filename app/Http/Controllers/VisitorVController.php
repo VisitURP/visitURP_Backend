@@ -41,6 +41,8 @@ class VisitorVController extends Controller
             'phone' => ['nullable','max:500'],
             'fk_id_Ubigeo' => ['nullable','max:500'],
             'educationalInstitution' => ['nullable','max:500'],
+           'birthDate' => ['nullable','date_format:d/m/Y'],
+            'gender' => 'nullable','in:' . implode(',', [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])
         ]);
 
         $existingVisitor = VisitorV::where('email', $request->input('email'))->first();
@@ -93,9 +95,8 @@ class VisitorVController extends Controller
     public function show(int $id)
     {
         $visitorV = VisitorV::findOrFail($id);
-        return response()->json([
+        return response()->json(
             $visitorV
-        ] 
         );
     }
 
@@ -113,31 +114,61 @@ class VisitorVController extends Controller
     public function update(Request $request, int $visitorV)
     {
         $validatedData = $request->validate([
-            'name' => ['required', 'max:500'],
-            'email' => ['required','email', 'max:500'],
+            'name' => ['nullable','max:500'],
+            'email' => ['nullable','email', 'max:500'],
             'lastName' => ['nullable', 'max:500'],
             'fk_docType_id' => ['nullable', 'max:100'],
             'documentNumber' => ['nullable','max:500'],
             'phone' => ['nullable','max:500'],
-            'fk_id_Ubigeo' => ['nullable','max:500'],
+            'fk_id_Ubigeo' => ['nullable'],
             'educationalInstitution' => ['nullable','max:500'],
+            'birthDate' => ['nullable','date_format:d/m/Y'],
+            'gender' => 'nullable','in:' . implode(',', [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])
+            
         ]);
 
-        $visitorV = VisitorV::findOrFail($visitorV);
-        $visitorV-> name = $request['name'];
-        $visitorV-> email = $request['email'];
-        $visitorV->lastName = $request['lastName'];
-        $visitorV-> fk_docType_id = $request['fk_docType_id'];
-        $visitorV-> documentNumber = $request['documentNumber'];
-        $visitorV-> phone = $request['phone'];
-        $visitorV-> fk_id_Ubigeo = $request['fk_id_Ubigeo'];
-        $visitorV-> educationalInstitution = $request['educationalInstitution'];
-        $visitorV-> save();
+         // Encuentra el visitante por su ID
+    $visitorV = VisitorV::findOrFail($visitorV);
 
-        return response()->json([
-            'Message' => 'Data already updated.',
-            'Virtual visitor: ' => $visitorV
-        ]);
+        // filled Solo actualiza los campos si no son null
+    if ($request->filled('name')) {
+        $visitorV->name = $request->input('name');
+    }
+    if ($request->filled('email')) {
+        $visitorV->email = $request->input('email');
+    }
+    if ($request->filled('lastName')) {
+        $visitorV->lastName = $request->input('lastName');
+    }
+    if ($request->filled('fk_docType_id')) {
+        $visitorV->fk_docType_id = $request->input('fk_docType_id');
+    }
+    if ($request->filled('documentNumber')) {
+        $visitorV->documentNumber = $request->input('documentNumber');
+    }
+    if ($request->filled('phone')) {
+        $visitorV->phone = $request->input('phone');
+    }
+    if ($request->filled('fk_id_Ubigeo')) {
+        $visitorV->fk_id_Ubigeo = $request->input('fk_id_Ubigeo');
+    }
+    if ($request->filled('educationalInstitution')) {
+        $visitorV->educationalInstitution = $request->input('educationalInstitution');
+    }
+    if ($request->filled('birthDate')) {
+        $visitorV->birthDate = $request->input('birthDate');
+    }
+    if ($request->filled('gender')) {
+        $visitorV->gender = $request->input('gender');
+    }
+
+    // Guarda los cambios
+    $visitorV->save();
+
+    return response()->json([
+        'Message' => 'Data already updated.',
+        'Virtual visitor' => $visitorV
+    ]);
     }
 
     /**

@@ -12,21 +12,9 @@ class BuiltAreaController extends Controller
      */
     public function index()
     {
-        $builtArea = BuiltArea::get();
-        $data = $builtArea->map(function($builtArea){
-            return [
-                'id_builtArea' => $builtArea -> id_builtArea,
-                'fk_id_academicInterest' => $builtArea -> fk_id_academicInterest,
-                'builtAreaName' => $builtArea -> builtAreaName,
-                'builtAreaCod' => $builtArea -> builtAreaCod,
-                'builtAreaDescription' => $builtArea -> builtAreaDescription,
-            ];
-        });
-
-        //pequeña modificacion
-        return response()->json(
-            $data
-        );
+        $builtArea = BuiltArea::all();
+        return response()->json($builtArea);
+        
     }
 
     /**
@@ -61,6 +49,8 @@ class BuiltAreaController extends Controller
             $request->validate([
                 'fk_id_academicInterest' => ['required'],
                 'builtAreaName' => ['required', 'max:100'],
+                'builtAreaImageURL' => ['nullable'],
+                'builtAreaAudioURL' => ['nullable'],
                 'builtAreaCod' => ['required'],
                 'builtAreaDescription' => ['required', 'max:200'],
             ]);
@@ -68,6 +58,8 @@ class BuiltAreaController extends Controller
             $area = BuiltArea::create([
                 'fk_id_academicInterest' => $request['fk_id_academicInterest'],
                 'builtAreaName' => $request['builtAreaName'],
+                'builtAreaImageURL' => $request['builtAreaImageURL'],
+                'builtAreaAudioURL' => $request['builtAreaAudioURL'],
                 'builtAreaCod' => $request['builtAreaCod'],
                 'builtAreaDescription' => $request['builtAreaDescription']
             ]);
@@ -107,6 +99,8 @@ class BuiltAreaController extends Controller
         $request->validate([
             'fk_id_academicInterest' => ['required', 'max:100'],
             'builtAreaName' => ['required', 'max:100'],
+            'builtAreaImageURL' => ['nullable'],
+            'builtAreaAudioURL' => ['nullable'],
             'builtAreaCod' => ['required'],
             'builtAreaDescription' => ['required']
         ]);
@@ -114,6 +108,8 @@ class BuiltAreaController extends Controller
         $builtArea = BuiltArea::findOrFail($builtArea);
         $builtArea->fk_id_academicInterest= $request['fk_id_academicInterest'];
         $builtArea->builtAreaName= $request['builtAreaName'];
+        $builtArea->builtAreaImageURL= $request['builtAreaImageURL'];
+        $builtArea->builtAreaAudioURL= $request['builtAreaAudioURL'];
         $builtArea->builtAreaCod= $request['builtAreaCod'];
         $builtArea->builtAreaDescription = $request['builtAreaDescription'];
         $builtArea->save();

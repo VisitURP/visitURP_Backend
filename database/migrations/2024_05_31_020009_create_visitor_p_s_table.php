@@ -22,6 +22,8 @@ return new class extends Migration
             $table->dateTime('visitDate');
             $table->unsignedBigInteger('fk_id_Ubigeo');
             $table->string('educationalInstitution', 500);
+            $table->dateTime('birthDate');
+            $table->enum('gender', ['F', 'M', 'I'])->nullable();
             $table->timestamps();
             $table->softDeletes();
 

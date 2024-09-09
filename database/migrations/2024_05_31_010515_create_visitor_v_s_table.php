@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('phone', 500)->nullable();
             $table->unsignedBigInteger('fk_id_Ubigeo')->nullable();
             $table->string('educationalInstitution', 500)->nullable();
+            $table->dateTime('birthDate');
+            $table->enum('gender', ['F', 'M', 'I'])->nullable();
             $table->timestamps();
             $table->softDeletes();
 

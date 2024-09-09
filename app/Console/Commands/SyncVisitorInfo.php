@@ -51,7 +51,9 @@ class SyncVisitorInfo extends Command
         // Sincronizar desde VisitorP para registros que no hayan sido cubiertos por la lógica anterior
         $visitorPRecords = visitorP::all();
         foreach ($visitorPRecords as $visitorP) {
-            $visitorV = VisitorV::where('email', $visitorP->email)->first();
+            $visitorV = VisitorV::where('email', $visitorP->email)
+                                ->orWhere('documentNumber', $visitorP->docNumber)
+                                ->first();
                                 
             if (!$visitorV) {
                 // Si no hay un match en VisitorV, actualiza o crea un registro con tipo 'P' (físico)

@@ -29,15 +29,18 @@ class VisitorPreferenceController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'visitor_type' => 'required|string|in:V,P', // Validación del campo discriminador
-            'fk_id_visitorV' => 'nullable|integer|required_if:visitor_type,V',
-            'fk_id_visitorP' => 'nullable|integer|required_if:visitor_type,P',
+        $request->validate([
+            'fk_id_visitor' => 'required|integer',
             'fk_id_academicInterested' => 'required|integer',
+            'visitor_type' => 'required|in:' . implode(',', [visitorPreference::TYPE1, VisitorPreference::TYPE2]),
         ]);
-    
-        $visitorPreference = VisitorPreference::create($validatedData);
-    
+
+        $visitorPreference = visitorPreference::create([
+            'fk_id_visitor' => $request->fk_id_visitor,
+            'fk_id_academicInterested' => $request->fk_id_academicInterested,
+            'visitor_type' => $request->visitor_type,
+        ]);
+
         return response()->json($visitorPreference, 201);
     }
 
@@ -67,23 +70,15 @@ class VisitorPreferenceController extends Controller
     public function update(Request $request, int $visitorPreference)
     {
         $request->validate([
-            'visitor_type' => ['required', 'string','in:V,P'],
-            'fk_id_visitorV' => ['nullable', 'integer','required_if:visitor_type,V'],
-            'fk_id_visitorP' => ['nullable', 'integer','required_if:visitor_type,P'],
-            'fk_id_academicInterested' => ['required','integer'],
+            'fk_id_visitor' => 'required|integer',
+            'fk_id_academicInterested' => 'required|integer',
+            'visitor_type' => 'in:' . implode(',', [visitorPreference::TYPE1, visitorPreference::TYPE2]),
         ]);
 
-        $visitorPreference = VisitorPreference::findOrFail($visitorPreference);
-        $visitorPreference-> visitor_type = $request['visitor_type'];
-        $visitorPreference->fk_id_visitorV = $request['fk_id_visitorV'];
-        $visitorPreference->fk_id_visitorP = $request['fk_id_visitorP'];
-        $visitorPreference->fk_id_academicInterested = $request['fk_id_academicInterested'];
-        $visitorPreference-> save();
+        $visitorPreference = visitorPreference::findOrFail($id);
+        $visitorPreference->update($request->only('visitor_type'));
 
-        return response()->json([
-            'Message' => 'Data already updated.',
-            'Visitor Preference: ' => $visitorPreference
-        ]);
+        return response()->json($visitorPreference, 200);
     }
 
     /**
@@ -91,11 +86,11 @@ class VisitorPreferenceController extends Controller
      */
     public function destroy(int $id)
     {
-        $visitorPreference = VisitorPreference::findOrFail($id);
+        $visitorPreference = visitorPreference::findOrFail($id);
         $visitorPreference -> delete();
 
         return response()->json([
-            'Message' => 'Visitor preference deleted successfully.'
+            'Message' => 'Data was deleted successfully.'
         ]);
     }
 }

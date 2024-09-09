@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class BuiltArea extends Model
 {
     use SoftDeletes;
+
     protected $table = 'built_areas';
     protected $primaryKey = 'id_builtArea';
-    protected $fillable = ['fk_id_academicInterest', 'builtAreaName','builtAreaCod', 'builtAreaDescription'];
+    protected $fillable = ['fk_id_academicInterest', 'builtAreaName', 'builtAreaImageURL', 'builtAreaAudioURL','builtAreaCod', 'builtAreaDescription'];
 
     public function academicInterest()
     {

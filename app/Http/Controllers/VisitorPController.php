@@ -12,27 +12,9 @@ class VisitorPController extends Controller
      */
     public function index()
     {
-        $visitorP = visitorP::get();
+        $details = visitorP::all();
+        return response()->json($details);
 
-        $data = $visitorP->map(function($visitorP){
-            return [
-                'id_visitorP' => $visitorP -> id_visitorP,
-                'name' => $visitorP -> name,
-                'lastName' => $visitorP -> lastName,
-                'email' => $visitorP -> email,
-                'fk_docType_id' => $visitorP -> fk_docType_id,
-                'docNumber' => $visitorP -> docNumber,
-                'phone' => $visitorP -> phone,
-                'visitDate' => $visitorP -> visitDate,
-                'residentDistrict' => $visitorP -> residentDistrict,
-                'educationalInstitution' => $visitorP -> educationalInstitution,
-            ];
-        });
-
-        //pequeña modificacion
-        return response()->json(
-            $data
-        );
     }
 
     /**
@@ -58,13 +40,10 @@ class VisitorPController extends Controller
             'visitDate' => ['required','date_format:d/m/y'], // Accept DD/MM/YY format
             'fk_id_Ubigeo' => ['max:500'],
             'educationalInstitution' => ['required','max:500'],
+            'birthDate' => ['nullable','date_format:d/m/Y'],
+            'gender' => 'nullable','in:' . implode(',', [visitorP::TYPE1, visitorP::TYPE2, visitorP::TYPE3])
         ]);
 
-        // // PREGUNTAR AL PROFE SI SE HACE UN FILTRO CON EL CORREO Y DOCUMENTO
-        // // PARA EVITAR DUPLICADOS
-        // // MI DUDA ES QUE SE PUEDE SER VISITOR MUCHAS VECES
-        // $visitorEmail = visitorP::where('email', $request->visitorEmail)->first();
-        // $visitorDocNumber = visitorP::where('docNumber', $request->visitorDocNumber)->first();
         
         $visitorP = visitorP::create($validatedData);
         
@@ -108,6 +87,9 @@ class VisitorPController extends Controller
             'visitDate' => ['required','date_format:d/m/y'], // Accept DD/MM/YY format
             'fk_id_Ubigeo' => ['required','max:500'],
             'educationalInstitution' => ['required','max:500'],
+            'birthDate' => ['nullable','date_format:d/m/Y'],
+            'gender' => 'nullable','required|in:' . implode(',', [visitorP::TYPE1, visitorP::TYPE2, visitorP::TYPE3])
+       
         ]);
 
         $visitorP = visitorP::findOrFail($visitorP);
@@ -120,6 +102,8 @@ class VisitorPController extends Controller
         $visitorP-> visitDate = $request['visitDate'];
         $visitorP-> fk_id_Ubigeo = $request['fk_id_Ubigeo'];
         $visitorP-> educationalInstitution = $request['educationalInstitution'];
+        $visitorP-> birthDate = $request['birthDate'];
+        $visitorP-> gender = $request['gender'];
         $visitorP-> save();
 
         return response()->json([
