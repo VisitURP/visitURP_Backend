@@ -48,6 +48,10 @@ class VisitorVController extends Controller
         $existingVisitor = VisitorV::where('email', $request->input('email'))->first();
         
         if ($existingVisitor) {
+
+            // Actualizar campos si se proporcionaron nuevos datos
+            $existingVisitor->update(array_filter($validatedData));
+
             $visitV = VisitV::create([
                'fk_id_visitorV' => $existingVisitor->id_visitorV,
                'fk_id_semester' => $this->assignSemester($existingVisitor->created_at),

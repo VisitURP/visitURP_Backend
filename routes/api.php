@@ -6,6 +6,7 @@ use App\Http\Controllers\VisitorPController;
 use App\Http\Controllers\VisitorVController;
 use App\Http\Controllers\ChatbotCategorieController;
 use App\Http\Controllers\ChatbotQAController;
+use App\Http\Controllers\ChatBot_InquiryController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\VisitorInfoXapplicantController;
 use App\Http\Controllers\AcademicInterestController;
