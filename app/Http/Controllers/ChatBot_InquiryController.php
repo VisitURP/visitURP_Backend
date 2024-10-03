@@ -30,7 +30,7 @@ class ChatBot_InquiryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'fk_visitorV_id' => 'required|exists:chatbot_categories,id_category',
+            'fk_visitorV_id' => 'required|exists:visitor_v_s,id_visitorV',
             'detail' => 'required|string',
             'state' => 'required|string',
         ]);
