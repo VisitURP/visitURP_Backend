@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('fk_id_visitor');
             $table->unsignedBigInteger('fk_id_academicInterested');
             $table->enum('visitor_type', ['V', 'P']);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
