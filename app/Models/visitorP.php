@@ -15,9 +15,8 @@ class visitorP extends Model
     
     protected $table = 'visitor_p_s';
     protected $primaryKey = 'id_visitorP';
-    protected $fillable = ['name', 'lastName', 'email','fk_docType_id', 'docNumber', 'phone', 'visitDate', 'fk_id_Ubigeo', 
-    'educationalInstitution', 'birthDate',
-        'gender'];
+    protected $fillable = ['name', 'lastName', 'email','fk_docType_id', 'docNumber', 'phone', 'visitDate', 'cod_Ubigeo', 
+    'educationalInstitution', 'birthDate', 'gender'];
 
     public function setVisitDateAttribute($value)
     {

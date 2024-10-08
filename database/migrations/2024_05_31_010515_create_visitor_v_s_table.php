@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('fk_docType_id')->nullable();
             $table->string('documentNumber', 500)->nullable();
             $table->string('phone', 500)->nullable();
-            $table->unsignedBigInteger('fk_id_Ubigeo')->nullable();
+            $table->string('cod_Ubigeo')->nullable();
             $table->string('educationalInstitution', 500)->nullable();
             $table->dateTime('birthDate')->nullable();
             $table->enum('gender', ['F', 'M', 'I'])->nullable();
@@ -27,7 +27,6 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->foreign('fk_docType_id')->references('id_docType')->on('doc_types');
-            $table->foreign('fk_id_Ubigeo')->references('id_Ubigeo')->on('ubigeos');
 
             //falta forgein de Ubigeo
         });

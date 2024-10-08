@@ -23,7 +23,7 @@ class VisitorV extends Model
         'fk_docType_id', 
         'documentNumber', 
         'phone',
-        'fk_id_Ubigeo',
+        'cod_Ubigeo',
         'educationalInstitution',
         'birthDate',
         'gender'

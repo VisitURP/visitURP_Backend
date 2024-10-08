@@ -39,7 +39,7 @@ class VisitorVController extends Controller
             'fk_docType_id' => ['nullable', 'max:100'],
             'documentNumber' => ['nullable','max:500'],
             'phone' => ['nullable','max:500'],
-            'fk_id_Ubigeo' => ['nullable','max:500'],
+            'cod_Ubigeo' => ['nullable','max:500'],
             'educationalInstitution' => ['nullable','max:500'],
            'birthDate' => ['nullable','date_format:d/m/Y'],
             'gender' => 'nullable','in:' . implode(',', [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])
@@ -124,7 +124,7 @@ class VisitorVController extends Controller
             'fk_docType_id' => ['nullable', 'max:100'],
             'documentNumber' => ['nullable','max:500'],
             'phone' => ['nullable','max:500'],
-            'fk_id_Ubigeo' => ['nullable'],
+            'cod_Ubigeo' => ['nullable'],
             'educationalInstitution' => ['nullable','max:500'],
             'birthDate' => ['nullable','date_format:d/m/Y'],
             'gender' => 'nullable','in:' . implode(',', [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])
@@ -153,8 +153,8 @@ class VisitorVController extends Controller
     if ($request->filled('phone')) {
         $visitorV->phone = $request->input('phone');
     }
-    if ($request->filled('fk_id_Ubigeo')) {
-        $visitorV->fk_id_Ubigeo = $request->input('fk_id_Ubigeo');
+    if ($request->filled('cod_Ubigeo')) {
+        $visitorV->cod_Ubigeo = $request->input('cod_Ubigeo');
     }
     if ($request->filled('educationalInstitution')) {
         $visitorV->educationalInstitution = $request->input('educationalInstitution');
