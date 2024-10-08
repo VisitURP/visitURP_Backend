@@ -38,7 +38,7 @@ class VisitorPController extends Controller
             'docNumber' => ['required','max:500'],
             'phone' => ['required','max:500'],
             'visitDate' => ['required','date_format:d/m/y'], // Accept DD/MM/YY format
-            'fk_id_Ubigeo' => ['max:500'],
+            'cod_Ubigeo' => ['max:500'],
             'educationalInstitution' => ['required','max:500'],
             'birthDate' => ['nullable','date_format:d/m/Y'],
             'gender' => 'nullable','in:' . implode(',', [visitorP::TYPE1, visitorP::TYPE2, visitorP::TYPE3])
@@ -78,33 +78,58 @@ class VisitorPController extends Controller
     public function update(Request $request, int $visitorP)
     {
         $request->validate([
-            'name' => ['required', 'max:500'],
-            'lastName' => ['required', 'max:500'],
-            'email' => ['required','email', 'max:500'],
-            'fk_docType_id' => ['required', 'max:100'],
-            'docNumber' => ['required','max:500'],
-            'phone' => ['required','max:500'],
-            'visitDate' => ['required','date_format:d/m/y'], // Accept DD/MM/YY format
-            'fk_id_Ubigeo' => ['required','max:500'],
-            'educationalInstitution' => ['required','max:500'],
+            'name' => ['nullable', 'max:500'],
+            'lastName' => ['nullable', 'max:500'],
+            'email' => ['nullable','email', 'max:500'],
+            'fk_docType_id' => ['nullable', 'max:100'],
+            'docNumber' => ['nullable','max:500'],
+            'phone' => ['nullable','max:500'],
+            'visitDate' => ['nullable','date_format:d/m/y'], // Accept DD/MM/YY format
+            'cod_Ubigeo' => ['nullable'],
+            'educationalInstitution' => ['nullable','max:500'],
             'birthDate' => ['nullable','date_format:d/m/Y'],
-            'gender' => 'nullable','required|in:' . implode(',', [visitorP::TYPE1, visitorP::TYPE2, visitorP::TYPE3])
+            'gender' => 'nullable','in:' . implode(',', [visitorP::TYPE1, visitorP::TYPE2, visitorP::TYPE3])
        
         ]);
 
         $visitorP = visitorP::findOrFail($visitorP);
-        $visitorP-> name = $request['name'];
-        $visitorP->lastName = $request['lastName'];
-        $visitorP-> email = $request['email'];
-        $visitorP-> fk_docType_id = $request['fk_docType_id'];
-        $visitorP-> docNumber = $request['docNumber'];
-        $visitorP-> phone = $request['phone'];
-        $visitorP-> visitDate = $request['visitDate'];
-        $visitorP-> fk_id_Ubigeo = $request['fk_id_Ubigeo'];
-        $visitorP-> educationalInstitution = $request['educationalInstitution'];
-        $visitorP-> birthDate = $request['birthDate'];
-        $visitorP-> gender = $request['gender'];
-        $visitorP-> save();
+         // filled Solo actualiza los campos si no son null
+    if ($request->filled('name')) {
+        $visitorP->name = $request->input('name');
+    }
+    if ($request->filled('email')) {
+        $visitorP->email = $request->input('email');
+    }
+    if ($request->filled('lastName')) {
+        $visitorP->lastName = $request->input('lastName');
+    }
+    if ($request->filled('fk_docType_id')) {
+        $visitorP->fk_docType_id = $request->input('fk_docType_id');
+    }
+    if ($request->filled('docNumber')) {
+        $visitorP->docNumber = $request->input('docNumber');
+    }
+    if ($request->filled('phone')) {
+        $visitorP->phone = $request->input('phone');
+    }
+    if ($request->filled('visitDate')) {
+        $visitorP->visitDate = $request->input('visitDate');
+    }
+    if ($request->filled('cod_Ubigeo')) {
+        $visitorP->cod_Ubigeo = $request->input('cod_Ubigeo');
+    }
+    if ($request->filled('educationalInstitution')) {
+        $visitorP->educationalInstitution = $request->input('educationalInstitution');
+    }
+    if ($request->filled('birthDate')) {
+        $visitorP->birthDate = $request->input('birthDate');
+    }
+    if ($request->filled('gender')) {
+        $visitorP->gender = $request->input('gender');
+    }
+
+    // Guarda los cambios
+    $visitorP->save();
 
         return response()->json([
             'Message' => 'Data already updated.',
