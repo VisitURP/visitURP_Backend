@@ -2,18 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\VisitorInfoxapplicant;
+use App\Models\VisitorInfoXApplicant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Http\JsonResponse;
 
-class VisitorInfoxapplicantController extends Controller
+class VisitorInfoXApplicantController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+     public function syncVisitorInfoXApplicant(): JsonResponse
+    {
+        // Llamada al comando usando Artisan
+        Artisan::call('sync:visitor-infoXapplicant');
+
+        // Opcional: Capturar el resultado del comando y mostrar en la respuesta
+        $output = Artisan::output();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sincronización de VisitorInfoXApplicant ejecutada.',
+            'output' => $output, // Muestra la salida del comando (opcional)
+        ]);
+    }
+
     public function index()
     {
-        $vXa = VisitorInfoXapplicant::all();
-        return response()->json($vXa);
+        $records = VisitorInfoxApplicant::all();
+        return response()->json($records);
     }
 
     /**
@@ -29,14 +47,26 @@ class VisitorInfoxapplicantController extends Controller
      */
     public function store(Request $request)
     {
+        // Validar el request
         $request->validate([
-            'fk_applicant_id' => 'required|exists:applicants',
-            'fk_visitorInfo_id' => 'required|exists:visitor_infos',
+            'fk_id_applicant' => 'nullable',
+            'fk_id_visitor' => 'nullable',
+            'visitor_type' => 'nullable|in:V,P,B',
+            'admitted' => 'boolean',
         ]);
 
-        $Vapplicant = VisitorInfoXapplicant::create($request->all());
+        // Verificar si el registro ya existe basado en fk_id_applicant y fk_id_visitor
+        $existingRecord = VisitorInfoxApplicant::where('fk_id_applicant', $request->fk_id_applicant)
+                            ->where('fk_id_visitor', $request->fk_id_visitor)
+                            ->first();
 
-        return response()->json($Vapplicant, 201);
+        if ($existingRecord) {
+            return response()->json(['message' => 'Registro duplicado'], 409);
+        }
+
+        // Crear el nuevo registro
+        $newRecord = VisitorInfoxApplicant::create($request->all());
+        return response()->json($newRecord, 201);
     }
 
     /**
@@ -44,19 +74,18 @@ class VisitorInfoxapplicantController extends Controller
      */
     public function show(int $id)
     {
-        $vXa = VisitorInfoXapplicant::find($id);
-
-        if (!$vXa) {
-            return response()->json(['message' => 'Visitor x Applicant not found'], 404);
+        $record = VisitorInfoxApplicant::find($id);
+        if ($record) {
+            return response()->json($record);
+        } else {
+            return response()->json(['message' => 'Registro no encontrado'], 404);
         }
-
-        return response()->json($vXa);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(VisitorInfoXapplicant $visitorInfoXapplicant)
+    public function edit(VisitorInfoXApplicant $visitorInfoXApplicant)
     {
         //
     }
@@ -66,20 +95,21 @@ class VisitorInfoxapplicantController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        $Vapplicant = Applicant::find($id);
+        $record = VisitorInfoxApplicant::find($id);
 
-        if (!$Vapplicant) {
-            return response()->json(['message' => 'Visitor info x Applicant not found'], 404);
+        if (!$record) {
+            return response()->json(['message' => 'Registro no encontrado'], 404);
         }
 
+        // Validar el request
         $request->validate([
-            'fk_applicant_id' => 'required|exists:applicants',
-            'fk_visitorInfo_id' => 'required|exists:visitor_infos',
+            'visitor_type' => 'nullable|in:V,P,B',
+            'admitted' => 'boolean',
         ]);
 
-        $Vapplicant->update($request->all());
-
-        return response()->json($Vapplicant);
+        // Actualizar el registro
+        $record->update($request->all());
+        return response()->json($record);
     }
 
     /**
@@ -87,14 +117,13 @@ class VisitorInfoxapplicantController extends Controller
      */
     public function destroy(int $id)
     {
-        $Vapplicant = VisitorInfoXapplicant::find($id);
+        $record = VisitorInfoxApplicant::find($id);
 
-        if (!$Vapplicant) {
-            return response()->json(['message' => 'Visitor X Applicant not found'], 404);
+        if (!$record) {
+            return response()->json(['message' => 'Registro no encontrado'], 404);
         }
 
-        $Vapplicant->delete();
-
-        return response()->json(['message' => 'Visitor X Applicant deleted successfully']);
+        $record->delete();
+        return response()->json(['message' => 'Registro eliminado']);
     }
 }
