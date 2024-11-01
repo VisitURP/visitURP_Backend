@@ -202,6 +202,8 @@ Route::put('update-semester/{id_semester}', [SemesterController::class, 'update'
 Route::delete('delete-semester/{id_semester}', [SemesterController::class, 'destroy']);
 
 //visitorPreferences table
+Route::get('getPreferencesByVisitorId/{id}', [VisitorPreferenceController::class, 'getPreferencesByVisitorId']);
+
 Route::post('register-visitorPreference', [VisitorPreferenceController::class, 'store']);
 
 Route::get('list-visitorPreference', [VisitorPreferenceController::class, 'index']);
