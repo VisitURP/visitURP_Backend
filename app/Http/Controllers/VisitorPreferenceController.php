@@ -10,6 +10,26 @@ class VisitorPreferenceController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function getPreferencesByVisitorId($id_visitor)
+    {
+        // Obtiene las preferencias específicas del visitante
+        $preferences = VisitorPreference::where('fk_id_visitor', $id_visitor)->get();
+
+        // Verifica si se encontraron preferencias
+        if ($preferences->isEmpty()) {
+            return response()->json([
+                
+                'message' => 'No se encontraron preferencias para este visitante.'
+            ], 404);
+        }
+
+        return response()->json([
+            
+            $preferences
+        ]);
+    }
+
     public function index()
     {
         $details = VisitorPreference::all();
