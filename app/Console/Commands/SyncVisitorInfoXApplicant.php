@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\VisitorInfoXapplicant;
 use App\Models\VisitorV;
-use App\Models\VisitorP;
+use App\Models\visitorP;
 use App\Models\Applicant;
 
 class SyncVisitorInfoXApplicant extends Command
@@ -36,7 +36,6 @@ class SyncVisitorInfoXApplicant extends Command
     $recorrerlista = 0;
     $vPointer = 0;
     $pPointer = 0;
-    $aPointer = 0;
 
     while ($vPointer < count($visitorVList) || $pPointer < count($visitorPList)) {
         // Asegúrate de que $vPointer y $pPointer están dentro de los límites
@@ -133,96 +132,103 @@ class SyncVisitorInfoXApplicant extends Command
         $this->info("pPointer: {$pPointer} como Presencial (P)");
     }
     
-    $uniqueIndex = 0;
+    // Sincronización de UniqueDocs y Applicants
+$uniqueIndex = 0;
+$aPointer = 0;
 
-    while ($aPointer < count($applicants)) {
-        // Asegúrate de que $vPointer y $pPointer están dentro de los límites
-        $docA = $aPointer < count($applicants) ? $applicants[$aPointer]->documentNumber : null;
-        $this->info("Puntero aPointer: {$aPointer}, Total applicants: " . count($applicants));
-        $this->info("docA: {$docA}");
+while ($aPointer < count($applicants) || $uniqueIndex < count($uniqueDocs)) {
+    $docA = $aPointer < count($applicants) ? $applicants[$aPointer]->documentNumber : null;
+    $uniqueDoc = $uniqueIndex < count($uniqueDocs) ? $uniqueDocs[$uniqueIndex] : null;
+    $docU = $uniqueDoc['document'] ?? null;
+
+    if ($docA !== null && ($docU === null || $docA < $docU)) {
+        // Procesa `applicant` si su documento es menor
+        $this->updateOrCreateVisitorInfo($applicants[$aPointer], null);
+        $aPointer++;
+        $this->info("docA: {$docA} ");
+        $this->info("docU: {$docU} ");            
+        $this->info("Aplicante agregado: {$docA}");
+
+
+    } elseif ($docU !== null && ($docA === null || $docU < $docA)) {
+        // Procesa `uniqueDoc` si su documento es menor
+        $this->updateOrCreateVisitorInfo(null, $uniqueDoc);
+        $uniqueIndex++;
         
-        $applicant = $applicants[$aPointer] ?? null;
-        // $docA = $applicant->documentNumber;
-    
-        
-            if($docA === $uniqueDocs[$uniqueIndex]['document'])
-            {
-                // Si son iguales, registrar en VisitorInfoXapplicant
-                $this->updateOrCreateVisitorInfo($applicant, $uniqueDocs[$uniqueIndex]);
-                $aPointer++;
-                $uniqueIndex++;
+        $this->info("docU: {$docU} ");
+        $this->info("docA: {$docA} ");
+        $this->info("visitante agregado: {$docU}");
 
-                $this->info("uniqueIndex: {$uniqueIndex} ");
-                    $this->info("docA: {$docA} ");
-                    $this->info("Documento: " . $uniqueDocs[$uniqueIndex]['document']);
-                    $this->info("aPointer: {$aPointer}");
-            }
-            else
-            {
-                if($docA < $uniqueDocs[$uniqueIndex]['document'])
-                {
-                    
-                    $this->updateOrCreateVisitorInfo($applicant, $uniqueDocs[$uniqueIndex]);
-                    $aPointer++;
 
-                    $this->info("uniqueIndex: {$uniqueIndex} ");
-                    $this->info("docA: {$docA} ");
-                    $this->info("Documento: " . $uniqueDocs[$uniqueIndex]['document']);
-                    $this->info("aPointer: {$aPointer}");
-                }
-                else
-                {
-                    if($docA < $uniqueDocs[$uniqueIndex]['document'])
-                    {
-                        $this->updateOrCreateVisitorInfo($applicant, $uniqueDocs[$uniqueIndex]);
-                        $uniqueIndex++;
+    } elseif ($docA === $docU) {
+        // Coincidencia exacta
+        $this->updateOrCreateVisitorInfo($applicants[$aPointer], $uniqueDoc);
+        $uniqueIndex++;
+        $aPointer++;
+        $this->info("coincidencia agregada: {$docU}");
 
-                       $this->info("uniqueIndex: {$uniqueIndex} ");
-                       $this->info("docA: {$docA} ");
-                       $this->info("Documento: " . $uniqueDocs[$uniqueIndex]['document']);
-                       $this->info("aPointer: {$aPointer}");
-                    }
-                }
-            }
-        
-     
-            while ($uniqueIndex < count($uniqueDocs)) {
-                // Aquí podrías manejar el caso en que los uniqueDocs se han agotado
-                $this->updateOrCreateVisitorInfo(null, $uniqueDocs[$uniqueIndex]);
-                
-                $uniqueIndex++;
-
-                $this->info("uniqueIndex: {$uniqueIndex} ");
-                       $this->info("docA: {$docA} ");
-                       $this->info("Documento: " . $uniqueDocs[$uniqueIndex]['document']);
-                       $this->info("aPointer: {$aPointer}");
-                break;
-            }
-        
-
-    } 
-
-    $this->info("Todos los documentos únicos han sido procesados.");
-        
-
-}
-  
-    
-    protected function updateOrCreateVisitorInfo($applicant, $uniqueDoc)
-    {
-        VisitorInfoXapplicant::updateOrCreate(
-            [
-                'fk_id_applicant' => $applicant->id_applicant ?? null,
-                'fk_id_visitor' => $uniqueDoc['fk_id_visitor'],
-            ],
-            [
-                'visitor_type' => $uniqueDoc['visitor_type'],
-                'admitted' => $applicant->admitted ?? false,
-            ]
-        );
-
-        $this->info("Registro actualizado o creado para documento {$uniqueDoc['document']} con fk_id_visitor {$uniqueDoc['fk_id_visitor']}.");
     }
-} 
+}
+
+            while ($uniqueIndex < count($uniqueDocs)) {
+            // Aquí podrías manejar el caso en que los uniqueDocs se han agotado
+            $this->updateOrCreateVisitorInfo(null, $uniqueDocs[$uniqueIndex]);
+                    
+            $uniqueIndex++;
+            
+            $this->info("uniqueIndex: {$uniqueIndex} ");
+            $this->info("docA: {$docA} ");
+            $this->info("aPointer: {$aPointer}");
+                    
+        }
+            
+            
+            while ($aPointer < count($applicants)) {
+            $docA = $applicants[$aPointer]->documentNumber;
+           
+            
+            // Registrar en VisitorInfoXapplicant si el aplicante no coincide con ningún visitante
+            // Si es necesario, podrías hacer una verificación adicional aquí
+            $this->updateOrCreateVisitorInfo($applicants[$aPointer], null); // Asumiendo que la función permite un segundo parámetro nulo
+            
+                    $this->info("Aplicante agregado: {$docA}");
+                    $aPointer++;
+                
+        }
+    }
+            
+            protected function updateOrCreateVisitorInfo($applicant, $uniqueDoc)
+            {
+                // Verificar si el documento único es nulo o no tiene `fk_id_visitor`
+                if (is_null($uniqueDoc) || !isset($uniqueDoc['fk_id_visitor'])) {
+                
+                    VisitorInfoXapplicant::firstOrCreate(
+                        [
+                            'fk_id_applicant' => $applicant->id_applicant,
+                            'fk_id_visitor' => null,
+                        ],
+                        [
+                            'visitor_type' => 'NV',
+                            'admitted' => $applicant->admitted,
+                        ]
+                    );
+                }
+
+                VisitorInfoXapplicant::firstOrCreate(
+                    [
+                        'fk_id_applicant' => $applicant->id_applicant ?? null,
+                        'fk_id_visitor' => $uniqueDoc['fk_id_visitor'] ?? null,
+                    ],
+                    [
+                        'visitor_type' => $uniqueDoc['visitor_type'] ?? 'NV',
+                        'admitted' => $applicant->admitted ?? false,
+                    ]
+                );
+
+               
+            }
+
+    }         
+
 
 

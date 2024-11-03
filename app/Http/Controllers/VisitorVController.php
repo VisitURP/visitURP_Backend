@@ -3,16 +3,42 @@
 namespace App\Http\Controllers;
 
 use App\Models\VisitorV;
+use App\Models\visitorP;
 use App\Models\VisitV;
 use App\Models\Semester;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VisitorVController extends Controller
 {
+    public function getVisitorsByGender($gender) 
+    {
+    // Validar que el género ingresado sea uno de los valores permitidos
+    if (!in_array($gender, [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])) {
+        return response()->json(['error' => 'Género no válido. Use F, M o NA.'], 400);
+    }
+
+    // Contar visitantes virtuales por género específico
+    $virtualCount = VisitorV::where('gender', $gender)->count();
+    
+    // Contar visitantes presenciales por género específico
+    $physicalCount = visitorP::where('gender', $gender)->count();
+
+    // Sumar los resultados
+    $totalByGender = $virtualCount + $physicalCount;
+
+    // Devolver el resultado en formato JSON
+    return response()->json([
+        'gender' => $gender,
+        'total_visitors' => $totalByGender
+    ]);
+    }
+
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         $details = VisitorV::all();
@@ -83,15 +109,15 @@ class VisitorVController extends Controller
     }
 
     public function assignSemester($createdAt)
-{
-    // Busca el semestre correspondiente basado en la fecha de creación
-    $semester = Semester::where('until', '>=', $createdAt)
+    {
+        // Busca el semestre correspondiente basado en la fecha de creación
+        $semester = Semester::where('until', '>=', $createdAt)
                         ->orderBy('until', 'asc')
                         ->first();
 
-    // Retorna el id del semestre
-    return $semester ? $semester->id_semester : null;
-}
+        // Retorna el id del semestre
+        return $semester ? $semester->id_semester : null;
+    }
 
     /**
      * Display the specified resource.

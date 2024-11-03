@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\visitorP;
 use Illuminate\Http\Request;
+// use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class VisitorPController extends Controller
 {
