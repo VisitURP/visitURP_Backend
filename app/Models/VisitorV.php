@@ -9,9 +9,9 @@ use Carbon\Carbon;
 class VisitorV extends Model
 {
     use SoftDeletes;
-    const TYPE1 = 'V';
-    const TYPE2 = 'P';
-    const TYPE3 = 'I';
+    const TYPE1 = 'F';
+    const TYPE2 = 'M';
+    const TYPE3 = 'NA';
 
     protected $table = 'visitor_v_s';
     protected $primaryKey = 'id_visitorV';

@@ -10,6 +10,34 @@ class ChatBot_InquiryController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function markSpecificVisitorsAsAnswered($id_inquiry)
+    {
+        $updatedRows = ChatbotInquiry::where('state', 'To Answer')
+                                        ->where('id_inquiry', $id_inquiry)
+                                        ->update(['state' => 'Answered']);
+
+         return response()->json(['updated_count' => $updatedRows]);
+    }
+
+    public function countInquiryNonAnswered()
+    {
+        $count = ChatbotInquiry::where('state', 'To Answer')->count();
+
+        return response()->json($count);
+    
+    }
+
+    public function countInquiryAnswered()
+    {
+        $count = ChatbotInquiry::where('state', 'Answered')->count();
+
+        return response()->json($count);
+    
+    }
+    
+
+
     public function index()
     {
         $QA = ChatbotInquiry::all();

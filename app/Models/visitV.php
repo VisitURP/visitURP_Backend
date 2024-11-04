@@ -11,13 +11,7 @@ class visitV extends Model
     use SoftDeletes;
     protected $table = 'visit_v_s';
     protected $primaryKey = 'id_visitV';
-    protected $fillable = ['fk_id_visitorV','fk_id_semester'];
-
-
-    public function visitorV()
-    {
-        return $this->belongsTo(VisitorV::class, 'fk_id_visitorV');
-    }
+    protected $fillable = ['fk_id_visitor','visitor_type', 'fk_id_semester'];
 
     public function visitVDetail()
     {

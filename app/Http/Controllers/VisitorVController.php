@@ -3,16 +3,42 @@
 namespace App\Http\Controllers;
 
 use App\Models\VisitorV;
-use App\Models\VisitV;
+use App\Models\visitorP;
+use App\Models\visitV;
 use App\Models\Semester;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VisitorVController extends Controller
 {
+    public function getVisitorsByGender($gender) 
+    {
+    // Validar que el género ingresado sea uno de los valores permitidos
+    if (!in_array($gender, [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])) {
+        return response()->json(['error' => 'Género no válido. Use F, M o NA.'], 400);
+    }
+
+    // Contar visitantes virtuales por género específico
+    $virtualCount = VisitorV::where('gender', $gender)->count();
+    
+    // Contar visitantes presenciales por género específico
+    $physicalCount = visitorP::where('gender', $gender)->count();
+
+    // Sumar los resultados
+    $totalByGender = $virtualCount + $physicalCount;
+
+    // Devolver el resultado en formato JSON
+    return response()->json([
+        'gender' => $gender,
+        'total_visitors' => $totalByGender
+    ]);
+    }
+
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         $details = VisitorV::all();
@@ -41,7 +67,7 @@ class VisitorVController extends Controller
             'phone' => ['nullable','max:500'],
             'cod_Ubigeo' => ['nullable','max:500'],
             'educationalInstitution' => ['nullable','max:500'],
-           'birthDate' => ['nullable','date_format:d/m/Y'],
+            'birthDate' => ['nullable','date_format:d/m/Y'],
             'gender' => 'nullable','in:' . implode(',', [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])
         ]);
 
@@ -53,11 +79,13 @@ class VisitorVController extends Controller
             $existingVisitor->update(array_filter($validatedData));
 
             $visitV = VisitV::create([
-               'fk_id_visitorV' => $existingVisitor->id_visitorV,
+               'fk_id_visitor' => $existingVisitor->id_visitorV,
+               'visitor_type' => 'V',
                'fk_id_semester' => $this->assignSemester($existingVisitor->created_at),
             ]);
-        // Retorna los datos del visitante existente para que Unity los muestre en el modal
-        return response()->json([
+
+            // Retorna los datos del visitante existente para que Unity los muestre en el modal
+            return response()->json([
             'isNewVisitor' => false,
             'visitorV' => $existingVisitor,
             'visitV' => $visitV,
@@ -68,30 +96,31 @@ class VisitorVController extends Controller
         $visitorV = VisitorV::create($validatedData);
         
         $visitV = VisitV::create([
-            'fk_id_visitorV' => $visitorV->id_visitorV,
+            'fk_id_visitor' => $visitorV->id_visitorV,
+            'visitor_type' => 'V',
             'fk_id_semester' => $this->assignSemester($visitorV->created_at),
         ]);
 
     // Retornar la respuesta con los datos del visitante y de la visita
-    return response()->json([
-        'isNewVisitor' => true,
-        'visitorV' => $visitorV,
-        'visitV' => $visitV,
-    ], 201);
+        return response()->json([
+            'isNewVisitor' => true,
+            'visitorV' => $visitorV,
+            'visitV' => $visitV,
+        ], 201);
 
        }
     }
 
     public function assignSemester($createdAt)
-{
-    // Busca el semestre correspondiente basado en la fecha de creación
-    $semester = Semester::where('until', '>=', $createdAt)
+    {
+        // Busca el semestre correspondiente basado en la fecha de creación
+        $semester = Semester::where('until', '>=', $createdAt)
                         ->orderBy('until', 'asc')
                         ->first();
 
-    // Retorna el id del semestre
-    return $semester ? $semester->id_semester : null;
-}
+        // Retorna el id del semestre
+        return $semester ? $semester->id_semester : null;
+    }
 
     /**
      * Display the specified resource.

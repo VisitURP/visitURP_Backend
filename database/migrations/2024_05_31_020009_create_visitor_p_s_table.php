@@ -19,7 +19,6 @@ return new class extends Migration
             $table->unsignedBigInteger('fk_docType_id')->nullable();
             $table->string('docNumber', 500)->nullable();
             $table->string('phone', 500)->nullable();
-            $table->dateTime('visitDate')->nullable();
             $table->string('cod_Ubigeo')->nullable();
             $table->string('educationalInstitution', 500)->nullable();
             $table->dateTime('birthDate')->nullable();

@@ -260,3 +260,36 @@ Route::delete('delete-ubigeo/{id}', [UbigeoController::class, 'destroy']);
 // Route::post('/import-ubigeos', [ImportController::class, 'importUbigeos'])->name('import.ubigeos');
 Route::get('import-ubigeos', [ImportController::class, 'importUbigeos']);
 
+
+//Dashboard
+Route::get('total-visitors', [VisitorInfoXApplicantController::class, 'getTotalVisitors']);
+
+Route::get('visitors/gender/{gender}', [VisitorVController::class, 'getVisitorsByGender']);
+
+Route::get('visitorsInfo/gender/{gender}', [VisitorInfoXApplicantController::class, 'getVisitorInfosByGender']);
+
+Route::get('visitors/admitted', [VisitorInfoXApplicantController::class, 'getAdmittedVisitors']);
+
+Route::get('visitors/non-admitted', [VisitorInfoXApplicantController::class, 'getNonAdmittedVisitors']);
+
+Route::get('visitors/residence/{code_ubigeo}', [VisitorInfoXApplicantController::class, 'getVisitorsByResidence']);
+
+Route::get('academic-interests/count', [VisitorPreferenceController::class, 'getAcademicInterestCounts']);
+
+Route::get('inquiries/{id_inquiry}', [ChatBot_InquiryController::class, 'markSpecificVisitorsAsAnswered']);
+
+Route::get('inquiries-ToAnswer', [ChatBot_InquiryController::class, 'countInquiryNonAnswered']);
+
+Route::get('inquiries-Answered', [ChatBot_InquiryController::class, 'countInquiryAnswered']);
+
+Route::get('getVisitorBySemester/{semesterName}', [VisitorInfoXApplicantController::class, 'getVisitorsBySemester']);
+
+
+
+Route::get('visitors/monthly', [VisitorPController::class, 'getMonthlyPhysicalVisitors']);
+
+Route::get('visitors/semester/{id_semester}', [VisitorVController::class, 'getVisitorsBySemester']);
+
+
+
+

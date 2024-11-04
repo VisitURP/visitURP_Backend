@@ -11,6 +11,20 @@ class VisitorPreferenceController extends Controller
      * Display a listing of the resource.
      */
 
+     public function getAcademicInterestCounts()
+    {
+        $interestCounts = VisitorPreference::select('academic_interests.academicInterestName as career_name')
+        ->selectRaw('COUNT(*) as count')
+        ->join('academic_interests', 'visitor_preferences.fk_id_academicInterested', '=', 'academic_interests.id_academicInterest')
+        ->groupBy('fk_id_academicInterested', 'academic_interests.academicInterestName')
+        ->get();
+
+        // Formato de respuesta JSON
+        return response()->json([
+        'academic_interests' => $interestCounts
+        ]);
+    }
+
     public function getPreferencesByVisitorId($id_visitor)
     {
         // Obtiene las preferencias específicas del visitante
