@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\VisitorV;
 use App\Models\visitorP;
-use App\Models\VisitV;
+use App\Models\visitV;
 use App\Models\Semester;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
@@ -67,7 +67,7 @@ class VisitorVController extends Controller
             'phone' => ['nullable','max:500'],
             'cod_Ubigeo' => ['nullable','max:500'],
             'educationalInstitution' => ['nullable','max:500'],
-           'birthDate' => ['nullable','date_format:d/m/Y'],
+            'birthDate' => ['nullable','date_format:d/m/Y'],
             'gender' => 'nullable','in:' . implode(',', [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])
         ]);
 
@@ -79,11 +79,13 @@ class VisitorVController extends Controller
             $existingVisitor->update(array_filter($validatedData));
 
             $visitV = VisitV::create([
-               'fk_id_visitorV' => $existingVisitor->id_visitorV,
+               'fk_id_visitor' => $existingVisitor->id_visitorV,
+               'visitor_type' => 'V',
                'fk_id_semester' => $this->assignSemester($existingVisitor->created_at),
             ]);
-        // Retorna los datos del visitante existente para que Unity los muestre en el modal
-        return response()->json([
+
+            // Retorna los datos del visitante existente para que Unity los muestre en el modal
+            return response()->json([
             'isNewVisitor' => false,
             'visitorV' => $existingVisitor,
             'visitV' => $visitV,
@@ -94,16 +96,17 @@ class VisitorVController extends Controller
         $visitorV = VisitorV::create($validatedData);
         
         $visitV = VisitV::create([
-            'fk_id_visitorV' => $visitorV->id_visitorV,
+            'fk_id_visitor' => $visitorV->id_visitorV,
+            'visitor_type' => 'V',
             'fk_id_semester' => $this->assignSemester($visitorV->created_at),
         ]);
 
     // Retornar la respuesta con los datos del visitante y de la visita
-    return response()->json([
-        'isNewVisitor' => true,
-        'visitorV' => $visitorV,
-        'visitV' => $visitV,
-    ], 201);
+        return response()->json([
+            'isNewVisitor' => true,
+            'visitorV' => $visitorV,
+            'visitV' => $visitV,
+        ], 201);
 
        }
     }

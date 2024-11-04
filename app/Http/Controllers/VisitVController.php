@@ -18,7 +18,8 @@ class VisitVController extends Controller
         $data = $visit_V->map(function($visit_V){
             return [
                 'id_visitV' => $visit_V -> id_visitV,
-                'fk_id_visitorV' => $visit_V -> fk_id_visitorV,
+                'fk_id_visitor' => $visit_V -> fk_id_visitorV,
+                'visitor_type' => $visit_V -> visitor_type,
                 'fk_id_semester' => $visit_V -> fk_id_semester,
             ];
         });
@@ -43,7 +44,7 @@ class VisitVController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'fk_id_visitorV' => ['required', 'max:500'],
+            'fk_id_visitor' => ['required', 'max:500'],
         ]);
 
         $visitV = visitV::create($validatedData);
@@ -79,10 +80,12 @@ class VisitVController extends Controller
     {
         $request->validate([
             'fk_id_visitorV' => ['required', 'max:500'],
+            'visitor_type' => ['required'],
         ]);
 
         $visitV = visitV::findOrFail($visitV);
-        $visitV-> fk_id_visitorV = $request['fk_id_visitorV'];
+        $visitV-> fk_id_visitor = $request['fk_id_visitor'];
+        $visitV-> visitor_type = $request['visitor_type'];
         $visitV-> save();
 
         return response()->json([

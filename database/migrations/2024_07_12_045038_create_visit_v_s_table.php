@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('visit_v_s', function (Blueprint $table) {
             $table->id('id_visitV');
-            $table->unsignedBigInteger('fk_id_visitorV');
+            $table->unsignedBigInteger('fk_id_visitor');
+            $table->enum('visitor_type', ['V', 'P', 'B'])->nullable(); 
             $table->unsignedBigInteger('fk_id_semester')->nullable();
-            $table->foreign('fk_id_visitorV')->references('id_visitorV')->on('visitor_v_s');    
+            // $table->foreign('fk_id_visitorV')->references('id_visitorV')->on('visitor_v_s');    
             $table->foreign('fk_id_semester')->references('id_semester')->on('semesters');
             $table->timestamps();
             $table->softDeletes();

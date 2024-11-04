@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\visitorP;
+use App\Models\visitV;
+use App\Models\Semester;
 use Illuminate\Http\Request;
-// use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class VisitorPController extends Controller
@@ -39,7 +40,6 @@ class VisitorPController extends Controller
             'fk_docType_id' => ['required', 'max:100'],
             'docNumber' => ['required','max:500'],
             'phone' => ['required','max:500'],
-            'visitDate' => ['required','date_format:d/m/y'], // Accept DD/MM/YY format
             'cod_Ubigeo' => ['max:500'],
             'educationalInstitution' => ['required','max:500'],
             'birthDate' => ['nullable','date_format:d/m/Y'],
@@ -48,10 +48,29 @@ class VisitorPController extends Controller
 
         
         $visitorP = visitorP::create($validatedData);
-        
-        return response()->json($visitorP, 201);
 
-        
+        $visitV = visitV::create([
+            'fk_id_visitor' => $visitorP->id_visitorP,
+            'visitor_type' => 'P',
+            'fk_id_semester' => $this->assignSemester($visitorP->created_at),
+        ]);
+
+        // Retorna los datos del visitante existente para que Unity los muestre en el modal
+        return response()->json([
+            'visitorP' => $visitorP,
+            'visitV' => $visitV, 
+        ]);       
+    }
+
+    public function assignSemester($createdAt)
+    {
+        // Busca el semestre correspondiente basado en la fecha de creación
+        $semester = Semester::where('until', '>=', $createdAt)
+                        ->orderBy('until', 'asc')
+                        ->first();
+
+        // Retorna el id del semestre
+        return $semester ? $semester->id_semester : null;
     }
 
     /**
@@ -86,7 +105,6 @@ class VisitorPController extends Controller
             'fk_docType_id' => ['nullable', 'max:100'],
             'docNumber' => ['nullable','max:500'],
             'phone' => ['nullable','max:500'],
-            'visitDate' => ['nullable','date_format:d/m/y'], // Accept DD/MM/YY format
             'cod_Ubigeo' => ['nullable'],
             'educationalInstitution' => ['nullable','max:500'],
             'birthDate' => ['nullable','date_format:d/m/Y'],
@@ -113,9 +131,6 @@ class VisitorPController extends Controller
     }
     if ($request->filled('phone')) {
         $visitorP->phone = $request->input('phone');
-    }
-    if ($request->filled('visitDate')) {
-        $visitorP->visitDate = $request->input('visitDate');
     }
     if ($request->filled('cod_Ubigeo')) {
         $visitorP->cod_Ubigeo = $request->input('cod_Ubigeo');
