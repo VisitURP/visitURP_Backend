@@ -21,4 +21,18 @@ class VisitorPreference extends Model
         'fk_id_academicInterested', 
         'visitor_type',
     ];
+
+    public function academicInterest()
+    {
+        return $this->belongsTo(AcademicInterest::class, 'fk_id_academicInterested', 'id_academicInterest');
+    }
+
+    public function visitor()
+    {
+        if ($this->visitor_type == 'V') {
+            return $this->belongsTo(VisitorV::class, 'fk_id_visitor');
+        } elseif ($this->visitor_type == 'P') {
+            return $this->belongsTo(visitorP::class, 'fk_id_visitor');
+        }
+    }
 }

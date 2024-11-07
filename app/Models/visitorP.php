@@ -32,4 +32,16 @@ class visitorP extends Model
     {
         return $this->hasMany(docType::class, 'fk_docType_id');
     }
+
+    public function visitorPreferences()
+    {
+        return $this->hasMany(VisitorPreference::class, 'fk_id_visitor');
+    }
+
+    public function ubigeo()
+    {
+        return $this->hasOne(Ubigeo::class, 'cod_Ubigeo', 'cod_Ubigeo');
+    }
+
+    
 }
