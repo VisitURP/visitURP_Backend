@@ -202,8 +202,6 @@ Route::put('update-semester/{id_semester}', [SemesterController::class, 'update'
 Route::delete('delete-semester/{id_semester}', [SemesterController::class, 'destroy']);
 
 //visitorPreferences table
-Route::get('getPreferencesByVisitorId/{id}', [VisitorPreferenceController::class, 'getPreferencesByVisitorId']);
-
 Route::post('register-visitorPreference', [VisitorPreferenceController::class, 'store']);
 
 Route::get('list-visitorPreference', [VisitorPreferenceController::class, 'index']);
@@ -284,6 +282,11 @@ Route::get('inquiries-Answered', [ChatBot_InquiryController::class, 'countInquir
 
 Route::get('getVisitorBySemester/{semesterName}', [VisitorInfoXApplicantController::class, 'getVisitorsBySemester']);
 
+
+//visitAll_v2
+Route::get('getPreferencesByVisitorId/{id}', [VisitorPreferenceController::class, 'getPreferencesByVisitorId']);
+
+Route::delete('deletevisitorPreference/{fk_id_visitor}/{fk_id_academicInterest}', [VisitorPreferenceController::class, 'deletePreference']);
 
 
 Route::get('visitors/monthly', [VisitorPController::class, 'getMonthlyPhysicalVisitors']);

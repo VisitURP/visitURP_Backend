@@ -14,7 +14,7 @@ class VisitorPreference extends Model
     const TYPE1 = 'V';
     const TYPE2 = 'P';
 
-    protected $primarykey = 'id_visitorPreference';
+    protected $primaryKey = 'id_visitorPreference';
 
     protected $fillable = [
         'fk_id_visitor', 
