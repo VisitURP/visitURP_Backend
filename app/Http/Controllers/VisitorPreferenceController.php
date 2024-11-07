@@ -28,7 +28,7 @@ class VisitorPreferenceController extends Controller
     public function getPreferencesByVisitorId($id_visitor)
     {
         // Obtiene las preferencias específicas del visitante
-        $preferences = VisitorPreference::where('fk_id_visitor', $id_visitor)->get();
+        $preferences = VisitorPreference::where('fk_id_visitor', $id_visitor)->orWhere('visitor_type', 'V')->get();
 
         // Verifica si se encontraron preferencias
         if ($preferences->isEmpty()) {
@@ -43,6 +43,27 @@ class VisitorPreferenceController extends Controller
             $preferences
         ]);
     }
+
+    public function deletePreference($id_visitor, $fk_id_academicInterest)
+{
+    $preference = VisitorPreference::where('fk_id_visitor', $id_visitor)
+                                   ->where('fk_id_academicInterested', $fk_id_academicInterest)
+                                   ->first();
+
+    if (!$preference) {
+        return response()->json([
+            'message' => 'No se encontró la preferencia para este visitante y el interés académico.'
+        ], 404);
+    }
+
+    // Elimina la preferencia
+    $preference->delete();
+
+    return response()->json([
+        'message' => 'Preferencia eliminada correctamente.'
+    ], 200);
+}
+
 
     public function index()
     {
