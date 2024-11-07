@@ -28,7 +28,7 @@ class VisitorPreferenceController extends Controller
     public function getPreferencesByVisitorId($id_visitor)
     {
         // Obtiene las preferencias específicas del visitante
-        $preferences = VisitorPreference::where('fk_id_visitor', $id_visitor)->get();
+        $preferences = VisitorPreference::where('fk_id_visitor', $id_visitor)->orWhere('visitor_type', 'V')->get();
 
         // Verifica si se encontraron preferencias
         if ($preferences->isEmpty()) {
