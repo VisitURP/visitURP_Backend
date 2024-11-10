@@ -9,7 +9,7 @@ class Semester extends Model
 {
     use SoftDeletes;
     protected $table = 'semesters';
-    protected $primaryKey = 'id_semester';
-    protected $fillable = ['semesterName', 'until', ];
+    protected $primaryKey = 'semesterName';
+    protected $fillable = ['semesterName', 'semesterUntil'];
 
 }

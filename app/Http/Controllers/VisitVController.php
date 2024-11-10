@@ -20,7 +20,7 @@ class VisitVController extends Controller
                 'id_visitV' => $visit_V -> id_visitV,
                 'fk_id_visitor' => $visit_V -> fk_id_visitorV,
                 'visitor_type' => $visit_V -> visitor_type,
-                'fk_id_semester' => $visit_V -> fk_id_semester,
+                'fk_semesterName' => $visit_V -> fk_semesterName,
             ];
         });
 

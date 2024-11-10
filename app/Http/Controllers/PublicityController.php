@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Semester;
+use App\Models\Publicity;
 use Illuminate\Http\Request;
 
-class SemesterController extends Controller
+class PublicityController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $details = Semester::all();
+        $details = Publicity::all();
         return response()->json($details);
     }
 
@@ -30,11 +30,11 @@ class SemesterController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'semesterName' => 'required|regex:/202[0-5]-[0-2]/|max:255|string',
-            'semesterUntil' => 'required|date_format:Y-m-d H:i:s',
+            'title' => 'required',
+            'url' => 'required',
         ]);
 
-        $detail = Semester::create($validated);
+        $detail = Publicity::create($validated);
 
         return response()->json($detail, 201);
     }
@@ -42,12 +42,11 @@ class SemesterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $semesterName)
+    public function show(string $id)
     {
-        $semester = Semester::findOrFail($semesterName);
-        $semester->semesterName = strtoupper($semester->semesterName);
+        $pub = Publicity::findOrFail($id);
         return response()->json([
-            $semester
+            $pub
         ] 
         );
     }
@@ -55,7 +54,7 @@ class SemesterController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Semester $semester)
+    public function edit(Publicity $semester)
     {
         //
     }
@@ -63,31 +62,31 @@ class SemesterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $sem)
+    public function update(Request $request, string $pub)
     {
         $request->validate([
-            'semesterName' => ['required', 'regex:/202[0-5]-[0-2]/','max:255','string'],
-            'semesterUntil' => 'required|date_format:Y-m-d H:i:s',
+            'title' => 'required',
+            'url' => 'required',
         ]);
 
-        $sem = Semester::findOrFail($sem);
-        $sem-> semesterName = $request['semesterName'];
-        $sem-> semesterUntil = $request['semesterUntil'];
-        $sem-> save();
+        $pub = Publicity::findOrFail($pub);
+        $pub-> title = $request['title'];
+        $pub-> url = $request['url'];
+        $pub-> save();
 
         return response()->json([
             'Message' => 'Data already updated.',
-            'Semester: ' => $sem
+            'Publicity: ' => $pub
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $semesterName)
+    public function destroy(string $id)
     {
-        $sem = Semester::findOrFail($semesterName);
-        $sem -> delete();
+        $pub = Publicity::findOrFail($id);
+        $pub -> delete();
 
         return response()->json([
             'Message' => 'Semester deleted successfully.'

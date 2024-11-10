@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id('id_visitV');
             $table->unsignedBigInteger('fk_id_visitor');
             $table->enum('visitor_type', ['V', 'P', 'B'])->nullable(); 
-            $table->unsignedBigInteger('fk_id_semester')->nullable();
+            $table->string('fk_semesterName');
             // $table->foreign('fk_id_visitorV')->references('id_visitorV')->on('visitor_v_s');    
-            $table->foreign('fk_id_semester')->references('id_semester')->on('semesters');
+            $table->foreign('fk_semesterName')->references('semesterName')->on('semesters')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,8 +29,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('visit_v_s', function (Blueprint $table) {
-            $table->dropForeign(['fk_id_visitorV']);
-            $table->dropForeign(['fk_id_semester']);
+            $table->dropForeign(['fk_id_visitor']);
+            $table->dropForeign(['fk_semesterName']);
         });
 
         Schema::dropIfExists('visit_v_s');

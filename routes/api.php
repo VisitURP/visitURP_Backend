@@ -22,6 +22,7 @@ use App\Http\Controllers\InteractiveFeedbacksController;
 use App\Http\Controllers\VisitorInfoController;
 use App\Http\Controllers\UbigeoController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\PublicityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -195,11 +196,11 @@ Route::post('register-semester', [SemesterController::class, 'store']);
 
 Route::get('list-semester', [SemesterController::class, 'index']);
 
-Route::get('find-semester/{id_semester}', [SemesterController::class, 'show']);
+Route::get('find-semester/{semesterName}', [SemesterController::class, 'show']);
 
-Route::put('update-semester/{id_semester}', [SemesterController::class, 'update']);
+Route::put('update-semester/{semesterName}', [SemesterController::class, 'update']);
 
-Route::delete('delete-semester/{id_semester}', [SemesterController::class, 'destroy']);
+Route::delete('delete-semester/{semesterName}', [SemesterController::class, 'destroy']);
 
 //visitorPreferences table
 Route::get('getPreferencesByVisitorId/{id}', [VisitorPreferenceController::class, 'getPreferencesByVisitorId']);
@@ -291,5 +292,14 @@ Route::get('visitors/monthly', [VisitorPController::class, 'getMonthlyPhysicalVi
 Route::get('visitors/semester/{id_semester}', [VisitorVController::class, 'getVisitorsBySemester']);
 
 
+//publicity table
 
+Route::post('register-publicity', [PublicityController::class, 'store']);
 
+Route::get('list-publicity', [PublicityController::class, 'index']);
+
+Route::get('find-publicity/{id}', [PublicityController::class, 'show']);
+
+Route::put('update-publicity/{id}', [PublicityController::class, 'update']);
+
+Route::delete('delete-publicity/{id}', [PublicityController::class, 'destroy']);
