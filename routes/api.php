@@ -22,6 +22,7 @@ use App\Http\Controllers\InteractiveFeedbacksController;
 use App\Http\Controllers\VisitorInfoController;
 use App\Http\Controllers\UbigeoController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\PublicityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -235,6 +236,16 @@ Route::put('update-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::
 
 Route::delete('delete-interactiveFeedbacks/{id}', [InteractiveFeedbacksController::class, 'destroy']);
 
+//publicity PublicityController
+Route::post('register-publicity', [PublicityController::class, 'store']);
+
+Route::get('list-publicities', [PublicityController::class, 'index']);
+
+Route::get('find-publicity/{id}', [PublicityController::class, 'show']);
+
+Route::put('update-publicity/{id}', [PublicityController::class, 'update']);
+
+Route::delete('delete-publicity/{id}', [PublicityController::class, 'destroy']);
 
 //Ubigeo
 Route::get('getdepartmentS', [UbigeoController::class, 'getDepartments']);
