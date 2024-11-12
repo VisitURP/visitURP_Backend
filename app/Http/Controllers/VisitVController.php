@@ -45,6 +45,8 @@ class VisitVController extends Controller
     {
         $validatedData = $request->validate([
             'fk_id_visitor' => ['required', 'max:500'],
+            'visitor_type' => 'required|in:' . implode(',', [visitV::TYPE1, visitV::TYPE2]),
+            'fk_id_semester' => ['required'],
         ]);
 
         $visitV = visitV::create($validatedData);
