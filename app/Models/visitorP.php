@@ -15,7 +15,7 @@ class visitorP extends Model
     
     protected $table = 'visitor_p_s';
     protected $primaryKey = 'id_visitorP';
-    protected $fillable = ['name', 'lastName', 'email','fk_docType_id', 'docNumber', 'phone', 'visitDate', 'cod_Ubigeo', 
+    protected $fillable = ['name', 'lastName', 'email','fk_docType_id', 'docNumber', 'phone', 'cod_Ubigeo', 
     'educationalInstitution', 'birthDate', 'gender'];
 
     public function setVisitDateAttribute($value)
@@ -32,4 +32,21 @@ class visitorP extends Model
     {
         return $this->hasMany(docType::class, 'fk_docType_id');
     }
+
+    public function visitorPreferences()
+    {
+        return $this->hasMany(VisitorPreference::class, 'fk_id_visitor');
+    }
+
+    public function ubigeo()
+    {
+        return $this->hasOne(Ubigeo::class, 'cod_Ubigeo', 'cod_Ubigeo');
+    }
+
+    public function visitV()
+    {
+        return $this->hasMany(visitV::class, 'fk_id_visitor','id_visitorP');
+    }
+
+    
 }

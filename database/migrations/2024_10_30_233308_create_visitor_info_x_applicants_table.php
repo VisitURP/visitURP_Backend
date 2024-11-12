@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_visitorInfoxApplicant');
             $table->unsignedBigInteger('fk_id_applicant')->nullable();
             $table->string('fk_id_visitor')->nullable(); // Permite almacenar IDs simples o combinados
-            $table->enum('visitor_type', ['V', 'P', 'B'])->nullable(); // V para Virtual, P para Physical, B para Both
+            $table->enum('visitor_type', ['V', 'P', 'B', 'NV'])->nullable(); // V para Virtual, P para Physical, B para Both
             $table->boolean('admitted')->default(false); 
             $table->timestamps();
             $table->softDeletes();

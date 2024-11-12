@@ -45,8 +45,8 @@ class SyncVisitorInfoXApplicant extends Command
         $this->info("Puntero pPointer: {$pPointer}, Total visitorPList: " . count($visitorPList));
         $docP = $pPointer < count($visitorPList) ? $visitorPList[$pPointer]->docNumber : null;
 
-        $this->info("docV: {$docV} como virtual (V)");
-        $this->info("docP: {$docP} como virtual (V)");
+        // $this->info("docV: {$docV} como virtual (V)");
+        // $this->info("docP: {$docP} como virtual (V)");
 
         // Lógica de comparación
         if ($docV !== null && ($docP === null || $docV < $docP)) {

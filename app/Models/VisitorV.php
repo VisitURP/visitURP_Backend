@@ -49,8 +49,16 @@ class VisitorV extends Model
 
     public function visitV()
     {
-        return $this->hasMany(visitV::class, 'fk_id_visitorV','id_visitorV');
+        return $this->hasMany(visitV::class, 'fk_id_visitor','id_visitorV');
     }
 
-    //Falta agregar Ubigeo
+    public function visitorPreferences()
+    {
+        return $this->hasMany(VisitorPreference::class, 'fk_id_visitor');
+    }
+
+    public function ubigeo()
+    {
+        return $this->hasOne(Ubigeo::class, 'cod_Ubigeo', 'cod_Ubigeo');
+    }
 }

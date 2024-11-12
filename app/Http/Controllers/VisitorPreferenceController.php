@@ -87,7 +87,7 @@ class VisitorPreferenceController extends Controller
         $request->validate([
             'fk_id_visitor' => 'required|integer',
             'fk_id_academicInterested' => 'required|integer',
-            'visitor_type' => 'required|in:' . implode(',', [visitorPreference::TYPE1, VisitorPreference::TYPE2]),
+            'visitor_type' => 'required|in:' . implode(',', [VisitorPreference::TYPE1, VisitorPreference::TYPE2]),
         ]);
 
         $visitorPreference = visitorPreference::create([
