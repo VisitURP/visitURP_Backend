@@ -10,6 +10,11 @@ class VisitorInfoXApplicant extends Model
     use SoftDeletes;
 
     protected $table = 'visitor_info_x_applicants'; 
+    const TYPE1 = 'V';
+    const TYPE2 = 'P';
+    const TYPE3 = 'B';
+    const TYPE4 = 'NV';
+
     protected $primaryKey = 'id_visitorInfoxApplicant';
     // Specify the fillable attributes
     protected $fillable = [

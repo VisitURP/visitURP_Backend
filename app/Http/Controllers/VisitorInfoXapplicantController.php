@@ -327,7 +327,7 @@ class VisitorInfoXApplicantController extends Controller
         $request->validate([
             'fk_id_applicant' => 'nullable',
             'fk_id_visitor' => 'nullable',
-            'visitor_type' => 'nullable|in:V,P,B,NV',
+            'visitor_type' => 'nullable|in:' . implode(',', [VisitorInfoXApplicant::TYPE1, VisitorInfoXApplicant::TYPE2, VisitorInfoXApplicant::TYPE3, VisitorInfoXApplicant::TYPE4]),
             'admitted' => 'boolean',
         ]);
 
