@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('semesters', function (Blueprint $table) {
-            $table->string('semesterName')->primary(); 
-            $table->dateTime('semesterFrom');
-            $table->dateTime('semesterTo');
+        Schema::create('publicities', function (Blueprint $table) {
+            $table->id('id');
+            $table->string('title');
+            $table->string('url');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('semesters');
+        Schema::dropIfExists('publicities');
     }
 };

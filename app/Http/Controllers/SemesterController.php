@@ -27,13 +27,29 @@ class SemesterController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+        public function store(Request $request)
     {
+        // Validar todos los campos en una sola llamada
         $validated = $request->validate([
-            'semesterName' => 'required',
-            'until' => 'required|date_format:Y-m-d H:i:s',
+            'semesterName' => [
+                'required',
+                'regex:/202[0-9]-[0-2]/',
+                'string'
+            ],
+            'semesterFrom' => 'required|date_format:Y-m-d H:i:s',
+            'semesterTo' => 'required|date_format:Y-m-d H:i:s|after:semesterFrom',
+        ], [
+            'semesterName.required' => 'El nombre del semestre es obligatorio.',
+            'semesterName.regex' => 'El formato del nombre del semestre no es válido (debe ser 202X-Y).',
+            'semesterName.string' => 'El nombre del semestre debe ser una cadena de texto.',
+            'semesterFrom.required' => 'La fecha de inicio del semestre es obligatoria.',
+            'semesterFrom.date_format' => 'La fecha de inicio debe tener el formato Y-m-d H:i:s.',
+            'semesterTo.required' => 'La fecha de finalización del semestre es obligatoria.',
+            'semesterTo.date_format' => 'La fecha de finalización debe tener el formato Y-m-d H:i:s.',
+            'semesterTo.after' => 'La fecha de finalización debe ser posterior a la fecha de inicio.',
         ]);
 
+        // Crear el registro en la base de datos
         $detail = Semester::create($validated);
 
         return response()->json($detail, 201);
@@ -42,7 +58,7 @@ class SemesterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(string $id)
     {
         $semester = Semester::findOrFail($id);
         return response()->json([
@@ -62,28 +78,38 @@ class SemesterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $sem)
+    public function update(Request $request, string $id)
     {
-        $request->validate([
-            'semesterName' => ['required', 'max:500'],
-            'until' => 'required|date_format:Y-m-d H:i:s',
-        ]);
+        $semester = Semester::findOrFail($id);
 
-        $sem = Semester::findOrFail($sem);
-        $sem-> semesterName = $request['semesterName'];
-        $sem-> until = $request['until'];
-        $sem-> save();
-
-        return response()->json([
-            'Message' => 'Data already updated.',
-            'Semester: ' => $sem
+        $validated = $request->validate([
+            'semesterName' => [
+                'required',
+                'regex:/202[0-9]-[0-2]/',
+                'string'
+            ],
+            'semesterFrom' => 'required|date_format:Y-m-d H:i:s',
+            'semesterTo' => 'required|date_format:Y-m-d H:i:s|after:semesterFrom',
+        ], [
+            'semesterName.required' => 'El nombre del semestre es obligatorio.',
+            'semesterName.regex' => 'El formato del nombre del semestre no es válido (debe ser 202X-Y).',
+            'semesterName.string' => 'El nombre del semestre debe ser una cadena de texto.',
+            'semesterFrom.required' => 'La fecha de inicio del semestre es obligatoria.',
+            'semesterFrom.date_format' => 'La fecha de inicio debe tener el formato Y-m-d H:i:s.',
+            'semesterTo.required' => 'La fecha de finalización del semestre es obligatoria.',
+            'semesterTo.date_format' => 'La fecha de finalización debe tener el formato Y-m-d H:i:s.',
+            'semesterTo.after' => 'La fecha de finalización debe ser posterior a la fecha de inicio.',
         ]);
+        $semester->update($validated);
+
+        return response()->json($semester, 200);
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(string $id)
     {
         $sem = Semester::findOrFail($id);
         $sem -> delete();
