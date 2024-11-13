@@ -30,16 +30,16 @@ class VisitorV extends Model
     ];
 
     public function setBirthDateAttribute($value)
-{
-    // Verificamos si el valor no es nulo ni vacío
-    if (!empty($value)) {
-        // Si hay un valor, intentamos formatearlo
-        $this->attributes['birthDate'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
-    } else {
-        // Si es nulo o vacío, lo dejamos como null
-        $this->attributes['birthDate'] = null;
+    {
+        // Verificamos si el valor no es nulo ni vacío
+        if (!empty($value)) {
+            // Si hay un valor, intentamos formatearlo
+            $this->attributes['birthDate'] = Carbon::createFromFormat('d/m/Y', $value)->format('Y-m-d');
+        } else {
+            // Si es nulo o vacío, lo dejamos como null
+            $this->attributes['birthDate'] = null;
+        }
     }
-}
 
 
     public function docType()
