@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id('id_visitV');
             $table->unsignedBigInteger('fk_id_visitor');
             $table->enum('visitor_type', ['V', 'P'])->nullable(); 
-            $table->unsignedBigInteger('fk_id_semester')->nullable();
-            $table->foreign('fk_id_semester')->references('id_semester')->on('semesters');
+            $table->string('fk_id_semester')->nullable();
+            $table->foreign('fk_id_semester')->references('semesterName')->on('semesters');
             $table->timestamps();
             $table->softDeletes();
         });

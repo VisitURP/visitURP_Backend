@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('semesters', function (Blueprint $table) {
-            $table->id('id_semester'); 
-            $table->string('semesterName'); 
-            $table->dateTime('until');
+            $table->string('semesterName')->primary(); 
+            $table->dateTime('semesterFrom');
+            $table->dateTime('semesterTo');
             $table->timestamps();
             $table->softDeletes();
         });

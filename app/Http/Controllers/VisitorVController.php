@@ -68,7 +68,7 @@ class VisitorVController extends Controller
             'cod_Ubigeo' => ['nullable','max:500'],
             'educationalInstitution' => ['nullable','max:500'],
             'birthDate' => ['nullable','date_format:d/m/Y'],
-            'gender' => 'nullable','in:' . implode(',', [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])
+            'gender' => ['nullable', 'in:' . implode(',', [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])]
         ]);
 
         $existingVisitor = VisitorV::where('email', $request->input('email'))->first();
@@ -113,13 +113,13 @@ class VisitorVController extends Controller
 
     public function assignSemester($createdAt)
     {
-        // Busca el semestre correspondiente basado en la fecha de creación
-        $semester = Semester::where('until', '>=', $createdAt)
-                        ->orderBy('until', 'asc')
-                        ->first();
+         // Busca el semestre correspondiente que incluye la fecha de creación
+            $semester = Semester::where('semesterFrom', '<=', $createdAt)
+            ->where('semesterTo', '>=', $createdAt)
+            ->orderBy('semesterFrom', 'asc')
+            ->first();
 
-        // Retorna el id del semestre
-        return $semester ? $semester->id_semester : null;
+        return $semester ? $semester->semesterName : null;
     }
 
     /**

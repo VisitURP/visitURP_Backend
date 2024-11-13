@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Semester extends Model
 {
     use SoftDeletes;
-    protected $table = 'semesters';
-    protected $primaryKey = 'id_semester';
-    protected $fillable = ['semesterName', 'until', ];
 
+    protected $table = 'semesters';
+    protected $primaryKey = 'semesterName';
+    public $incrementing = false; 
+    protected $keyType = 'string'; 
+
+    protected $fillable = ['semesterName', 'semesterFrom', 'semesterTo'];
 }
