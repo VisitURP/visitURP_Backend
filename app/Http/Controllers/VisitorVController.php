@@ -156,44 +156,44 @@ class VisitorVController extends Controller
             'cod_Ubigeo' => ['nullable'],
             'educationalInstitution' => ['nullable','max:500'],
             'birthDate' => ['nullable','date_format:d/m/Y'],
-            'gender' => 'nullable','in:' . implode(',', [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])
+            'gender' => ['nullable','in:' . implode(',', [VisitorV::TYPE1, VisitorV::TYPE2, VisitorV::TYPE3])]
             
         ]);
 
          // Encuentra el visitante por su ID
-    $visitorV = VisitorV::findOrFail($visitorV);
+        $visitorV = VisitorV::findOrFail($visitorV);
 
-        // filled Solo actualiza los campos si no son null
-    if ($request->filled('name')) {
-        $visitorV->name = $request->input('name');
-    }
-    if ($request->filled('email')) {
-        $visitorV->email = $request->input('email');
-    }
-    if ($request->filled('lastName')) {
-        $visitorV->lastName = $request->input('lastName');
-    }
-    if ($request->filled('fk_docType_id')) {
-        $visitorV->fk_docType_id = $request->input('fk_docType_id');
-    }
-    if ($request->filled('documentNumber')) {
-        $visitorV->documentNumber = $request->input('documentNumber');
-    }
-    if ($request->filled('phone')) {
-        $visitorV->phone = $request->input('phone');
-    }
-    if ($request->filled('cod_Ubigeo')) {
-        $visitorV->cod_Ubigeo = $request->input('cod_Ubigeo');
-    }
-    if ($request->filled('educationalInstitution')) {
-        $visitorV->educationalInstitution = $request->input('educationalInstitution');
-    }
-    if ($request->filled('birthDate')) {
-        $visitorV->birthDate = $request->input('birthDate');
-    }
-    if ($request->filled('gender')) {
-        $visitorV->gender = $request->input('gender');
-    }
+            // filled Solo actualiza los campos si no son null
+        if ($request->filled('name')) {
+            $visitorV->name = $request->input('name');
+        }
+        if ($request->filled('email')) {
+            $visitorV->email = $request->input('email');
+        }
+        if ($request->filled('lastName')) {
+            $visitorV->lastName = $request->input('lastName');
+        }
+        if ($request->filled('fk_docType_id')) {
+            $visitorV->fk_docType_id = $request->input('fk_docType_id');
+        }
+        if ($request->filled('documentNumber')) {
+            $visitorV->documentNumber = $request->input('documentNumber');
+        }
+        if ($request->filled('phone')) {
+            $visitorV->phone = $request->input('phone');
+        }
+        if ($request->filled('cod_Ubigeo')) {
+            $visitorV->cod_Ubigeo = $request->input('cod_Ubigeo');
+        }
+        if ($request->filled('educationalInstitution')) {
+            $visitorV->educationalInstitution = $request->input('educationalInstitution');
+        }
+        if ($request->filled('birthDate')) {
+            $visitorV->birthDate = $request->input('birthDate');
+        }
+        if ($request->filled('gender')) {
+            $visitorV->gender = $request->input('gender');
+        }
 
     // Guarda los cambios
     $visitorV->save();

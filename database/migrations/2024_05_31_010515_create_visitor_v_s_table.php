@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('cod_Ubigeo')->nullable();
             $table->string('educationalInstitution', 500)->nullable();
             $table->dateTime('birthDate')->nullable();
-            $table->enum('gender', ['F', 'M', 'I'])->nullable();
+            $table->enum('gender', ['F', 'M', 'NA'])->nullable();
             $table->timestamps();
             $table->softDeletes();
 
