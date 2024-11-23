@@ -107,4 +107,14 @@ class VisitVDetailController extends Controller
             'Message' => 'Virtual visitor deleted successfully.'
         ]);
     }
+
+    public function count(){
+        $count=VisitVDetail::select('fk_id_builtArea','kindOfEvent',\DB::raw('COUNT(*) as count')) 
+              ->where('kindOfEvent','V')
+              ->groupBy('fk_id_builtArea','kindOfEvent')
+              ->get();
+        return response()->json([
+            'data'=>$count,
+        ]);
+    }
 }

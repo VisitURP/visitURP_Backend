@@ -191,6 +191,8 @@ Route::put('update-visitVD/{id_visitVDetail}', [VisitVDetailController::class, '
 
 Route::delete('delete-visitVD/{id_visitVDetail}', [VisitVDetailController::class, 'destroy']);
 
+Route::get('count-visitVD/', [VisitVDetailController::class, 'count']);
+
 //semester table
 Route::post('register-semester', [SemesterController::class, 'store']);
 
