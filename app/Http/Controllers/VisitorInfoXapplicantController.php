@@ -6,6 +6,7 @@ use App\Models\VisitorInfoXApplicant;
 use App\Models\VisitorV;
 use App\Models\visitorP;
 use App\Models\Semester;
+use App\Models\VisitorPreference;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\JsonResponse;
@@ -17,67 +18,68 @@ class VisitorInfoXApplicantController extends Controller
      * Display a listing of the resource.
      */
 
-     public function getTotalVisitors() {
+    public function getTotalVisitors()
+    {
         // Contar visitantes virtuales
         $totalVirtualVisitors = VisitorInfoXApplicant::where('visitor_type', 'V')
-        ->orWhere('visitor_type', 'B')
-        ->count();
+            ->orWhere('visitor_type', 'B')
+            ->count();
 
-        $totalPhysicalVisitors = VisitorInfoXApplicant::where('visitor_type', 'P') 
-        ->orWhere('visitor_type', 'B')
-        ->count();
+        $totalPhysicalVisitors = VisitorInfoXApplicant::where('visitor_type', 'P')
+            ->orWhere('visitor_type', 'B')
+            ->count();
 
         // Sumar ambos
         $totalVisitors = $totalVirtualVisitors + $totalPhysicalVisitors;
-    
+
         return response()->json(
             $totalVisitors
         );
     }
 
-    public function getVisitorInfosByGender($gender) 
-   {
+    public function getVisitorInfosByGender($gender)
+    {
         // Contadores para cada género
-        $femaleCount = 0; 
-        $maleCount = 0; 
-        $naCount = 0; 
+        $femaleCount = 0;
+        $maleCount = 0;
+        $naCount = 0;
 
         // Contar visitantes virtuales
         $virtualVisitors = VisitorInfoXApplicant::where('visitor_type', 'V')->get();
         foreach ($virtualVisitors as $visitorInfo) {
             // Obtener el género del visitante usando el fk_id_visitor
             $visitor = VisitorV::find($visitorInfo->fk_id_visitor);
-            
-                if ($visitor->gender === 'F') {
-                    $femaleCount++;
-                } elseif ($visitor->gender === 'M') {
-                    $maleCount++;
-                } elseif ($visitor->gender === 'NA') {
-                    $naCount++;
-                }
-            
+
+            if ($visitor->gender === 'F') {
+                $femaleCount++;
+            } elseif ($visitor->gender === 'M') {
+                $maleCount++;
+            } elseif ($visitor->gender === 'NA') {
+                $naCount++;
+            }
+
         }
 
-             // Contar visitantes presenciales
-            $physicalVisitors = VisitorInfoXApplicant::where('visitor_type', 'P')->get();
-            foreach ($physicalVisitors as $visitorInfo) {
-             // Obtener el género del visitante usando el fk_id_visitor
-             $visitor = visitorP::find($visitorInfo->fk_id_visitor);
-             
-                 if ($visitor->gender === 'F') {
-                     $femaleCount++;
-                 } elseif ($visitor->gender === 'M') {
-                     $maleCount++;
-                 } elseif ($visitor->gender === 'NA') {
-                     $naCount++;
-                 }
-             
-         }
+        // Contar visitantes presenciales
+        $physicalVisitors = VisitorInfoXApplicant::where('visitor_type', 'P')->get();
+        foreach ($physicalVisitors as $visitorInfo) {
+            // Obtener el género del visitante usando el fk_id_visitor
+            $visitor = visitorP::find($visitorInfo->fk_id_visitor);
 
-           // Contar visitantes presenciales
-           $BothVisitors = VisitorInfoXApplicant::where('visitor_type', 'B')->get();
-           foreach ($BothVisitors as $visitorInfo) {
-            
+            if ($visitor->gender === 'F') {
+                $femaleCount++;
+            } elseif ($visitor->gender === 'M') {
+                $maleCount++;
+            } elseif ($visitor->gender === 'NA') {
+                $naCount++;
+            }
+
+        }
+
+        // Contar visitantes presenciales
+        $BothVisitors = VisitorInfoXApplicant::where('visitor_type', 'B')->get();
+        foreach ($BothVisitors as $visitorInfo) {
+
             // Obtener el género del visitante usando el fk_id_visitor
             // Desconcatenar usando explode
             $ids = explode('_', $visitorInfo->fk_id_visitor);
@@ -87,40 +89,40 @@ class VisitorInfoXApplicantController extends Controller
             $physicalId = $ids[1]; // 3
 
             $visitor = VisitorV::find($virtualId);
-            
-                if ($visitor->gender === 'F') {
-                    $femaleCount++;
-                } elseif ($visitor->gender === 'M') {
-                    $maleCount++;
-                } elseif ($visitor->gender === 'NA') {
-                    $naCount++;
-                }
-            
-            
+
+            if ($visitor->gender === 'F') {
+                $femaleCount++;
+            } elseif ($visitor->gender === 'M') {
+                $maleCount++;
+            } elseif ($visitor->gender === 'NA') {
+                $naCount++;
+            }
+
+
         }
 
         // Retornar el conteo según el género solicitado
         switch ($gender) {
-        case 'F':
-            return response()->json(['total_visitorsbyGender' => $femaleCount]);
-        case 'M':
-            return response()->json(['total_visitorsbyGender' => $maleCount]);
-        case 'NA':
-            return response()->json(['total_visitorsbyGender' => $naCount]);
+            case 'F':
+                return response()->json(['total_visitorsbyGender' => $femaleCount]);
+            case 'M':
+                return response()->json(['total_visitorsbyGender' => $maleCount]);
+            case 'NA':
+                return response()->json(['total_visitorsbyGender' => $naCount]);
         }
     }
 
-     public function getAdmittedVisitors()
+    public function getAdmittedVisitors()
     {
         // Contar visitantes admitidos
         $admittedCount = DB::table('visitor_info_x_applicants')
-        ->where('admitted', 1)
-        ->count();
+            ->where('admitted', 1)
+            ->count();
 
         // Preparar los resultados
         $admittedVisitors = [
-        'total_admitted' => $admittedCount
-    ];
+            'total_admitted' => $admittedCount
+        ];
 
         return response()->json($admittedVisitors);
     }
@@ -129,12 +131,12 @@ class VisitorInfoXApplicantController extends Controller
     {
         // Contar visitantes no admitidos
         $nonAdmittedCount = DB::table('visitor_info_x_applicants')
-        ->where('admitted', 0)
-        ->count();
+            ->where('admitted', 0)
+            ->count();
 
         // Preparar los resultados
         $nonAdmittedVisitors = [
-        'total_non_admitted' => $nonAdmittedCount
+            'total_non_admitted' => $nonAdmittedCount
         ];
 
         return response()->json($nonAdmittedVisitors);
@@ -162,43 +164,43 @@ class VisitorInfoXApplicantController extends Controller
         // Contar visitantes físicos
         $physicalVisitors = VisitorInfoXApplicant::where('visitor_type', 'P')->get();
         foreach ($physicalVisitors as $visitorInfo) {
-        // Obtener el visitante físico usando el fk_id_visitor
-        $visitor = visitorP::find($visitorInfo->fk_id_visitor);
-        if ($visitor && $visitor->cod_Ubigeo === $ubigeocode) {
-            $counter++;
+            // Obtener el visitante físico usando el fk_id_visitor
+            $visitor = visitorP::find($visitorInfo->fk_id_visitor);
+            if ($visitor && $visitor->cod_Ubigeo === $ubigeocode) {
+                $counter++;
             }
-       }
+        }
 
-       // Contar visitantes presenciales
-       $BothVisitors = VisitorInfoXApplicant::where('visitor_type', 'B')->get();
-       foreach ($BothVisitors as $visitorInfo) {
-        
-        // Obtener el género del visitante usando el fk_id_visitor
-        // Desconcatenar usando explode
-        $ids = explode('_', $visitorInfo->fk_id_visitor);
+        // Contar visitantes presenciales
+        $BothVisitors = VisitorInfoXApplicant::where('visitor_type', 'B')->get();
+        foreach ($BothVisitors as $visitorInfo) {
 
-        // Acceder a los IDs
-        $virtualId = $ids[0]; // 12
-        $physicalId = $ids[1]; // 3
+            // Obtener el género del visitante usando el fk_id_visitor
+            // Desconcatenar usando explode
+            $ids = explode('_', $visitorInfo->fk_id_visitor);
 
-        $visitorV = VisitorV::find($virtualId);
-        $visitorP = visitorP::find($physicalId);
-        
+            // Acceder a los IDs
+            $virtualId = $ids[0]; // 12
+            $physicalId = $ids[1]; // 3
+
+            $visitorV = VisitorV::find($virtualId);
+            $visitorP = visitorP::find($physicalId);
+
             if ($visitorV->cod_Ubigeo === $ubigeocode) {
                 $counter++;
             } elseif ($visitorP->cod_Ubigeo === $ubigeocode) {
                 $counter++;
-            }        
-        
-       }
+            }
+
+        }
 
         // Retornar el conteo en formato JSON
-            return response()->json(['total_visitorsbyResidence' => $counter]);
-        }
+        return response()->json(['total_visitorsbyResidence' => $counter]);
+    }
 
     public function getVisitorsBySemester($id_semestre)
     {
-        
+
         // Obtener el semestre por nombre
         $semester = Semester::where('semesterName', $id_semestre)->first();
 
@@ -215,28 +217,28 @@ class VisitorInfoXApplicantController extends Controller
         foreach ($virtualVisitors as $visitorInfo) {
             // Obtener el género del visitante usando el fk_id_visitor
             $visitor = VisitorV::find($visitorInfo->fk_id_visitor);
-            
-                if ($visitor->created_at < $semester->until) {
-                    $counter++;
-                }             
+
+            if ($visitor->created_at < $semester->until) {
+                $counter++;
+            }
         }
 
-             // Contar visitantes presenciales
-            $physicalVisitors = VisitorInfoXApplicant::where('visitor_type', 'P')->get();
-            foreach ($physicalVisitors as $visitorInfo) {
-             // Obtener el género del visitante usando el fk_id_visitor
-             $visitor = visitorP::find($visitorInfo->fk_id_visitor);
-             
-                 if ($visitor->created_at < $semester->until) {
-                     $counter++;
-                 } 
-             
-         }
+        // Contar visitantes presenciales
+        $physicalVisitors = VisitorInfoXApplicant::where('visitor_type', 'P')->get();
+        foreach ($physicalVisitors as $visitorInfo) {
+            // Obtener el género del visitante usando el fk_id_visitor
+            $visitor = visitorP::find($visitorInfo->fk_id_visitor);
 
-           // Contar visitantes presenciales
-           $BothVisitors = VisitorInfoXApplicant::where('visitor_type', 'B')->get();
-           foreach ($BothVisitors as $visitorInfo) {
-            
+            if ($visitor->created_at < $semester->until) {
+                $counter++;
+            }
+
+        }
+
+        // Contar visitantes presenciales
+        $BothVisitors = VisitorInfoXApplicant::where('visitor_type', 'B')->get();
+        foreach ($BothVisitors as $visitorInfo) {
+
             // Obtener el género del visitante usando el fk_id_visitor
             // Desconcatenar usando explode
             $ids = explode('_', $visitorInfo->fk_id_visitor);
@@ -246,11 +248,11 @@ class VisitorInfoXApplicantController extends Controller
             $physicalId = $ids[1]; // 3
 
             $visitor = VisitorV::find($virtualId);
-            
-                if ($visitor->created_at < $semester->until) {
-                    $counter++;
-                }            
-        }      
+
+            if ($visitor->created_at < $semester->until) {
+                $counter++;
+            }
+        }
 
         // Devolver el resultado en formato JSON
         return response()->json([
@@ -260,36 +262,7 @@ class VisitorInfoXApplicantController extends Controller
 
     }
 
-    //  //tengo que adecuarlo
-    //  public function getMonthlyPhysicalVisitors(Request $request)
-    //  {
-    //      // Usa el año actual o el año especificado en la solicitud
-    //      $year = $request->query('year', date('Y'));
- 
-    //      $monthlyVisitors = [];
- 
-    //      // Bucle para contar visitantes en cada mes del año
-    //      for ($month = 1; $month <= 12; $month++) {
-    //      $count = visitorP::whereYear('visitDate', $year)
-    //                       ->whereMonth('visitDate', $month)
-    //                       ->count();
- 
-    //      // Log para verificar el conteo por mes
-    //      Log::info("Contando visitantes para el mes $month en el año $year: $count");
- 
-    //      $monthlyVisitors[$month] = $count;
-    //      }
- 
-    //      // Retornar el resultado en formato JSON
-    //      return response()->json([
-    //          'year' => $year,
-    //          'monthly_visitors' => $monthlyVisitors
-    //      ]);
-    //  }
-
-
-
-     public function syncVisitorInfoXApplicant(): JsonResponse
+    public function syncVisitorInfoXApplicant(): JsonResponse
     {
         // Llamada al comando usando Artisan
         Artisan::call('sync:visitor-infoXapplicant');
@@ -333,8 +306,8 @@ class VisitorInfoXApplicantController extends Controller
 
         // Verificar si el registro ya existe basado en fk_id_applicant y fk_id_visitor
         $existingRecord = VisitorInfoxApplicant::where('fk_id_applicant', $request->fk_id_applicant)
-                            ->where('fk_id_visitor', $request->fk_id_visitor)
-                            ->first();
+            ->where('fk_id_visitor', $request->fk_id_visitor)
+            ->first();
 
         if ($existingRecord) {
             return response()->json(['message' => 'Registro duplicado'], 409);
@@ -401,5 +374,18 @@ class VisitorInfoXApplicantController extends Controller
 
         $record->delete();
         return response()->json(['message' => 'Registro eliminado']);
+    }
+
+
+    public function count(int $id_visitor, int $id_academicInterest){
+        $countPreferences = VisitorPreference::where('fk_id_academicInterested', $id_academicInterest)
+        -> where('fk_id_visitor', $id_visitor)
+        ->count();
+
+        return response()->json([
+            'id_visitor'=>$id_visitor,
+            'id_academicInterest'=>$id_academicInterest,
+            'count'=>$countPreferences
+        ]);
     }
 }
